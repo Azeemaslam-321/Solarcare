@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SolarCare — Solar Panel Cleaning, Maintenance & Repair</title>
+  <meta name="description" content="Professional solar panel cleaning, maintenance and repair. Monthly/Quarterly packages, AMC plans, WhatsApp booking +91 8112780010">
+  <meta name="theme-color" content="#0d47a1">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    /* ---------- THEME COLORS ---------- */
+    :root{
+      --bg: #f4f8fb;
+      --card: #ffffff;
+      --primary: #0d47a1; /* deep blue */
+      --accent: #ffb703;  /* warm yellow */
+      --muted: #6c7a89;
+      --glass: rgba(255,255,255,0.6);
+      --dark-bg: #071124;
+      --text: #071124; /* default text color */
+    }
+
+    /* dark mode variables (toggled via .dark on <html>) */
+    html.dark{
+      --bg: #071124;
+      --card: #0b2033;
+      --muted: #9fb0c8;
+      --glass: rgba(10,20,30,0.4);
+      --text: #ffffff; /* light text in dark mode */
+    }
+
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+
+    /* ---------- NAV ---------- */
+    .site-nav{background:linear-gradient(90deg, rgba(13,71,161,0.95), rgba(21,101,192,0.95));}
+    .site-nav .navbar-brand{display:flex;align-items:center;gap:12px;color:#fff;font-weight:700}
+    .logo-mark{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff8a00);display:flex;align-items:center;justify-content:center;color:#071124;font-weight:800;box-shadow:0 6px 18px rgba(13,71,161,0.18)}
+    .nav-contact{background:rgba(255,255,255,0.08);padding:6px 12px;border-radius:10px;color:#fff;font-weight:600}
+    .nav-link{color:rgba(255,255,255,0.95)!important}
+
+    /* ---------- HERO ---------- */
+    .hero{padding:84px 0;background-image:linear-gradient(180deg, rgba(1,30,66,0.85), rgba(1,30,66,0.6)), url('https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;color:#fff}
+    .hero .eyebrow{display:inline-block;background:rgba(255,255,255,0.08);padding:6px 12px;border-radius:999px;font-weight:700;margin-bottom:12px}
+    .hero h1{font-size:2.3rem;font-weight:800;line-height:1.05}
+    .hero p.lead{font-size:1.05rem;opacity:0.95}
+    .hero-ctas{margin-top:20px}
+
+    /* subtle animated wave under hero */
+    .hero-wave{height:40px;background:linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0));clip-path:polygon(0 0,100% 0,100% 70%,0 100%)}
+
+    /* ---------- CONTENT LAYOUT ---------- */
+    section{padding:48px 0}
+    .container-narrow{max-width:1100px;margin:0 auto}
+
+    /* ---------- CARDS ---------- */
+    .card-soft{background:var(--card);border-radius:14px;padding:22px;box-shadow:0 8px 30px rgba(13,71,161,0.06);transition:transform .28s ease,box-shadow .28s ease}
+    .card-soft:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(13,71,161,0.09)}
+    .service-icon{width:72px;height:72px;border-radius:14px;background:linear-gradient(180deg, rgba(13,71,161,0.06), rgba(21,101,192,0.04));display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--primary);margin-bottom:14px}
+
+    /* ---------- PRICING ---------- */
+    .price-tag{font-weight:800;font-size:1.6rem;color:var(--primary)}
+    .cta-ghost{background:transparent;border:2px solid var(--primary);color:var(--primary);border-radius:12px;padding:10px 16px}
+
+    /* ---------- FORM ---------- */
+    .form-card{background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.72));padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
+
+    /* ---------- FOOTER ---------- */
+    footer.site-footer{background:var(--card);padding:36px 0;border-top:1px solid rgba(13,71,161,0.04)}
+
+    /* ---------- ANIMATIONS ---------- */
+    .fade-up{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+    .fade-up.in{opacity:1;transform:none}
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width:767px){
+      .hero{padding:56px 0}
+      .hero h1{font-size:1.6rem}
+      .gallery-img{height:150px;}
+    }
+
+    /* ---------- DARK MODE BUTTON ---------- */
+    .dark-toggle{background:rgba(255,255,255,0.06);border-radius:999px;padding:8px 10px;color:#fff}
+
+    /* ---------- GALLERY ---------- */
+    .gallery-img{height:200px;object-fit:cover;border-radius:8px;}
+
+    /* ---------- BUTTONS ---------- */
+    .btn-main{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:10px 16px}
+    .btn-main:hover{background:var(--accent);color:var(--text)}
+    html.dark .btn-main{background:var(--accent);color:var(--text)}
+
+    /* ---------- LINKS AND TEXT ---------- */
+    a{color:var(--primary)}
+    html.dark a{color:var(--accent)}
+    .muted{color:var(--muted)!important}
+
+    /* ---------- ACCORDION (FAQ) ---------- */
+    .accordion-button{background:var(--card);color:var(--text)}
+    .accordion-body{background:var(--bg);color:var(--text)}
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg site-nav navbar-dark sticky-top">
+<div class="container">
+<a class="navbar-brand d-flex align-items-center" href="#/">
+<div class="logo-mark">SC</div>
+<span class="ms-2 fw-bold text-white">SolarCare</span>
+</a>
+
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navMenu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="#/">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="#/services">Services</a></li>
+<li class="nav-item"><a class="nav-link" href="#/pricing">Pricing</a></li>
+<li class="nav-item"><a class="nav-link" href="#/gallery">Gallery</a></li>
+<li class="nav-item"><a class="nav-link" href="#/blog">Blog</a></li>
+<li class="nav-item"><a class="nav-link" href="#/faq">FAQ</a></li>
+<li class="nav-item"><a class="nav-link" href="#/about">About</a></li>
+<li class="nav-item"><a class="nav-link" href="#/contact">Contact</a></li>
+</ul>
+
+<button id="darkToggle" class="btn btn-sm ms-3 btn-warning"><i class="ri-moon-line"></i></button>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero text-center">
+<div class="container hero-content" data-anim>
+<h1 class="fw-bold display-5">Solar Panel Cleaning, Maintenance & Repair</h1>
+<p class="lead mt-3">Boost output • Warranty-safe methods • Waterless & robotic options</p>
+<a href="#/book" class="btn btn-warning mt-3 px-4 py-2 fw-bold">Book Now</a>
+</div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="container py-5">
+
+<!-- MAIN PAGES: Using hash-routing to keep single-file site -->
+
+<!-- HOME CONTENT (same as hero + quick features) -->
+<section id="home" class="page" style="display:block">
+  <div class="container container-narrow">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7">
+        <div class="card-soft p-4">
+          <h3 class="fw-bold">Why SolarCare?</h3>
+          <p class="muted">We use safe methods, trained technicians and give a service warranty. Our cleaning and maintenance services increase your system output and lifetime.</p>
+
+          <div class="row g-3 mt-3">
+            <div class="col-md-4">
+              <div class="d-flex gap-2 align-items-start">
+                <div class="service-icon"><i class="ri-shining-line"></i></div>
+                <div>
+                  <h6 class="mb-1">Increase Output</h6>
+                  <p class="muted small mb-0">Before/after efficiency checks</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="d-flex gap-2 align-items-start">
+                <div class="service-icon"><i class="ri-user-shared-line"></i></div>
+                <div>
+                  <h6 class="mb-1">Certified Technicians</h6>
+                  <p class="muted small mb-0">Safety-first & insured</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="d-flex gap-2 align-items-start">
+                <div class="service-icon"><i class="ri-timer-flash-line"></i></div>
+                <div>
+                  <h6 class="mb-1">Fast Scheduling</h6>
+                  <p class="muted small mb-0">Same-day options (city dependent)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="form-card">
+          <h5 class="fw-bold">Quick Book</h5>
+          <form id="quickForm">
+            <div class="mb-2"><input name="name" class="form-control" placeholder="Aapka naam" required aria-label="Name"></div>
+            <div class="mb-2"><input name="phone" pattern="[0-9]{10}" class="form-control" placeholder="Mobile (10 digits)" required aria-label="Phone"></div>
+            <div class="mb-2">
+              <select name="service" class="form-select" aria-label="Service">
+                <option>Solar Panel Cleaning</option>
+                <option>Premium Maintenance</option>
+                <option>Repair / Inverter Check</option>
+                <option>Installation Support</option>
+                <option>Bird Net / Pigeon Proofing</option>
+              </select>
+            </div>
+            <div class="mb-2 d-flex gap-2">
+              <input name="date" type="date" class="form-control" aria-label="Date">
+              <input name="time" type="time" class="form-control" aria-label="Time">
+            </div>
+
+            <div class="mb-2 form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="sendWaQuick" checked>
+              <label class="form-check-label" for="sendWaQuick">Also send to WhatsApp</label>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-main flex-grow-1">Send Booking</button>
+              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            </div>
+            <div class="mt-2 small muted">We will contact you to confirm. Backend endpoint is optional — WhatsApp opens on submit.</div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PAGE -->
+<section id="services" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Services</h2>
+      <p class="muted">Comprehensive solar services — cleaning, maintenance, installation & repair.</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- card 1 -->
+      <div class="col-md-4">
+        <div class="card-soft text-center p-4">
+          <div class="service-icon mx-auto"><i class="ri-brush-3-line"></i></div>
+          <h5>Solar Panel Cleaning</h5>
+          <p class="muted">Monthly/Quarterly | Waterless | Robotic options available. Includes dust removal, streak-free finish, and efficiency boost.</p>
+          <div class="mt-3"><a href="#/book?plan=cleaning" class="cta-ghost">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-soft text-center p-4">
+          <div class="service-icon mx-auto"><i class="ri-tools-line"></i></div>
+          <h5>Maintenance & Efficiency Check</h5>
+          <p class="muted">Inverter test, wiring check, output measurement, and thermal imaging. Prevents breakdowns and optimizes performance.</p>
+          <div class="mt-3"><a href="#/book?plan=maintenance" class="cta-ghost">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-soft text-center p-4">
+          <div class="service-icon mx-auto"><i class="ri-battery-charge-line"></i></div>
+          <h5>Battery & Streetlight Services</h5>
+          <p class="muted">Battery top-up, replacement, and street light repair. Includes LED upgrades and energy audits.</p>
+          <div class="mt-3"><a href="#/book?plan=battery" class="cta-ghost">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-soft p-4 mt-3">
+          <h5 class="fw-bold">Repair Services</h5>
+          <p class="muted">Panel repair, inverter repair, charge controller issues, wiring replacement. Diagnostic visit charges apply. We handle micro-cracks, hotspots, and corrosion.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-soft p-4 mt-3">
+          <h5 class="fw-bold">Installation Support</h5>
+          <p class="muted">New installation, re-installation after shifting, structure fabrication & mounting. Includes site assessment and custom designs for rooftops.</p>
+        </div>
+      </div>
+
+      <!-- New sub-services -->
+      <div class="col-md-4">
+        <div class="card-soft text-center p-4">
+          <div class="service-icon mx-auto"><i class="ri-shield-check-line"></i></div>
+          <h5>Bird Net & Pest Control</h5>
+          <p class="muted">Protect panels from birds and pests. Durable netting and eco-friendly repellents.</p>
+          <div class="mt-3"><a href="#/book?plan=birdnet" class="cta-ghost">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-soft text-center p-4">
+          <div class="service-icon mx-auto"><i class="ri-leaf-line"></i></div>
+          <h5>Eco-Friendly Cleaning</h5>
+          <p class="muted">Biodegradable solutions, no harsh chemicals. Ideal for green homes.</p>
+          <div class="mt-3"><a href="#/book?plan=eco" class="cta-ghost">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-soft text-center p-4">
+          <div class="service-icon mx-auto"><i class="ri-bar-chart-line"></i></div>
+          <h5>Performance Monitoring</h5>
+          <p class="muted">Install sensors for real-time data. Track output and get alerts.</p>
+          <div class="mt-3"><a href="#/book?plan=monitoring" class="cta-ghost">Select</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING PAGE -->
+<section id="pricing" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Pricing & AMC</h2>
+      <p class="muted">Transparent pricing — sample packages to start with.</p>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card-soft p-4 text-center">
+          <h5>Basic Cleaning</h5>
+          <p class="muted small">Quarterly cleaning • Visual check</p>
+          <div class="price-tag mt-2">₹999</div>
+          <div class="mt-3"><a href="#/book?plan=basic" class="btn btn-main">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-soft p-4 text-center border" style="border-color:rgba(13,71,161,0.08)">
+          <h5>Premium Maintenance</h5>
+          <p class="muted small">Monthly cleaning • Efficiency test • Inverter check</p>
+          <div class="price-tag mt-2">₹2499</div>
+          <div class="mt-3"><a href="#/book?plan=premium" class="btn btn-main">Select</a></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-soft p-4 text-center">
+          <h5>Enterprise / AMC</h5>
+          <p class="muted small">Custom schedule • Priority support • Repairs included</p>
+          <div class="price-tag mt-2">Custom</div>
+          <div class="mt-3"><a href="#/contact" class="btn btn-outline-secondary">Contact Sales</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <h5 class="fw-bold">AMC Plans</h5>
+      <div class="row g-3 mt-3">
+        <div class="col-md-4">
+          <div class="card-soft p-3 text-center">
+            <h6>Basic AMC</h6>
+            <p class="muted small">Quarterly visits + priority booking</p>
+            <div class="h5">₹9,999 / year</div>
+            <div class="mt-2"><a href="#/book?plan=amc-basic" class="btn cta-ghost">Buy</a></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card-soft p-3 text-center" style="border:2px solid rgba(13,71,161,0.06)">
+            <h6>Premium AMC</h6>
+            <p class="muted small">Monthly visits + small repairs (upto ₹2000)</p>
+            <div class="h5">₹24,999 / year</div>
+            <div class="mt-2"><a href="#/book?plan=amc-premium" class="btn btn-main">Buy</a></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card-soft p-3 text-center">
+            <h6>Enterprise</h6>
+            <p class="muted small">Commercial rooftops — custom pricing</p>
+            <div class="h5">Custom</div>
+            <div class="mt-2"><a href="#/contact" class="btn btn-outline-secondary">Contact</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY PAGE (New) -->
+<section id="gallery" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Our Work Gallery</h2>
+      <p class="muted">See our solar panel cleaning and maintenance projects in action.</p>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4"><img src="https://specsolar.com.au/wp-content/uploads/SF_Cleaning_2_1000x700.jpg" alt="Cleaning in progress" class="gallery-img w-100"></div>
+      <div class="col-md-4"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/4457/production/_88459471_gettyimages-462843274.jpg" alt="Team at work" class="gallery-img w-100"></div>
+      <div class="col-md-4"><img src="https://tse3.mm.bing.net/th/id/OIP.Y2pDJzyu3nmzxb0PvZckQQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Solar installation" class="gallery-img w-100"></div>
+      <div class="col-md-4"><img src="https://thumbs.dreamstime.com/z/comparison-solar-panels-installation-aerial-view-photovoltaic-grassy-field-photo-collage-male-workers-242016717.jpg" alt="Before/after" class="gallery-img w-100"></div>
+      <div class="col-md-4"><img src="https://tse3.mm.bing.net/th/id/OIP.9U19hwrIe3h5hbjXLodU4gHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Maintenance check" class="gallery-img w-100"></div>
+      <div class="col-md-4"><img src="https://image.shutterstock.com/image-photo/washing-cleaning-photovoltaic-panels-260nw-1257985636.jpg" alt="Eco-cleaning" class="gallery-img w-100"></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG PAGE (New) -->
+<section id="blog" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Solar Maintenance Blog</h2>
+      <p class="muted">Tips and insights to keep your solar system running efficiently.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card-soft p-4">
+          <h5>Why Clean Solar Panels Regularly?</h5>
+          <p class="muted">Dust and debris can reduce efficiency by up to 20%. Learn safe cleaning methods.</p>
+          <a href="#/blog/1" class="btn btn-outline-primary">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-soft p-4">
+          <h5>Top 5 Solar Myths Debunked</h5>
+          <p class="muted">Separate fact from fiction about solar energy and maintenance.</p>
+          <a href="#/blog/2" class="btn btn-outline-primary">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-soft p-4">
+          <h5>Choosing the Right AMC Plan</h5>
+          <p class="muted">Compare options and save on long-term costs.</p>
+          <a href="#/blog/3" class="btn btn-outline-primary">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-soft p-4">
+          <h5>Eco-Friendly Solar Care</h5>
+          <p class="muted">Sustainable practices for a greener future.</p>
+          <a href="#/blog/4" class="btn btn-outline-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ PAGE (New, moved from footer) -->
+<section id="faq" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Frequently Asked Questions</h2>
+      <p class="muted">Common queries about our services.</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f1">Kya cleaning se panel damage hote hain?</button></h2>
+            <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body muted">Nahi — hamare certified methods safe hain aur warranty ke saath hain.</div></div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">Kitna time lagta hai?</button></h2>
+            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body muted">3–6 panels: 30–60 mins (rough estimate, depends on size).</div></div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">Kya AMC plans mein repairs included hain?</button></h2>
+            <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body muted">Premium AMC mein small repairs (upto ₹2000) included hain. Basic mein priority support.</div></div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4">Waterless cleaning kya hota hai?</button></h2>
+            <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body muted">Yeh dry cleaning method hai jo pani ke bina dust remove karta hai, ideal for water-scarce areas.</div></div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f5">Kitni baar cleaning karwani chahiye?</button></h2>
+            <div id="f5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body muted">Monthly ya quarterly, location ke hisaab se. Dust-prone areas mein zyada frequently.</div></div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f6">Kya warranty milti hai?</button></h2>
+            <div id="f6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body muted">Haan, har service pe 6-month warranty. Damage hone par free repair.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK PAGE -->
+<section id="book" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Book a Service</h2>
+      <p class="muted">Fill details below — we will confirm via WhatsApp / Call.</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <form id="bookingForm" class="form-card">
+          <div class="row g-2">
+            <div class="col-md-6"><input name="name" class="form-control" placeholder="Aapka naam" required aria-label="Name"></div>
+            <div class="col-md-6"><input name="phone" pattern="[0-9]{10}" class="form-control" placeholder="Mobile (10 digits)" required aria-label="Phone"></div>
+            <div class="col-md-6 mt-2"><select name="service" class="form-select" aria-label="Service"><option>Solar Panel Cleaning</option><option>Premium Maintenance</option><option>Repair / Inverter Check</option><option>Installation Support</option><option>Bird Net / Pigeon Proofing</option></select></div>
+            <div class="col-md-6 mt-2"><input name="panels" type="number" min="1" class="form-control" placeholder="# panels (approx)" aria-label="Number of panels"></div>
+            <div class="col-md-6 mt-2"><input name="pref_date" type="datetime-local" class="form-control" aria-label="Preferred date and time"></div>
+            <div class="col-12 mt-2"><textarea name="address" rows="2" class="form-control" placeholder="Address" aria-label="Address"></textarea></div>
+            <div class="col-12 d-flex align-items-center gap-2 mt-3">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="viaWhatsappBook" checked>
+                <label class="form-check-label" for="viaWhatsappBook">Also send booking to WhatsApp</label>
+              </div>
+              <div class="ms-auto muted small">We will not share your data. Privacy ensured.</div>
+            </div>
+          </div>
+
+          <div class="mt-3 d-flex gap-2">
+            <button type="submit" class="btn btn-main">Confirm & Send</button>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-6">
+        <img src="https://solar-galactic.com/wp-content/uploads/2024/04/img-mission-vision.jpg" alt="team" class="img-fluid rounded shadow-sm">
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-bold">About SolarCare</h3>
+        <p class="muted">SolarCare is a professional solar services company offering cleaning, maintenance, installation and repair with certified technicians and transparent pricing.</p>
+        <ul class="muted">
+          <li>Residential & Commercial expertise</li>
+          <li>Certified safety protocols</li>
+          <li>Warranty on services</li>
+          <li>ISO 9001 certified</li>
+          <li>10+ years experience</li>
+        </ul>
+        <h5 class="fw-bold mt-3">Our Team</h5>
+        <p class="muted">Led by Rajesh Kumar, a solar engineer with 15 years in renewables. Our team includes certified electricians and technicians trained in the latest tech.</p>
+        <a href="#/contact" class="btn btn-main mt-2">Get a Free Site Visit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="page" style="display:none">
+  <div class="container container-narrow">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Contact</h2>
+      <p class="muted">Call, WhatsApp or send a message — we will respond within 24 hours.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card-soft p-4">
+          <h5 class="fw-bold">Contact Info</h5>
+          <p class="muted mb-1"><i class="ri-phone-line"></i> Phone: <a href="tel:+918112780010">+91 8112780010</a></p>
+          <p class="muted mb-1"><i class="ri-mail-line"></i> Email: info@digitrick.in</p>
+          <p class="muted mb-0"><i class="ri-map-pin-line"></i> Address: Your City, India</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-soft p-4">
+          <h5 class="fw-bold">Message Us</h5>
+          <form id="contactForm">
+            <div class="mb-2"><input name="name" class="form-control" placeholder="Name" required aria-label="Name"></div>
+            <div class="mb-2"><input name="phone" class="form-control" placeholder="Phone" required aria-label="Phone"></div>
+            <div class="mb-2"><textarea name="message" rows="3" class="form-control" placeholder="Message" aria-label="Message"></textarea></div>
+            <div class="d-flex gap-2"><button class="btn btn-main">Send via WhatsApp</button><button type="reset" class="btn btn-outline-secondary">Reset</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container container-narrow">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="d-flex align-items-center gap-3">
+          <div class="logo-mark">SC</div>
+          <div>
+            <div class="fw-bold">SolarCare</div>
+            <div class="muted small">Solar panel cleaning & services</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 text-md-end mt-3 mt-md-0">
+        <a class="btn btn-main me-2" href="https://wa.me/918112780010?text=I%20want%20to%20book%20a%20service" target="_blank">WhatsApp</a>
+        <a class="btn btn-outline-secondary" href="#/contact">Contact</a>
+      </div>
+    </div>
+    <div class="text-center mt-3 muted small">© 2025 SolarCare — All Rights Reserved</div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp button -->
+<a class="position-fixed" href="https://wa.me/918112780010?text=Hello%20SolarCare%2C%20I%20want%20to%20book%20a%20service" target="_blank" style="right:18px;bottom:18px;z-index:1200">
+  <div style="width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#ff8a00);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(13,71,161,0.14)">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382a4.99 4.99 0 0 0 1.01-2.77c0-2.76-2.24-5-5-5-2.76 0-5 2.24-5 5 0 2.76 2.24 5 5 5 .95 0 1.84-.25 2.62-.69l2.65 1.02-1.02-2.62z" fill="#071124"/></svg>
+  </div>
+</a>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ------- Simple Hash Routing -------
+  function showPageFromHash(){
+    const hash = location.hash.replace('#','') || '/';
+    const path = hash.split('?')[0];
+    const id = path === '/' ? 'home' : path.replace('/','');
+    document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'block';
+
+    // nav active
+    document.querySelectorAll('.nav-link').forEach(a=>{
+      const href = a.getAttribute('href') || '';
+      a.classList.toggle('active', href === '#'+path);
+    });
+
+    // reveal animations
+    document.querySelectorAll('.fade-up').forEach(el=>el.classList.remove('in'));
+    setTimeout(()=>{document.querySelectorAll('.fade-up').forEach(el=>el.classList.add('in'))},80);
+  }
+  window.addEventListener('hashchange', showPageFromHash);
+  window.addEventListener('load', function(){
+    showPageFromHash();
+
+    // prefill plan from query
+    const q = location.hash.split('?')[1];
+    if(q){
+      const params = new URLSearchParams(q);
+      const plan = params.get('plan');
+      if(plan){
+        const s = document.querySelector('#bookingForm select[name="service"]');
+        if(s){
+          if(plan==='basic') s.value='Solar Panel Cleaning';
+          if(plan==='premium') s.value='Premium Maintenance';
+          if(plan==='cleaning') s.value='Solar Panel Cleaning';
+        }
+      }
+    }
+  });
+
+  // ------- Booking Form (opens WhatsApp & POST to backend placeholder) -------
+  document.addEventListener('submit', async function(e){
+    if(e.target.id==='bookingForm' || e.target.id==='quickForm'){
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      // try backend POST (placeholder)
+      try{
+        await fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+      }catch(err){console.warn('No backend: /api/book',err)}
+
+      // WhatsApp
+      const viaWA = (form.id==='bookingForm') ? document.getElementById('viaWhatsappBook').checked : document.getElementById('sendWaQuick').checked;
+      if(viaWA){
+        const phone = '918112780010';
+        const msg = encodeURIComponent(`Hello SolarCare, I want to book a service.
+Name: ${data.name}
+Phone: ${data.phone}
+Service: ${data.service || ''}
+Preferred: ${data.pref_date || (data.date ? data.date+' '+(data.time||'') : '')}
+Panels: ${data.panels || ''}
+Address: ${data.address || ''}`);
+        window.open(`https://wa.me/${phone}?text=${msg}`,'_blank');
+      }
+
+      alert('Booking request sent. Hamari team jald contact karegi.');
+      form.reset();
+      location.hash = '#/';
+    }
+
+    if(e.target.id==='contactForm'){
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      const phone = '918112780010';
+      const msg = encodeURIComponent(`Hello SolarCare, I have a query.
+Name: ${data.name}
+Phone: ${data.phone}
+Message: ${data.message}`);
+      window.open(`https://wa.me/${phone}?text=${msg}`,'_blank');
+      alert('Message sent via WhatsApp. We will contact you soon.');
+      form.reset();
+    }
+  });
+
+  // Dark mode toggle
+  const darkToggle = document.getElementById('darkToggle');
+  darkToggle.addEventListener('click', function(){
+    document.documentElement.classList.toggle('dark');
+    // swap icon
+    this.innerHTML = document.documentElement.classList.contains('dark') ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
+  });
+
+  // simple reveal on scroll (for .fade-up)
+  const io = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}})},{threshold:0.12});
+  document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+</script>
+</body>
+</html>
