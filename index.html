@@ -67,7 +67,7 @@
     .cta-ghost{background:transparent;border:2px solid var(--primary);color:var(--primary);border-radius:12px;padding:10px 16px}
 
     /* ---------- FORM ---------- */
-    .form-card{background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.72));padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
+    .form-card{background:linear-gradient(180deg, var(--card), rgba(255,255,255,0.72));padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
 
     /* ---------- FOOTER ---------- */
     footer.site-footer{background:var(--card);padding:36px 0;border-top:1px solid rgba(13,71,161,0.04)}
@@ -102,6 +102,10 @@
     /* ---------- ACCORDION (FAQ) ---------- */
     .accordion-button{background:var(--card);color:var(--text)}
     .accordion-body{background:var(--bg);color:var(--text)}
+
+    /* ---------- DARK MODE FIXES ---------- */
+    html.dark .btn-warning{background:var(--accent);color:#fff;border-color:var(--accent)}
+    html.dark .btn-warning:hover{background:#ff8a00;color:#fff}
 
   </style>
 </head>
