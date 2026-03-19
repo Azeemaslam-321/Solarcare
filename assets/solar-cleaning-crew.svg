@@ -1,0 +1,37 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="36" fill="#F4EFE6"/>
+  <rect x="66" y="88" width="1068" height="724" rx="32" fill="#FFF9F0" stroke="#D6D0C4" stroke-width="8"/>
+  <path d="M132 692L338 486L514 622L716 400L962 632L1068 524V812H132V692Z" fill="#D9ECDF"/>
+  <rect x="210" y="190" width="476" height="244" rx="24" fill="#143B2B"/>
+  <path d="M240 220H656V404H240V220Z" fill="#234D3A"/>
+  <path d="M240 281H656" stroke="#89C8A0" stroke-width="10"/>
+  <path d="M240 343H656" stroke="#89C8A0" stroke-width="10"/>
+  <path d="M319 220V404" stroke="#89C8A0" stroke-width="10"/>
+  <path d="M398 220V404" stroke="#89C8A0" stroke-width="10"/>
+  <path d="M477 220V404" stroke="#89C8A0" stroke-width="10"/>
+  <path d="M556 220V404" stroke="#89C8A0" stroke-width="10"/>
+  <path d="M635 220V404" stroke="#89C8A0" stroke-width="10"/>
+  <circle cx="792" cy="220" r="56" fill="#FFB561"/>
+  <path d="M792 122V90" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M792 350V318" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M890 220H922" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M662 220H630" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M861 151L884 128" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M700 312L723 289" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M861 289L884 312" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <path d="M700 128L723 151" stroke="#FFB561" stroke-width="12" stroke-linecap="round"/>
+  <rect x="742" y="426" width="102" height="148" rx="28" fill="#EF8F35"/>
+  <rect x="718" y="556" width="148" height="120" rx="36" fill="#1D5B43"/>
+  <rect x="730" y="660" width="40" height="126" rx="20" fill="#143B2B"/>
+  <rect x="816" y="660" width="40" height="126" rx="20" fill="#143B2B"/>
+  <circle cx="794" cy="400" r="44" fill="#F5D9B8"/>
+  <rect x="852" y="410" width="30" height="214" rx="15" transform="rotate(14 852 410)" fill="#143B2B"/>
+  <rect x="866" y="388" width="136" height="28" rx="14" transform="rotate(14 866 388)" fill="#89C8A0"/>
+  <path d="M1000 436C1033 442 1054 478 1048 510C1042 542 1008 563 972 552" stroke="#6DB7D8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1008 478C1040 484 1060 518 1050 548" stroke="#6DB7D8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M986 448C1012 456 1030 484 1028 512" stroke="#6DB7D8" stroke-width="10" stroke-linecap="round"/>
+  <rect x="176" y="610" width="252" height="126" rx="24" fill="#FFFDF8" stroke="#D6D0C4" stroke-width="6"/>
+  <text x="210" y="662" fill="#143B2B" font-family="Arial, sans-serif" font-size="34" font-weight="700">Manual Cleaning</text>
+  <text x="210" y="708" fill="#5E685F" font-family="Arial, sans-serif" font-size="24">Soft brush, safe water flow,</text>
+  <text x="210" y="740" fill="#5E685F" font-family="Arial, sans-serif" font-size="24">and rooftop-safe handling.</text>
+</svg>

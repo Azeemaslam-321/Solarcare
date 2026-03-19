@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SolarCare | Solar Cleaning and Maintenance</title>
-  <meta name="description" content="SolarCare offers solar panel cleaning, maintenance, inspections, and repair support across Lucknow, Kanpur, Unnao, and nearby cities.">
+  <title>Solar Panel Cleaning in Lucknow, Aliganj and Mehndi Tola | SolarCare Uttar Pradesh</title>
+  <meta name="description" content="SolarCare provides solar panel cleaning, maintenance, bird netting, inverter inspection, and AMC support in Lucknow, Aliganj, Mehndi Tola, Unnao, Kanpur, and nearby areas of Uttar Pradesh.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#f4efe6" id="themeColorMeta">
   <meta name="google-adsense-account" content="ca-pub-9383637196263147">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9383637196263147" crossorigin="anonymous"></script>
@@ -12,6 +13,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "SolarCare",
+      "description": "Solar panel cleaning, maintenance, inspection, bird netting, and AMC support for rooftop solar systems.",
+      "telephone": "+91 8112780010",
+      "email": "info@digitrick.in",
+      "areaServed": [
+        "Lucknow",
+        "Aliganj",
+        "Mehndi Tola",
+        "Uttar Pradesh",
+        "Kanpur",
+        "Unnao"
+      ],
+      "serviceType": [
+        "Solar panel cleaning",
+        "Solar maintenance",
+        "Inverter inspection",
+        "Bird netting",
+        "Solar AMC support"
+      ]
+    }
+  </script>
   <style>
     :root {
       --bg: #f4efe6;
@@ -97,6 +123,11 @@
       display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
     }
 
+    .nav-links::-webkit-scrollbar {
+      height: 0;
+      width: 0;
+    }
+
     .nav-links a, .chip-link, .icon-btn, .phone-chip {
       border: 1px solid var(--line);
       background: var(--panel-strong);
@@ -112,6 +143,18 @@
     }
 
     .nav-tools { display: flex; gap: 10px; align-items: center; }
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--text);
+      cursor: pointer;
+      place-items: center;
+      font-size: 1.2rem;
+    }
     .icon-btn {
       width: 46px; height: 46px; display: grid; place-items: center; cursor: pointer;
       padding: 0; color: var(--text);
@@ -162,8 +205,11 @@
     .btn-soft { background: var(--panel-strong); border-color: var(--line); }
 
     .metric-row { margin-top: 26px; }
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
     .metric {
-      flex: 1 1 180px;
       min-width: 0;
       padding: 16px; border-radius: 22px;
       border: 1px solid var(--line); background: color-mix(in srgb, var(--panel-strong) 88%, transparent);
@@ -197,7 +243,7 @@
     }
     .section-head p { margin: 0; max-width: 56ch; color: var(--muted); }
 
-    .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid {
+    .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid, .media-grid, .work-grid {
       display: grid; gap: 16px;
     }
     .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -205,12 +251,219 @@
     .pricing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .articles-grid, .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .reviews-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .media-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .work-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .price { font-size: 2rem; margin-top: 12px; }
+    .price-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+    .price-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent-soft) 78%, transparent);
+      color: var(--brand-strong);
+      font-size: .84rem;
+      font-weight: 700;
+    }
     .tag-row { margin-top: 14px; }
     .tag-row span {
       padding: 8px 10px; border-radius: 999px; border: 1px solid var(--line);
       background: var(--panel-strong); color: var(--muted); font-size: .88rem;
+    }
+
+    .media-card {
+      overflow: hidden;
+      padding: 0;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+    }
+
+    .work-card {
+      overflow: hidden;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      box-shadow: var(--shadow);
+    }
+
+    .work-photo {
+      aspect-ratio: 4 / 3;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(20, 59, 43, 0.18), rgba(239, 143, 53, 0.08)),
+        linear-gradient(135deg, #f4efe6, #e5efe7);
+      display: grid;
+      place-items: center;
+    }
+
+    .work-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .work-photo.placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 18px;
+      border-radius: 22px;
+      border: 2px dashed rgba(29, 91, 67, 0.22);
+    }
+
+    .work-photo.placeholder .work-photo-note {
+      position: relative;
+      z-index: 1;
+      width: min(78%, 260px);
+      text-align: center;
+      padding: 18px 16px;
+      border-radius: 20px;
+      background: rgba(255, 253, 248, 0.88);
+      border: 1px solid rgba(29, 35, 30, 0.08);
+      color: var(--muted);
+    }
+
+    .work-photo-note strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--brand-strong);
+      margin-bottom: 8px;
+    }
+
+    .work-copy {
+      padding: 20px 22px 22px;
+    }
+
+    .work-copy h3 {
+      margin-top: 0;
+    }
+
+    .work-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+    }
+
+    .work-meta span {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .work-source {
+      margin-top: 14px;
+      font-size: .84rem;
+      color: var(--muted);
+    }
+
+    .work-source a {
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .area-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .area-pill {
+      padding: 14px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      font-weight: 700;
+      color: var(--brand-strong);
+      text-align: center;
+    }
+
+    .local-page-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .local-page-card {
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+    }
+
+    .local-page-card h3 {
+      margin-top: 0;
+    }
+
+    .media-art {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel-strong) 90%, transparent), color-mix(in srgb, var(--bg-soft) 85%, transparent));
+    }
+
+    .media-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-copy {
+      padding: 20px 22px 22px;
+    }
+
+    .media-copy p {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .video-wrap {
+      position: relative;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0a0f0c;
+      aspect-ratio: 16 / 9;
+      box-shadow: var(--shadow);
+    }
+
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-note {
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel-strong) 90%, transparent), color-mix(in srgb, var(--accent-soft) 28%, transparent));
+    }
+
+    .media-list {
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .media-list li + li {
+      margin-top: 10px;
     }
 
     .booking-grid {
@@ -241,6 +494,15 @@
       padding: 18px 22px; margin: 18px 0;
     }
 
+    .nav-links a,
+    .phone-chip,
+    .icon-btn,
+    .btn-main,
+    .btn-soft,
+    .chip-link {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     .floating-wa {
       position: fixed; right: 18px; bottom: 18px; z-index: 25;
       width: 62px; height: 62px; border-radius: 22px;
@@ -250,34 +512,155 @@
     }
 
     @media (max-width: 1024px) {
-      .topbar-inner, .hero, .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid, .booking-grid { grid-template-columns: 1fr; }
+      .topbar-inner, .hero, .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid, .booking-grid, .media-grid, .video-grid, .work-grid, .area-grid, .local-page-grid { grid-template-columns: 1fr; }
       .topbar-inner { display: flex; flex-direction: column; align-items: stretch; }
       .nav-links { justify-content: flex-start; }
       .nav-tools { justify-content: space-between; }
       .section-head { flex-direction: column; align-items: flex-start; }
+      .metric-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
     @media (max-width: 640px) {
       .shell { width: min(100% - 18px, 1180px); }
+      .topbar { position: sticky; top: 0; }
+      .topbar-inner { gap: 10px; padding: 12px 0; }
+      .brand { min-width: 0; justify-content: flex-start; }
+      .brand-mark { width: 42px; height: 42px; border-radius: 14px; }
+      .topbar-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .menu-toggle {
+        display: grid;
+        flex: 0 0 auto;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        margin: 0;
+        padding: 10px 0 2px;
+        gap: 10px;
+      }
+      .nav-links.is-open {
+        display: flex;
+      }
+      .nav-links a {
+        width: 100%;
+        border-radius: 18px;
+        padding: 13px 14px;
+      }
+      .nav-tools {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .phone-chip {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        font-weight: 700;
+      }
       .hero-copy, .hero-panel, .section-box, .review-card, .footer-box, .legal-box { border-radius: 24px; }
-      .hero-copy, .hero-panel, .section-box, .review-card, .footer-box, .legal-box, .stack-card, .service-card, .step-card, .price-card, .article-card, .contact-card, .booking-note { padding: 18px; }
+      .hero-copy, .hero-panel, .section-box, .review-card, .footer-box, .legal-box, .stack-card, .service-card, .step-card, .price-card, .article-card, .contact-card, .booking-note, .video-note { padding: 18px; }
+      .hero { padding: 18px 0 14px; gap: 14px; }
       .form-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 2.8rem; }
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .hero-actions .btn-main,
+      .hero-actions .btn-soft,
+      .hero-actions button {
+        width: 100%;
+        justify-content: center;
+      }
+      .metric-row { grid-template-columns: 1fr; margin-top: 20px; }
+      .metric { padding: 14px 16px; border-radius: 18px; }
+      .section-box { padding: 20px 16px; margin: 14px 0; }
+      .section-head { gap: 10px; margin-bottom: 18px; }
+      .section-head p { font-size: .98rem; }
+      .service-card,
+      .step-card,
+      .price-card,
+      .article-card,
+      .contact-card,
+      .work-card,
+      .stack-card,
+      .media-card,
+      .booking-note { border-radius: 22px; }
+      .media-copy { padding: 16px 16px 18px; }
+      .work-copy { padding: 16px 16px 18px; }
+      .video-wrap { border-radius: 22px; }
+      .tag-row { gap: 8px; }
+      .tag-row span { font-size: .82rem; padding: 7px 9px; }
+      .area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .local-page-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2.45rem; line-height: .96; max-width: 10ch; }
+      h2 { font-size: 1.8rem; line-height: 1.02; }
+      h3 { font-size: 1.12rem; }
+      .lead { font-size: 1rem; }
+      .eyebrow { font-size: .74rem; padding: 7px 12px; }
+      .form-control,
+      .form-select,
+      textarea.form-control { padding: 15px 14px; border-radius: 14px; }
+      .form-switch-row { align-items: flex-start; }
+      .legal-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .chip-link {
+        text-align: center;
+        justify-content: center;
+      }
+      .footer-box { flex-direction: column; align-items: flex-start; }
+      .floating-wa {
+        right: 14px;
+        bottom: 14px;
+        width: 58px;
+        height: 58px;
+        border-radius: 20px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .shell { width: min(100% - 14px, 1180px); }
+      .topbar-inner { padding: 10px 0; }
+      .brand small { font-size: .78rem; }
+      .phone-chip { font-size: .92rem; padding: 10px 12px; }
+      .icon-btn { width: 44px; height: 44px; }
+      h1 { font-size: 2.18rem; }
+      h2 { font-size: 1.56rem; }
+      .section-box { padding: 18px 14px; }
+      .legal-box { grid-template-columns: 1fr; }
+      .reviews-grid .review-card { padding: 18px; }
+      .area-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="shell topbar-inner">
-      <a class="brand" href="#top">
-        <span class="brand-mark"><i class="ri-sun-foggy-line"></i></span>
-        <span>SolarCare<small>Clean panels. Better output.</small></span>
-      </a>
+      <div class="topbar-row">
+        <a class="brand" href="#top">
+          <span class="brand-mark"><i class="ri-sun-foggy-line"></i></span>
+          <span>SolarCare<small>Clean panels. Better output.</small></span>
+        </a>
+        <button id="menuToggle" class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primaryNav">
+          <i class="ri-menu-3-line"></i>
+        </button>
+      </div>
 
-      <nav class="nav-links" aria-label="Primary navigation">
+      <nav id="primaryNav" class="nav-links" aria-label="Primary navigation">
         <a href="#services">Services</a>
         <a href="#process">Process</a>
+        <a href="#visuals">Visuals</a>
         <a href="#pricing">Pricing</a>
+        <a href="#site-work">Work</a>
+        <a href="#video">Video</a>
         <a href="#articles">Articles</a>
         <a href="about-solarcare.html">About</a>
         <a href="contact-solarcare.html">Contact Page</a>
@@ -297,7 +680,7 @@
       <div class="hero-copy surface">
         <span class="eyebrow"><i class="ri-flashlight-line"></i> Solar upkeep made clear</span>
         <h1>Clean panels. Better performance.</h1>
-        <p class="lead">SolarCare helps homes, housing societies, schools, offices, and commercial rooftops with solar panel cleaning, routine maintenance, bird protection, and issue-focused inspection support across Lucknow, Kanpur, Unnao, and nearby areas.</p>
+        <p class="lead">SolarCare focuses on solar panel cleaning, maintenance, bird protection, and inspection support for homes, housing societies, schools, offices, and commercial rooftops in Lucknow, especially areas such as Aliganj, Mehndi Tola, and nearby localities across Uttar Pradesh.</p>
         <div class="hero-actions" style="margin-top:24px">
           <a class="btn-main" href="#booking"><i class="ri-calendar-check-line"></i> Book a visit</a>
           <a class="btn-soft" href="https://wa.me/918112780010?text=Hello%20SolarCare%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer"><i class="ri-whatsapp-line"></i> WhatsApp now</a>
@@ -351,6 +734,110 @@
       </div>
     </section>
 
+    <section class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Lucknow Coverage</span>
+          <h2 style="margin-top:12px">SolarCare focuses on service coverage across major Lucknow localities.</h2>
+        </div>
+        <p>This local service-area section helps customers quickly understand that SolarCare is primarily focused on Lucknow work, including residential and rooftop support across key neighborhoods.</p>
+      </div>
+      <div class="area-grid">
+        <div class="area-pill">Aliganj</div>
+        <div class="area-pill">Mehndi Tola</div>
+        <div class="area-pill">Gomti Nagar</div>
+        <div class="area-pill">Gomti Nagar Extension</div>
+        <div class="area-pill">Indira Nagar</div>
+        <div class="area-pill">Jankipuram</div>
+        <div class="area-pill">Mahanagar</div>
+        <div class="area-pill">Vikas Nagar</div>
+        <div class="area-pill">Kalyanpur</div>
+        <div class="area-pill">Hazratganj</div>
+        <div class="area-pill">Chowk</div>
+        <div class="area-pill">Alambagh</div>
+        <div class="area-pill">Ashiyana</div>
+        <div class="area-pill">Rajajipuram</div>
+        <div class="area-pill">Faizabad Road Belt</div>
+        <div class="area-pill">Kursi Road Belt</div>
+      </div>
+    </section>
+
+    <section class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Service Areas</span>
+          <h2 style="margin-top:12px">Dedicated service pages for important Lucknow locations.</h2>
+        </div>
+        <p>These pages help visitors quickly find location-relevant service details and the right booking path for their area.</p>
+      </div>
+      <div class="local-page-grid">
+        <article class="local-page-card">
+          <h3>Lucknow main service page</h3>
+          <p class="muted">A broader page for city-wide solar cleaning, maintenance, and rooftop support across Lucknow.</p>
+          <a class="btn-soft" href="lucknow-solar-panel-cleaning.html">Open page</a>
+        </article>
+        <article class="local-page-card">
+          <h3>Gomti Nagar page</h3>
+          <p class="muted">A service page for Gomti Nagar and nearby rooftops that need cleaning and follow-up support.</p>
+          <a class="btn-soft" href="gomti-nagar-solar-panel-cleaning.html">Open page</a>
+        </article>
+        <article class="local-page-card">
+          <h3>Vikas Nagar page</h3>
+          <p class="muted">A service page for Vikas Nagar rooftops that need regular cleaning and maintenance support.</p>
+          <a class="btn-soft" href="vikas-nagar-solar-panel-cleaning.html">Open page</a>
+        </article>
+        <article class="local-page-card">
+          <h3>Aliganj page</h3>
+          <p class="muted">A service page for Aliganj homes, shops, and rooftops that need clear cleaning support.</p>
+          <a class="btn-soft" href="aliganj-solar-panel-cleaning.html">Open page</a>
+        </article>
+        <article class="local-page-card">
+          <h3>Mehndi Tola page</h3>
+          <p class="muted">A service page for Mehndi Tola rooftops that need cleaning visits and repeat care.</p>
+          <a class="btn-soft" href="mehndi-tola-solar-maintenance.html">Open page</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="visuals" class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Visuals</span>
+          <h2 style="margin-top:12px">Representative visuals for cleaning, output recovery, and inspection work.</h2>
+        </div>
+        <p>These custom illustrations help visitors understand what the service looks like before they book a visit.</p>
+      </div>
+      <div class="media-grid">
+        <article class="media-card">
+          <div class="media-art">
+            <img src="assets/solar-cleaning-crew.svg" alt="Illustration of a technician cleaning rooftop solar panels with safe tools">
+          </div>
+          <div class="media-copy">
+            <h3>On-site cleaning work</h3>
+            <p>Shows the kind of manual rooftop cleaning visit used for dust, bird droppings, and surface buildup.</p>
+          </div>
+        </article>
+        <article class="media-card">
+          <div class="media-art">
+            <img src="assets/solar-before-after.svg" alt="Before and after illustration showing dusty and cleaned solar panels">
+          </div>
+          <div class="media-copy">
+            <h3>Before and after condition</h3>
+            <p>Helps customers understand why visible cleanliness and output monitoring matter together.</p>
+          </div>
+        </article>
+        <article class="media-card">
+          <div class="media-art">
+            <img src="assets/solar-maintenance-inspection.svg" alt="Illustration of solar maintenance inspection with checklist and magnifier">
+          </div>
+          <div class="media-copy">
+            <h3>Inspection support</h3>
+            <p>Represents the maintenance side of the service, where visual issues and repeated dirt patterns are checked.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section id="process" class="section-box surface">
       <div class="section-head">
         <div>
@@ -367,18 +854,110 @@
       </div>
     </section>
 
+    <section id="video" class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Video</span>
+          <h2 style="margin-top:12px">A representative cleaning walkthrough visitors can watch before booking.</h2>
+        </div>
+        <p>This gives customers a quick visual idea of how solar cleaning tools and rooftop handling typically look in practice.</p>
+      </div>
+      <div class="video-grid">
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/WQ3grzv6Ymk?rel=0"
+            title="Representative solar panel cleaning process video"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <aside class="video-note">
+          <h3>What this video represents</h3>
+          <p class="muted">This embedded video is used as a general visual reference for solar panel cleaning workflow. It helps customers understand equipment handling, cleaning motion, and rooftop access awareness.</p>
+          <ul class="media-list">
+            <li>Soft-brush cleaning approach instead of harsh scraping</li>
+            <li>Manual attention to panel surface and rooftop movement</li>
+            <li>A better visual explanation than text-only service cards</li>
+          </ul>
+          <div class="tag-row">
+            <span>Cleaning demo</span>
+            <span>Rooftop workflow</span>
+            <span>Visual reference</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="site-work" class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Recent Site Work</span>
+          <h2 style="margin-top:12px">Representative work visuals that show the kind of rooftop service you provide.</h2>
+        </div>
+        <p>These visuals are used to represent the kind of solar cleaning and rooftop work visitors can expect. Later, you can replace them with your own completed site photos.</p>
+      </div>
+      <div class="work-grid">
+        <article class="work-card">
+          <div class="work-photo">
+            <img src="https://images.unsplash.com/photo-1754619880959-2b0528375883?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29sYXIlMjBwYW5lbCUyMGNsZWFuaW5nfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=80&w=1600" alt="Representative photo of solar panel cleaning with a long handled brush">
+          </div>
+          <div class="work-copy">
+            <h3>Residential rooftop cleaning</h3>
+            <p class="muted">A representative rooftop cleaning visual that helps explain how panel surface cleaning work looks in the field.</p>
+            <div class="work-meta">
+              <span>Cleaning work</span>
+              <span>Residential style</span>
+              <span>Visual example</span>
+            </div>
+            <!-- <p class="work-source">Image source: <a href="https://unsplash.com/photos/XZP59dwklV4" target="_blank" rel="noopener noreferrer">Unsplash</a></p> -->
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-photo">
+            <img src="https://images.unsplash.com/photo-1658298775754-5839ffd434cc?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29sYXIlMjBwYW5lbCUyMGNsZWFuaW5nfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=80&w=1600" alt="Representative photo of solar panels installed on a roof">
+          </div>
+          <div class="work-copy">
+            <h3>Maintenance and inspection visit</h3>
+            <p class="muted">A rooftop solar visual that works well for inspection, maintenance discussion, or site-condition explanation on service pages.</p>
+            <div class="work-meta">
+              <span>Maintenance</span>
+              <span>Inspection support</span>
+              <span>Rooftop system</span>
+            </div>
+            <!-- <p class="work-source">Image source: <a href="https://unsplash.com/photos/1658298775754-5839ffd434cc" target="_blank" rel="noopener noreferrer">Unsplash</a></p> -->
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-photo">
+            <img src="https://images.unsplash.com/photo-1764885518733-6cb0b3473996?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNvbGFyJTIwcGFuZWwlMjBjbGVhbmluZ3xlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=80&w=1600" alt="Representative photo of a modern building facade with solar panels">
+          </div>
+          <div class="work-copy">
+            <h3>Commercial or AMC service site</h3>
+            <p class="muted">A commercial-looking solar visual that fits AMC-style positioning, larger sites, and planned recurring maintenance support.</p>
+            <div class="work-meta">
+              <span>Commercial</span>
+              <span>Recurring service</span>
+              <span>Large site visual</span>
+            </div>
+            <!-- <p class="work-source">Image source: <a href="https://unsplash.com/photos/1764885518733-6cb0b3473996" target="_blank" rel="noopener noreferrer">Unsplash</a></p> -->
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section id="pricing" class="section-box surface">
       <div class="section-head">
         <div>
           <span class="eyebrow">Pricing</span>
-          <h2 style="margin-top:12px">Straightforward plans for homes and larger solar sites.</h2>
+          <h2 style="margin-top:12px">Affordable plans that make routine maintenance easier to start.</h2>
         </div>
-        <p>These plans provide a simple starting point. Final scope, pricing, and visit frequency may vary by rooftop size, access, and service requirements.</p>
+        <p>These plans are designed to feel practical, not heavy. Customers can start with a basic visit, upgrade only when needed, and request custom support for larger rooftops.</p>
       </div>
       <div class="pricing-grid">
-        <article class="price-card"><span class="eyebrow">Starter</span><h3>Basic Cleaning</h3><p class="muted">Quarterly cleaning with a visual check.</p><div class="price">₹999</div><div class="tag-row"><span>Home rooftops</span><span>Quick visit</span></div></article>
-        <article class="price-card"><span class="eyebrow">Popular</span><h3>Premium Maintenance</h3><p class="muted">Monthly upkeep with cleaning and inverter observation.</p><div class="price">₹2499</div><div class="tag-row"><span>Better uptime</span><span>Repeat service</span></div></article>
-        <article class="price-card"><span class="eyebrow">Commercial</span><h3>Enterprise / AMC</h3><p class="muted">Custom service schedules and priority support for larger rooftops, institutions, and commercial sites.</p><div class="price">Custom</div><div class="tag-row"><span>Factories</span><span>Institutions</span></div></article>
+        <article class="price-card"><span class="eyebrow">Budget-friendly start</span><h3>Basic Cleaning</h3><p class="muted">A simple entry plan for homeowners who want a clean panel surface and a quick visual check without overpaying.</p><div class="price">₹999</div><p class="price-note">Good for first-time service or routine upkeep on smaller home rooftops.</p><div class="price-highlight"><i class="ri-wallet-3-line"></i> Low-cost entry plan</div><div class="tag-row"><span>Home rooftops</span><span>Quick visit</span></div></article>
+        <article class="price-card"><span class="eyebrow">Best value</span><h3>Premium Maintenance</h3><p class="muted">A stronger plan for customers who want cleaning plus inspection support, recurring attention, and better service continuity.</p><div class="price">₹2499</div><p class="price-note">Popular for people who want more value than a one-time cleaning visit.</p><div class="price-highlight"><i class="ri-star-smile-line"></i> Most chosen plan</div><div class="tag-row"><span>Better uptime</span><span>Repeat service</span></div></article>
+        <article class="price-card"><span class="eyebrow">Flexible commercial support</span><h3>Enterprise / AMC</h3><p class="muted">Custom scheduling and priority service for larger rooftops, institutions, factories, and sites that need planned maintenance.</p><div class="price">Custom</div><p class="price-note">Pay according to site size, service frequency, and actual operational need.</p><div class="price-highlight"><i class="ri-building-line"></i> Scales with your site</div><div class="tag-row"><span>Factories</span><span>Institutions</span></div></article>
       </div>
     </section>
 
@@ -458,7 +1037,7 @@
           <h3>Direct contact</h3>
           <p class="muted"><strong>Phone:</strong> <a href="tel:+918112780010">+91 8112780010</a></p>
           <p class="muted"><strong>Email:</strong> <a href="mailto:info@digitrick.in">info@digitrick.in</a></p>
-          <p class="muted"><strong>Service area:</strong> Lucknow, Kanpur, Unnao, and nearby cities.</p>
+          <p class="muted"><strong>Service area:</strong> Lucknow, Aliganj, Mehndi Tola, nearby Lucknow localities, and selected service areas across Uttar Pradesh.</p>
         </article>
         <article class="contact-card">
           <div class="mini-icon"><i class="ri-message-3-line"></i></div>
@@ -499,7 +1078,7 @@
       <a class="chip-link" href="privacy.html">Privacy Policy</a>
       <a class="chip-link" href="terms.html">Terms & Conditions</a>
       <a class="chip-link" href="disclaimer.html">Disclaimer</a>
-      <a class="chip-link" href="ads.txt">ads.txt</a>
+      <!-- <a class="chip-link" href="ads.txt">ads.txt</a> -->
     </div>
 
     <footer class="footer-box surface">
@@ -511,9 +1090,36 @@
   <a class="floating-wa" href="https://wa.me/918112780010?text=Hello%20SolarCare%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><i class="ri-whatsapp-line"></i></a>
 
   <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const primaryNav = document.getElementById('primaryNav');
     const themeToggle = document.getElementById('themeToggle');
     const themeColorMeta = document.getElementById('themeColorMeta');
     const themeStorageKey = 'solarcare-theme';
+
+    function closeMobileMenu() {
+      if (!menuToggle || !primaryNav) return;
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.innerHTML = '<i class="ri-menu-3-line"></i>';
+      primaryNav.classList.remove('is-open');
+    }
+
+    if (menuToggle && primaryNav) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = primaryNav.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.innerHTML = isOpen ? '<i class="ri-close-line"></i>' : '<i class="ri-menu-3-line"></i>';
+      });
+
+      primaryNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMobileMenu);
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 640) {
+          closeMobileMenu();
+        }
+      });
+    }
 
     function setTheme(theme) {
       const resolved = theme === 'dark' ? 'dark' : 'light';
@@ -626,6 +1232,3 @@
   </script>
 </body>
 </html>
-
-
-

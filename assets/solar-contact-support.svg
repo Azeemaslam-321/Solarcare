@@ -1,0 +1,31 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="36" fill="#F4F8F4"/>
+  <rect x="70" y="84" width="1060" height="732" rx="34" fill="#FFFDF8" stroke="#D7DFD8" stroke-width="8"/>
+  <rect x="118" y="166" width="480" height="560" rx="32" fill="#173A2B"/>
+  <path d="M156 206H560V688H156V206Z" fill="#25503C"/>
+  <path d="M156 286H560" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M156 366H560" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M156 446H560" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M156 526H560" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M236 206V688" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M316 206V688" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M396 206V688" stroke="#91D1A7" stroke-width="10"/>
+  <path d="M476 206V688" stroke="#91D1A7" stroke-width="10"/>
+  <circle cx="842" cy="246" r="72" fill="#FFB561"/>
+  <rect x="744" y="370" width="212" height="260" rx="34" fill="#FFF6EA" stroke="#E4D8C5" stroke-width="8"/>
+  <circle cx="850" cy="418" r="34" fill="#EF8F35"/>
+  <path d="M836 418L846 428L866 408" stroke="#FFFDF8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="790" y="492" width="120" height="18" rx="9" fill="#97CFA9"/>
+  <rect x="790" y="532" width="92" height="18" rx="9" fill="#DCECE1"/>
+  <rect x="790" y="572" width="140" height="18" rx="9" fill="#DCECE1"/>
+  <circle cx="778" cy="704" r="48" fill="#F5D9B8"/>
+  <rect x="732" y="750" width="92" height="114" rx="24" fill="#EF8F35"/>
+  <rect x="708" y="844" width="138" height="56" rx="28" fill="#1D5B43"/>
+  <circle cx="912" cy="704" r="48" fill="#F5D9B8"/>
+  <rect x="866" y="750" width="92" height="114" rx="24" fill="#1D5B43"/>
+  <rect x="842" y="844" width="138" height="56" rx="28" fill="#143B2B"/>
+  <path d="M748 694C782 670 822 670 856 694" stroke="#143B2B" stroke-width="12" stroke-linecap="round"/>
+  <path d="M882 694C916 670 956 670 990 694" stroke="#143B2B" stroke-width="12" stroke-linecap="round"/>
+  <rect x="698" y="120" width="274" height="46" rx="18" fill="#DFF2E5"/>
+  <text x="722" y="152" fill="#1D5B43" font-family="Arial, sans-serif" font-size="28" font-weight="700">Contact and booking support</text>
+</svg>

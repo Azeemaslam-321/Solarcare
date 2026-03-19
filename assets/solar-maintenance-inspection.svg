@@ -1,0 +1,31 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="36" fill="#F3F8F5"/>
+  <rect x="72" y="88" width="1056" height="724" rx="32" fill="#FFFEFB" stroke="#D4DDD7" stroke-width="8"/>
+  <path d="M130 686L342 508L528 610L756 402L976 604L1072 520V812H130V686Z" fill="#D5EBDD"/>
+  <rect x="166" y="190" width="498" height="286" rx="28" fill="#143B2B"/>
+  <path d="M204 228H626V438H204V228Z" fill="#244D39"/>
+  <path d="M204 300H626" stroke="#8BD1A4" stroke-width="10"/>
+  <path d="M204 372H626" stroke="#8BD1A4" stroke-width="10"/>
+  <path d="M290 228V438" stroke="#8BD1A4" stroke-width="10"/>
+  <path d="M376 228V438" stroke="#8BD1A4" stroke-width="10"/>
+  <path d="M462 228V438" stroke="#8BD1A4" stroke-width="10"/>
+  <path d="M548 228V438" stroke="#8BD1A4" stroke-width="10"/>
+  <rect x="760" y="228" width="232" height="314" rx="28" fill="#FFF9F0" stroke="#D7D0C4" stroke-width="8"/>
+  <text x="796" y="292" fill="#143B2B" font-family="Arial, sans-serif" font-size="34" font-weight="700">Visit Notes</text>
+  <rect x="796" y="328" width="160" height="18" rx="9" fill="#9DDBB1"/>
+  <rect x="796" y="370" width="126" height="18" rx="9" fill="#D7E8DC"/>
+  <rect x="796" y="412" width="148" height="18" rx="9" fill="#D7E8DC"/>
+  <rect x="796" y="454" width="114" height="18" rx="9" fill="#D7E8DC"/>
+  <path d="M724 568C760 492 838 454 914 474" stroke="#1D5B43" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="932" cy="492" r="94" stroke="#1D5B43" stroke-width="20"/>
+  <rect x="684" y="554" width="118" height="24" rx="12" transform="rotate(-34 684 554)" fill="#1D5B43"/>
+  <circle cx="340" cy="586" r="46" fill="#F5D9B8"/>
+  <rect x="296" y="632" width="88" height="104" rx="24" fill="#EF8F35"/>
+  <rect x="276" y="720" width="128" height="64" rx="30" fill="#1D5B43"/>
+  <rect x="286" y="774" width="30" height="92" rx="15" fill="#143B2B"/>
+  <rect x="364" y="774" width="30" height="92" rx="15" fill="#143B2B"/>
+  <path d="M354 602L510 514" stroke="#143B2B" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="534" cy="500" r="34" stroke="#143B2B" stroke-width="14"/>
+  <rect x="172" y="122" width="310" height="46" rx="18" fill="#FFE3BD"/>
+  <text x="196" y="154" fill="#8B551C" font-family="Arial, sans-serif" font-size="28" font-weight="700">Inspection + maintenance support</text>
+</svg>
