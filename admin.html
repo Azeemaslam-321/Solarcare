@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SolarCare Admin | Leads</title>
+  <meta name="theme-color" content="#111a14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #111a14;
+      --panel: #19251d;
+      --panel-soft: #203126;
+      --text: #eff4ee;
+      --muted: #b5beb6;
+      --line: rgba(239, 244, 238, 0.1);
+      --brand: #95d5a3;
+      --accent: #ffb45a;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Source Sans 3', sans-serif;
+      background: radial-gradient(circle at top right, rgba(255,180,90,0.14), transparent 24%), linear-gradient(180deg, #111a14, #0c120f);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1180px, calc(100% - 28px)); margin: 0 auto; }
+    .topbar, .card, .toolbar, .empty {
+      background: rgba(25, 37, 29, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+    }
+
+    .topbar {
+      margin: 20px 0 18px;
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+
+    .muted { color: var(--muted); }
+
+    .toolbar {
+      padding: 16px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .badge, .chip, .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+    }
+
+    .btn {
+      cursor: pointer;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .leads {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .card { padding: 20px; }
+    .lead-top, .lead-meta, .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lead-top { margin-bottom: 12px; }
+    .lead-meta { margin-bottom: 14px; }
+    .lead-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(149, 213, 163, 0.12);
+      color: var(--brand);
+      border: 1px solid rgba(149, 213, 163, 0.2);
+      font-weight: 700;
+    }
+
+    .lead-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+
+    .lead-field {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
+    }
+
+    .lead-field strong {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+    }
+
+    .lead-actions {
+      margin-top: 16px;
+    }
+
+    .reply-btn {
+      background: linear-gradient(145deg, #1f6f4f, #174835);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .empty {
+      padding: 34px 22px;
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 780px) {
+      .topbar, .toolbar, .lead-top, .lead-meta, .lead-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .lead-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="topbar">
+      <div>
+        <h1>SolarCare Admin</h1>
+        <p class="muted" style="margin:8px 0 0">All bookings and contact requests in one place, with one-click WhatsApp replies.</p>
+      </div>
+      <a class="badge" href="index.html"><i class="ri-home-4-line"></i> Back to site</a>
+    </section>
+
+    <section class="toolbar">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <span class="chip"><i class="ri-database-2-line"></i> Live from local database</span>
+        <span class="chip" id="leadCount">Loading leads...</span>
+      </div>
+      <button class="btn" id="refreshBtn"><i class="ri-refresh-line"></i> Refresh</button>
+    </section>
+
+    <section id="emptyState" class="empty" hidden>
+      <h2>No leads yet</h2>
+      <p class="muted" style="margin-top:8px">New bookings and contact messages will appear here once users start submitting forms.</p>
+    </section>
+
+    <section id="leadList" class="leads"></section>
+  </main>
+
+  <script>
+    const leadList = document.getElementById('leadList');
+    const leadCount = document.getElementById('leadCount');
+    const emptyState = document.getElementById('emptyState');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatDate(value) {
+      if (!value) return 'Not available';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleString();
+    }
+
+    function buildWhatsappMessage(lead) {
+      if (lead.type === 'contact') {
+        return [
+          `Hello ${lead.name},`,
+          'SolarCare se reply kar rahe hain.',
+          `Aapki query mili: ${lead.notes || 'No message provided'}`,
+          'Please let us know how we can help further.'
+        ].join('\n');
+      }
+
+      return [
+        `Hello ${lead.name},`,
+        'SolarCare se aapki booking request mil gayi hai.',
+        `Service: ${lead.service || 'Not provided'}`,
+        `Preferred time: ${lead.date || 'Not provided'}`,
+        'Please confirm if you would like us to schedule the visit.'
+      ].join('\n');
+    }
+
+    function renderLead(lead) {
+      const typeLabel = lead.type === 'contact' ? 'Contact Message' : 'Booking Request';
+      const notesLabel = lead.type === 'contact' ? 'Message' : 'Notes';
+      const service = lead.service || 'Not provided';
+      const preferred = lead.date || 'Not provided';
+      const address = lead.address || 'Not provided';
+      const whatsappUrl = `https://wa.me/${encodeURIComponent(lead.phone)}?text=${encodeURIComponent(buildWhatsappMessage(lead))}`;
+
+      return `
+        <article class="card">
+          <div class="lead-top">
+            <div>
+              <div class="lead-type"><i class="ri-message-2-line"></i> ${escapeHtml(typeLabel)}</div>
+              <h3 style="margin-top:12px">${escapeHtml(lead.name)}</h3>
+            </div>
+            <div class="muted">Received: ${escapeHtml(formatDate(lead.created_at))}</div>
+          </div>
+
+          <div class="lead-meta">
+            <span class="chip"><i class="ri-phone-line"></i> ${escapeHtml(lead.phone)}</span>
+            <span class="chip"><i class="ri-hashtag"></i> ID ${escapeHtml(lead.id)}</span>
+          </div>
+
+          <div class="lead-grid">
+            <div class="lead-field">
+              <strong>Service</strong>
+              <span>${escapeHtml(service)}</span>
+            </div>
+            <div class="lead-field">
+              <strong>Preferred</strong>
+              <span>${escapeHtml(preferred)}</span>
+            </div>
+            <div class="lead-field">
+              <strong>Address</strong>
+              <span>${escapeHtml(address)}</span>
+            </div>
+            <div class="lead-field">
+              <strong>${escapeHtml(notesLabel)}</strong>
+              <span>${escapeHtml(lead.notes || 'Not provided')}</span>
+            </div>
+          </div>
+
+          <div class="lead-actions">
+            <span class="muted">Type: ${escapeHtml(lead.type)}</span>
+            <a class="btn reply-btn" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">
+              <i class="ri-whatsapp-line"></i> Reply on WhatsApp
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    async function loadLeads() {
+      leadCount.textContent = 'Loading leads...';
+      leadList.innerHTML = '';
+      emptyState.hidden = true;
+
+      try {
+        const response = await fetch('/api/admin/leads');
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || 'Failed to load leads');
+        }
+
+        const leads = Array.isArray(data.leads) ? data.leads : [];
+        leadCount.textContent = `${leads.length} total lead${leads.length === 1 ? '' : 's'}`;
+
+        if (!leads.length) {
+          emptyState.hidden = false;
+          return;
+        }
+
+        leadList.innerHTML = leads.map(renderLead).join('');
+      } catch (error) {
+        leadCount.textContent = 'Unable to load leads';
+        emptyState.hidden = false;
+        emptyState.innerHTML = `<h2>Could not load leads</h2><p class="muted" style="margin-top:8px">${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    refreshBtn.addEventListener('click', loadLeads);
+    loadLeads();
+  </script>
+</body>
+</html>
