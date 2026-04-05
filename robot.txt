@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://azeemaslam-321.github.io/sitemap.xml
