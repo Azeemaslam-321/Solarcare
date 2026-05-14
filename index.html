@@ -89,6 +89,46 @@
       "inLanguage": "en-IN"
     }
   </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How often should solar panels be cleaned?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In dusty areas, cleaning every 15 to 30 days is usually helpful. The right frequency depends on dust, pollution, and bird activity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does cleaning improve solar output?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Dirty panels may produce less electricity, so regular cleaning helps maintain better performance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide AMC plans?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, IMSOLARCARE provides AMC plans for regular cleaning, inspection support, and repeat visits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the roof is very high or difficult to access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the rooftop is at extra height or access is difficult, additional charges may apply and the client must provide a safe ladder before the visit starts."
+          }
+        }
+      ]
+    }
+  </script>
   <style>
     :root {
       --bg: #f4efe6;
@@ -615,6 +655,21 @@
       box-shadow: var(--shadow); font-size: 1.5rem;
     }
 
+    .floating-wa::before {
+      content: 'WhatsApp';
+      position: absolute;
+      right: 72px;
+      white-space: nowrap;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      color: var(--text);
+      font-size: .86rem;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
     @media (max-width: 1024px) {
       .topbar-inner, .hero, .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid, .booking-grid, .media-grid, .video-grid, .work-grid, .area-grid, .local-page-grid { grid-template-columns: 1fr; }
       .topbar-inner { display: flex; flex-direction: column; align-items: stretch; }
@@ -728,6 +783,7 @@
         height: 58px;
         border-radius: 20px;
       }
+      .floating-wa::before { display: none; }
     }
 
     @media (max-width: 420px) {
@@ -778,23 +834,23 @@
     <section class="hero">
       <div class="hero-copy surface">
         <span class="eyebrow"><i class="ri-flashlight-line"></i> Lucknow solar cleaning service</span>
-        <h1>Solar Panel Cleaning Service in Lucknow</h1>
-        <p class="lead">IMSOLARCARE provides professional solar panel cleaning, maintenance, and AMC services in Lucknow for homes, shops, offices, and commercial properties.</p>
-        <p class="lead">Regular solar cleaning helps improve panel efficiency, reduce dust loss, and maintain long-term performance.</p>
+        <h1>Solar Panel Cleaning in Lucknow for Better Output</h1>
+        <p class="lead">IMSOLARCARE provides professional solar panel cleaning, repair support, maintenance, and AMC visits for homes, shops, offices, and commercial rooftops in Lucknow.</p>
+        <p class="lead">Dust, bird waste, and rooftop buildup can reduce panel performance over time. You can get an instant quote, call directly, or book on WhatsApp in a few simple steps.</p>
         <div class="hero-offer-row">
           <span class="offer-pill"><i class="ri-price-tag-3-line"></i> Starting from ₹499</span>
-          <span class="offer-pill"><i class="ri-map-pin-2-line"></i> Lucknow-focused service</span>
+          <span class="offer-pill"><i class="ri-image-line"></i> Real before / after proof</span>
           <span class="offer-pill"><i class="ri-whatsapp-line"></i> Fast WhatsApp booking</span>
         </div>
         <div class="hero-actions" style="margin-top:24px">
-          <a class="btn-main" href="https://wa.me/918112780010?text=Hi%2C%20mujhe%20solar%20panel%20cleaning%20karwani%20hai.%0ALocation%3A%20" target="_blank" rel="noopener noreferrer"><i class="ri-whatsapp-line"></i> Book on WhatsApp</a>
-          <a class="btn-soft" href="tel:+918112780010"><i class="ri-phone-line"></i> Call now</a>
-          <a class="btn-soft" href="#pricing"><i class="ri-price-tag-3-line"></i> See pricing</a>
+          <a class="btn-main" href="#booking"><i class="ri-file-list-3-line"></i> Get Instant Quote</a>
+          <a class="btn-soft" href="https://wa.me/918112780010?text=Hi%2C%20mujhe%20solar%20panel%20cleaning%20karwani%20hai.%0ALocation%3A%20" target="_blank" rel="noopener noreferrer"><i class="ri-whatsapp-line"></i> WhatsApp Now</a>
+          <a class="btn-soft" href="tel:+918112780010"><i class="ri-phone-line"></i> Call Now</a>
         </div>
         <div class="metric-row">
-          <div class="metric"><strong>₹499</strong><span class="muted">entry cleaning plan</span></div>
-          <div class="metric"><strong>Call / WhatsApp</strong><span class="muted">easy booking flow</span></div>
-          <div class="metric"><strong>Lucknow</strong><span class="muted">local area coverage</span></div>
+          <div class="metric"><strong>Real photos</strong><span class="muted">before and after service proof</span></div>
+          <div class="metric"><strong>AMC / Repair</strong><span class="muted">maintenance and inspection support</span></div>
+          <div class="metric"><strong>Lucknow local</strong><span class="muted">homes, shops, and offices</span></div>
         </div>
       </div>
 
@@ -809,22 +865,22 @@
         </div>
         <div class="stack-card">
           <span class="eyebrow">Why customers book fast</span>
-          <h3>Clear services, clear pricing, and visible contact details.</h3>
-          <p class="muted">Visitors can see the service scope, compare pricing, and choose phone, WhatsApp, or form booking without extra steps.</p>
+          <h3>Clear pricing, real photos, and visible contact details.</h3>
+          <p class="muted">Visitors can compare starting prices, see real rooftop work, and choose phone, WhatsApp, or quote form booking without extra confusion.</p>
           <div class="tag-row">
-            <span>Book now</span>
+            <span>Instant quote</span>
             <span>Call now</span>
             <span>WhatsApp ready</span>
           </div>
         </div>
         <div class="stack-card">
           <span class="eyebrow">Most requested support</span>
-          <h3>Cleaning, AMC visits, inspection support, and bird waste removal.</h3>
-          <p class="muted">Use the site for routine home cleaning, periodic maintenance, local service-area support, and rooftop care planning.</p>
+          <h3>Cleaning, AMC visits, inspection support, and safe rooftop access planning.</h3>
+          <p class="muted">Use the site for routine home cleaning, periodic maintenance, local service-area support, and higher rooftop jobs where safe ladder access is available.</p>
           <div class="tag-row">
             <span>Cleaning</span>
             <span>Maintenance</span>
-            <span>Bird netting</span>
+            <span>Safe access</span>
             <span>Repair support</span>
           </div>
         </div>
@@ -842,7 +898,7 @@
         <article class="service-card">
           <div class="mini-icon"><i class="ri-map-pin-user-line"></i></div>
           <h3>Lucknow-focused service</h3>
-          <p class="muted">We serve residential, commercial, and small industrial properties in Lucknow with reliable cleaning support, practical maintenance help, and affordable pricing guidance.</p>
+          <p class="muted">We have provided solar panel cleaning support across Lucknow for homes, shops, offices, and small commercial setups. This helps us understand common issues like dust buildup, bird waste, rooftop access, and reduced panel visibility.</p>
           <div class="tag-row"><span>Homes</span><span>Shops</span><span>Commercial rooftops</span></div>
         </article>
         <article class="service-card">
@@ -852,10 +908,10 @@
           <div class="tag-row"><span>Phone</span><span>WhatsApp</span><span>Email</span></div>
         </article>
         <article class="service-card">
-          <div class="mini-icon"><i class="ri-calendar-schedule-line"></i></div>
-          <h3>Visits by appointment</h3>
-          <p class="muted">The business handles one-time cleaning, scheduled maintenance, and AMC repeat visits based on rooftop condition, panel count, and access requirements.</p>
-          <div class="tag-row"><span>One-time visit</span><span>Repeat care</span><span>AMC planning</span></div>
+          <div class="mini-icon"><i class="ri-shield-check-line"></i></div>
+          <h3>Safe rooftop access</h3>
+          <p class="muted">The business handles one-time cleaning, scheduled maintenance, and AMC repeat visits based on rooftop condition, panel count, and access requirements. If access is difficult, extra charges may apply and the client must provide a safe ladder.</p>
+          <div class="tag-row"><span>Safe ladder</span><span>High roof notice</span><span>AMC planning</span></div>
         </article>
       </div>
     </section>
@@ -1134,9 +1190,9 @@
       <div class="section-head">
         <div>
           <span class="eyebrow">Pricing</span>
-          <h2 style="margin-top:12px">Affordable plans that make routine maintenance easier to start.</h2>
+          <h2 style="margin-top:12px">Visible starting prices for residential, commercial, and AMC support.</h2>
         </div>
-        <p>These plans are designed to feel practical, not heavy. Customers can start with a basic visit, compare options quickly, and move to WhatsApp or phone without confusion.</p>
+        <p>Customers should be able to understand the starting price quickly. Basic cleaning starts at ₹499, larger rooftops can move to premium maintenance, and commercial or AMC work is quoted after site details are checked.</p>
       </div>
       <div class="pricing-grid">
         <article class="price-card"><span class="eyebrow">Budget-friendly start</span><h3>Basic Cleaning</h3><p class="muted">A simple entry plan for homeowners who want cleaner panel surfaces and a quick first service without overthinking the budget.</p><div class="price">₹499</div><p class="price-note">Good for small rooftops, first-time cleaning, and people who want a low-cost start.</p><div class="price-highlight"><i class="ri-wallet-3-line"></i> Easy first booking</div><div class="tag-row"><span>Home rooftops</span><span>Quick visit</span></div></article>
@@ -1172,7 +1228,7 @@
         <article class="article-card"><div class="mini-icon"><i class="ri-question-line"></i></div><h3>How often should solar panels be cleaned?</h3><p class="muted">In dusty areas, cleaning every 15 to 30 days is usually helpful. Frequency depends on dust, pollution, and bird activity.</p></article>
         <article class="article-card"><div class="mini-icon"><i class="ri-flashlight-line"></i></div><h3>Does cleaning improve solar output?</h3><p class="muted">Yes. Dirty panels may produce less electricity. Regular cleaning helps maintain better performance.</p></article>
         <article class="article-card"><div class="mini-icon"><i class="ri-calendar-check-line"></i></div><h3>Do you provide AMC plans?</h3><p class="muted">Yes, IMSOLARCARE provides affordable annual maintenance plans for regular service visits.</p></article>
-        <article class="article-card"><div class="mini-icon"><i class="ri-book-2-line"></i></div><h3>Need more answers?</h3><p class="muted">Visit the full FAQ page for more customer questions about services, pricing, and support.</p><div style="margin-top:16px"><a class="btn-soft" href="faq.html">Open FAQ page</a></div></article>
+        <article class="article-card"><div class="mini-icon"><i class="ri-alert-line"></i></div><h3>What if the roof is very high?</h3><p class="muted">If the rooftop is at extra height or access is difficult, additional charges may apply and the client must provide a safe ladder before the visit starts.</p><div style="margin-top:16px"><a class="btn-soft" href="faq.html">Open FAQ page</a></div></article>
       </div>
     </section>
 
@@ -1200,7 +1256,7 @@
           <span class="eyebrow">Booking</span>
           <h2 style="margin-top:12px">Send a booking request in a few simple steps.</h2>
         </div>
-        <p>The form is designed to stay readable on mobile and desktop, and requests are saved through the backend when the server is available.</p>
+        <p>The form is designed to stay readable on mobile and desktop. Name, mobile number, city or locality, and panel count are enough to start the quote process.</p>
       </div>
       <div class="booking-grid">
         <div class="booking-note">
@@ -1208,7 +1264,7 @@
           <p class="muted">Your request is saved when the server is available. If direct delivery is not possible, a WhatsApp fallback can still open so the enquiry is easier to complete.</p>
           <p class="muted"><strong>Roof access notice:</strong> If the rooftop is too high or difficult to access, extra charges may apply and the client must provide a safe ladder.</p>
           <div class="tag-row">
-            <span>Backend save</span>
+            <span>Instant quote flow</span>
             <span>WhatsApp fallback</span>
             <span>Mobile friendly</span>
           </div>
@@ -1217,6 +1273,7 @@
           <div class="form-grid">
             <input name="name" class="form-control" placeholder="Your name" required>
             <input name="phone" class="form-control" pattern="[0-9]{10}" placeholder="10 digit mobile number" required>
+            <input name="address" class="form-control" placeholder="City / locality" required>
             <select name="service" class="form-select">
               <option>Solar Panel Cleaning</option>
               <option>Premium Maintenance</option>
@@ -1226,15 +1283,13 @@
               <option>Performance Monitoring</option>
             </select>
             <input name="panels" type="number" min="1" class="form-control" placeholder="Approx. panel count">
-            <input name="pref_date" type="datetime-local" class="form-control">
-            <input name="address" class="form-control" placeholder="Site address">
-              <textarea name="notes" rows="4" class="form-control full" placeholder="Roof access details, issue description, cleaning frequency, ladder availability, or any other notes"></textarea>
+            <textarea name="notes" rows="4" class="form-control full" placeholder="Roof access details, issue description, cleaning frequency, ladder availability, or any other notes"></textarea>
             <div class="full form-switch-row">
               <label><input type="checkbox" id="viaWhatsappBook" checked> Also prepare a WhatsApp message</label>
               <span class="muted">We only use this information to respond to your request.</span>
             </div>
             <div class="full hero-actions">
-              <button type="submit" class="btn-main"><i class="ri-send-plane-line"></i> Confirm and send</button>
+              <button type="submit" class="btn-main"><i class="ri-send-plane-line"></i> Get Instant Quote</button>
               <button type="reset" class="btn-soft">Reset</button>
             </div>
           </div>
@@ -1264,6 +1319,8 @@
             <div class="form-grid">
               <input name="name" class="form-control" placeholder="Your name" required>
               <input name="phone" class="form-control" pattern="[0-9]{10}" placeholder="10 digit mobile number" required>
+              <input name="city" class="form-control" placeholder="City / locality" required>
+              <input name="panels" type="number" min="1" class="form-control" placeholder="Approx. panel count (optional)">
               <textarea name="message" rows="4" class="form-control full" placeholder="Tell us what you need"></textarea>
               <div class="full hero-actions">
                 <button type="submit" class="btn-main"><i class="ri-whatsapp-line"></i> Send on WhatsApp</button>
@@ -1279,14 +1336,14 @@
       <div class="section-head">
         <div>
           <span class="eyebrow">Why IMSOLARCARE Works</span>
-          <h2 style="margin-top:12px">Clear service signals that help visitors trust the business faster.</h2>
+          <h2 style="margin-top:12px">Real trust signals that help visitors decide faster.</h2>
         </div>
-        <p>Instead of relying on generic promises, this section explains the practical reasons customers can trust the booking experience and service flow.</p>
+        <p>Instead of relying on generic promises, this section highlights the proof customers usually look for before booking a service.</p>
       </div>
       <div class="reviews-grid">
-        <article class="review-card surface"><div class="stars"><i class="ri-phone-line"></i></div><p class="muted">Phone, WhatsApp, email, pricing, and booking options are visible on the homepage so customers do not need to search for the next step.</p><strong>Clear contact flow</strong></article>
-        <article class="review-card surface"><div class="stars"><i class="ri-map-pin-2-line"></i></div><p class="muted">Lucknow service areas, local pages, and dedicated service sections make it easier to understand where the business works and what support is offered.</p><strong>Local service clarity</strong></article>
-        <article class="review-card surface"><div class="stars"><i class="ri-book-open-line"></i></div><p class="muted">The website combines business pages, legal pages, blog content, FAQ support, and booking options in one complete user journey.</p><strong>Complete site structure</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-image-line"></i></div><p class="muted">Real before and after photos, real rooftop visuals, and actual AMC images help visitors see that the business is active on real sites.</p><strong>Real work proof</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-price-tag-3-line"></i></div><p class="muted">Starting prices, service categories, and booking options are visible on the homepage so customers can decide faster without hidden confusion.</p><strong>Visible pricing and offers</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-shield-check-line"></i></div><p class="muted">The roof access notice, ladder requirement, local service areas, and direct contact details help set practical expectations before the team visits.</p><strong>Clear safety and access policy</strong></article>
       </div>
     </section>
 
@@ -1384,6 +1441,30 @@
       window.open(`https://wa.me/918112780010?text=${encoded}`, '_blank', 'noopener');
     }
 
+    function trackEvent(eventName, params = {}) {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', eventName, params);
+    }
+
+    document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        trackEvent('generate_lead', {
+          lead_source: 'phone_call',
+          page_path: window.location.pathname
+        });
+      });
+    });
+
+    document.querySelectorAll('a[href*="wa.me"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        trackEvent('generate_lead', {
+          lead_source: 'whatsapp_click',
+          lead_label: (link.textContent || 'WhatsApp').trim(),
+          page_path: window.location.pathname
+        });
+      });
+    });
+
     async function submitBooking(form) {
       const data = Object.fromEntries(new FormData(form).entries());
       let serverResult = null;
@@ -1396,18 +1477,22 @@
 
       const useBrowserFallback = !serverResult?.whatsappDelivered && document.getElementById('viaWhatsappBook').checked;
       if (useBrowserFallback) {
-        const preferred = data.pref_date || '';
         openBusinessWhatsapp(
-          `Hello SolarCare, I want to book a service.\n` +
+          `Hello IMSOLARCARE, I want to book a service.\n` +
           `Name: ${data.name || ''}\n` +
           `Phone: ${data.phone || ''}\n` +
+          `City / locality: ${data.address || ''}\n` +
           `Service: ${data.service || ''}\n` +
-          `Preferred: ${preferred}\n` +
           `Panels: ${data.panels || ''}\n` +
-          `Address: ${data.address || ''}\n` +
           `Notes: ${data.notes || ''}`
         );
       }
+
+      trackEvent('generate_lead', {
+        lead_source: 'booking_form',
+        service_type: data.service || 'unknown',
+        city: data.address || 'not_provided'
+      });
 
       const confirmation = serverResult?.whatsappDelivered
         ? 'Booking request saved and WhatsApp notification sent.'
@@ -1429,22 +1514,38 @@
       if (!form.reportValidity()) return;
 
       const data = Object.fromEntries(new FormData(form).entries());
+      const combinedMessage = [
+        data.city ? `City / locality: ${data.city}` : '',
+        data.panels ? `Approx. panel count: ${data.panels}` : '',
+        data.message || ''
+      ].filter(Boolean).join('\n');
       let serverResult = null;
 
       try {
-        serverResult = await postJson('/api/contact', data);
+        serverResult = await postJson('/api/contact', {
+          name: data.name,
+          phone: data.phone,
+          message: combinedMessage
+        });
       } catch (error) {
         console.warn('Contact API unavailable, using WhatsApp fallback.', error);
       }
 
       if (!serverResult?.whatsappDelivered) {
         openBusinessWhatsapp(
-          `Hello SolarCare, I have a query.\n` +
+          `Hello IMSOLARCARE, I have a query.\n` +
           `Name: ${data.name || ''}\n` +
           `Phone: ${data.phone || ''}\n` +
+          `City / locality: ${data.city || ''}\n` +
+          `Approx. panel count: ${data.panels || ''}\n` +
           `Message: ${data.message || ''}`
         );
       }
+
+      trackEvent('generate_lead', {
+        lead_source: 'contact_form',
+        city: data.city || 'not_provided'
+      });
 
       const confirmation = serverResult?.whatsappDelivered
         ? 'Message saved and WhatsApp notification sent.'
