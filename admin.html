@@ -12,7 +12,7 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SolarCare Admin | Leads</title>
+  <title>IMSOLARCARE Admin | Leads</title>
   <meta name="theme-color" content="#111a14">
   <link rel="icon" type="image/svg+xml" href="assets/favicon-solarcare.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,7 +175,7 @@
   <main class="shell">
     <section class="topbar">
       <div>
-        <h1>SolarCare Admin</h1>
+        <h1>IMSOLARCARE Admin</h1>
         <p class="muted" style="margin:8px 0 0">All bookings and contact requests in one place, with one-click WhatsApp replies.</p>
       </div>
       <a class="badge" href="index.html"><i class="ri-home-4-line"></i> Back to site</a>
@@ -223,7 +223,7 @@
       if (lead.type === 'contact') {
         return [
           `Hello ${lead.name},`,
-          'SolarCare se reply kar rahe hain.',
+          'IMSOLARCARE se reply kar rahe hain.',
           `Aapki query mili: ${lead.notes || 'No message provided'}`,
           'Please let us know how we can help further.'
         ].join('\n');
@@ -231,7 +231,7 @@
 
       return [
         `Hello ${lead.name},`,
-        'SolarCare se aapki booking request mil gayi hai.',
+        'IMSOLARCARE se aapki booking request mil gayi hai.',
         `Service: ${lead.service || 'Not provided'}`,
         `Preferred time: ${lead.date || 'Not provided'}`,
         'Please confirm if you would like us to schedule the visit.'
