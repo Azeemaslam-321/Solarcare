@@ -280,19 +280,7 @@ async function handleBookingRequest(req, res) {
       'INSERT INTO bookings(name, phone, service, date, address, notes) VALUES(?,?,?,?,?,?)',
       [payload.name, payload.phone, payload.service, payload.date, payload.address, payload.notes]
     );
-
-    let whatsappDelivered = false;
-    let whatsappProvider = 'not-configured';
-    try {
-      const notification = await sendWhatsappNotification(buildBookingMessage(payload));
-      whatsappDelivered = notification.delivered;
-      whatsappProvider = notification.provider;
-    } catch (error) {
-      console.error('WhatsApp booking notification failed', error);
-      whatsappProvider = 'failed';
-    }
-
-    res.status(201).json({ ok: true, bookingId, whatsappDelivered, whatsappProvider });
+    res.status(201).json({ ok: true, bookingId, whatsappDelivered: false, whatsappProvider: 'direct-only' });
   } catch (error) {
     console.error('Failed to save booking', error);
     res.status(500).json({ error: 'failed to save booking' });
@@ -317,19 +305,7 @@ app.post('/api/contact', async (req, res) => {
       'INSERT INTO contact_messages(name, phone, message) VALUES(?,?,?)',
       [payload.name, payload.phone, payload.message]
     );
-
-    let whatsappDelivered = false;
-    let whatsappProvider = 'not-configured';
-    try {
-      const notification = await sendWhatsappNotification(buildContactMessage(payload));
-      whatsappDelivered = notification.delivered;
-      whatsappProvider = notification.provider;
-    } catch (error) {
-      console.error('WhatsApp contact notification failed', error);
-      whatsappProvider = 'failed';
-    }
-
-    res.status(201).json({ ok: true, messageId, whatsappDelivered, whatsappProvider });
+    res.status(201).json({ ok: true, messageId, whatsappDelivered: false, whatsappProvider: 'direct-only' });
   } catch (error) {
     console.error('Failed to save contact message', error);
     res.status(500).json({ error: 'failed to save contact message' });
@@ -380,11 +356,7 @@ async function startServer() {
 
     app.listen(port, () => {
       console.log(`SolarCare server running on port ${port}`);
-      if (process.env.WHATSAPP_NOTIFY_URL || (process.env.WHATSAPP_TEXTMEBOT_PHONE && process.env.WHATSAPP_TEXTMEBOT_API_KEY) || (process.env.WHATSAPP_CALLMEBOT_PHONE && process.env.WHATSAPP_CALLMEBOT_API_KEY)) {
-        console.log('WhatsApp notifications are configured.');
-      } else {
-        console.log('WhatsApp notifications are not configured yet. Add .env values to enable them.');
-      }
+      console.log('Direct WhatsApp links are enabled. API notifications are currently disabled.');
     });
   } catch (error) {
     console.error('Failed to initialize server', error);
