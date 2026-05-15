@@ -15,6 +15,11 @@ const useMySql = Boolean(
 let sqliteDb = null;
 let mysqlPool = null;
 let activeDatabase = useMySql ? 'mysql' : 'sqlite';
+const memoryStore = {
+  bookings: [],
+  contact_messages: []
+};
+let memoryIdCounter = 1;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -91,48 +96,89 @@ async function initializeDatabase() {
     }
   }
 
-  const sqlite3 = require('sqlite3').verbose();
-  sqliteDb = new sqlite3.Database(path.join(__dirname, 'bookings.db'));
+  try {
+    const sqlite3 = require('sqlite3').verbose();
+    sqliteDb = new sqlite3.Database(path.join(__dirname, 'bookings.db'));
 
-  await new Promise((resolve, reject) => {
-    sqliteDb.serialize(() => {
-      sqliteDb.run(`CREATE TABLE IF NOT EXISTS bookings (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        phone TEXT NOT NULL,
-        service TEXT NOT NULL,
-        date TEXT,
-        address TEXT,
-        notes TEXT,
-        created_at TEXT DEFAULT CURRENT_TIMESTAMP
-      )`, (bookingError) => {
-        if (bookingError) {
-          reject(bookingError);
-          return;
-        }
-
-        sqliteDb.run(`CREATE TABLE IF NOT EXISTS contact_messages (
+    await new Promise((resolve, reject) => {
+      sqliteDb.serialize(() => {
+        sqliteDb.run(`CREATE TABLE IF NOT EXISTS bookings (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
           phone TEXT NOT NULL,
-          message TEXT,
+          service TEXT NOT NULL,
+          date TEXT,
+          address TEXT,
+          notes TEXT,
           created_at TEXT DEFAULT CURRENT_TIMESTAMP
-        )`, (contactError) => {
-          if (contactError) {
-            reject(contactError);
+        )`, (bookingError) => {
+          if (bookingError) {
+            reject(bookingError);
             return;
           }
-          resolve();
+
+          sqliteDb.run(`CREATE TABLE IF NOT EXISTS contact_messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            message TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )`, (contactError) => {
+            if (contactError) {
+              reject(contactError);
+              return;
+            }
+            resolve();
+          });
         });
       });
     });
-  });
+
+    activeDatabase = 'sqlite';
+  } catch (error) {
+    console.error('SQLite initialization failed, falling back to in-memory storage.', error);
+    sqliteDb = null;
+    activeDatabase = 'memory';
+  }
 }
 
 async function runStatement(sql, values) {
   if (mysqlPool) {
     const [result] = await mysqlPool.execute(sql, values);
     return result.insertId || 0;
+  }
+
+  if (!sqliteDb) {
+    const createdAt = new Date().toISOString();
+
+    if (/INSERT INTO bookings/i.test(sql)) {
+      const row = {
+        id: memoryIdCounter++,
+        name: values[0],
+        phone: values[1],
+        service: values[2],
+        date: values[3],
+        address: values[4],
+        notes: values[5],
+        created_at: createdAt
+      };
+      memoryStore.bookings.push(row);
+      return row.id;
+    }
+
+    if (/INSERT INTO contact_messages/i.test(sql)) {
+      const row = {
+        id: memoryIdCounter++,
+        name: values[0],
+        phone: values[1],
+        message: values[2],
+        created_at: createdAt
+      };
+      memoryStore.contact_messages.push(row);
+      return row.id;
+    }
+
+    return 0;
   }
 
   return new Promise((resolve, reject) => {
@@ -150,6 +196,38 @@ async function allQuery(sql, values = []) {
   if (mysqlPool) {
     const [rows] = await mysqlPool.execute(sql, values);
     return rows;
+  }
+
+  if (!sqliteDb) {
+    if (/FROM bookings/i.test(sql)) {
+      return [...memoryStore.bookings].sort((a, b) => {
+        const aTime = new Date(a.created_at || 0).getTime();
+        const bTime = new Date(b.created_at || 0).getTime();
+        return bTime - aTime || b.id - a.id;
+      });
+    }
+
+    if (/FROM contact_messages/i.test(sql)) {
+      return [...memoryStore.contact_messages]
+        .map((row) => ({
+          id: row.id,
+          name: row.name,
+          phone: row.phone,
+          service: '',
+          date: '',
+          address: '',
+          notes: row.message,
+          created_at: row.created_at,
+          type: 'contact'
+        }))
+        .sort((a, b) => {
+          const aTime = new Date(a.created_at || 0).getTime();
+          const bTime = new Date(b.created_at || 0).getTime();
+          return bTime - aTime || b.id - a.id;
+        });
+    }
+
+    return [];
   }
 
   return new Promise((resolve, reject) => {
@@ -361,7 +439,13 @@ app.get('/admin', requireAdminAuth, (_req, res) => {
 async function startServer() {
   try {
     await initializeDatabase();
-    console.log(activeDatabase === 'mysql' ? 'Using MySQL database.' : 'Using local SQLite database.');
+    if (activeDatabase === 'mysql') {
+      console.log('Using MySQL database.');
+    } else if (activeDatabase === 'sqlite') {
+      console.log('Using local SQLite database.');
+    } else {
+      console.log('Using in-memory fallback storage.');
+    }
 
     app.listen(port, () => {
       console.log(`SolarCare server running on port ${port}`);
