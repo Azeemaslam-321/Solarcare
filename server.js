@@ -14,6 +14,7 @@ const useMySql = Boolean(
 );
 let sqliteDb = null;
 let mysqlPool = null;
+let activeDatabase = useMySql ? 'mysql' : 'sqlite';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,38 +49,46 @@ function loadLocalEnv() {
 
 async function initializeDatabase() {
   if (useMySql) {
-    const mysql = require('mysql2/promise');
-    mysqlPool = mysql.createPool({
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT || 3306),
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0
-    });
+    try {
+      const mysql = require('mysql2/promise');
+      mysqlPool = mysql.createPool({
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT || 3306),
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
+        connectTimeout: 10000
+      });
 
-    await mysqlPool.query(`CREATE TABLE IF NOT EXISTS bookings (
-      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      phone VARCHAR(50) NOT NULL,
-      service VARCHAR(255) NOT NULL,
-      date VARCHAR(100),
-      address TEXT,
-      notes TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+      await mysqlPool.query(`CREATE TABLE IF NOT EXISTS bookings (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        phone VARCHAR(50) NOT NULL,
+        service VARCHAR(255) NOT NULL,
+        date VARCHAR(100),
+        address TEXT,
+        notes TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`);
 
-    await mysqlPool.query(`CREATE TABLE IF NOT EXISTS contact_messages (
-      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      phone VARCHAR(50) NOT NULL,
-      message TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+      await mysqlPool.query(`CREATE TABLE IF NOT EXISTS contact_messages (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        phone VARCHAR(50) NOT NULL,
+        message TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`);
 
-    return;
+      activeDatabase = 'mysql';
+      return;
+    } catch (error) {
+      console.error('MySQL initialization failed, falling back to local SQLite.', error);
+      mysqlPool = null;
+      activeDatabase = 'sqlite';
+    }
   }
 
   const sqlite3 = require('sqlite3').verbose();
@@ -352,7 +361,7 @@ app.get('/admin', requireAdminAuth, (_req, res) => {
 async function startServer() {
   try {
     await initializeDatabase();
-    console.log(useMySql ? 'Using MySQL database.' : 'Using local SQLite database.');
+    console.log(activeDatabase === 'mysql' ? 'Using MySQL database.' : 'Using local SQLite database.');
 
     app.listen(port, () => {
       console.log(`SolarCare server running on port ${port}`);
