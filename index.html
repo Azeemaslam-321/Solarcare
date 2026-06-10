@@ -855,6 +855,94 @@
       color: var(--muted);
     }
 
+    .slider-shell {
+      display: grid;
+      gap: 18px;
+    }
+
+    .slider-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .slider-toolbar p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .slider-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .slider-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 94%, transparent);
+      color: var(--brand-strong);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .slider-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .real-work-slider {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(280px, 33%);
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+
+    .real-work-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .real-slide {
+      scroll-snap-align: start;
+      overflow: hidden;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 92%, transparent);
+      box-shadow: var(--shadow);
+    }
+
+    .real-slide img {
+      width: 100%;
+      height: 280px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .real-slide-copy {
+      padding: 16px 18px 18px;
+    }
+
+    .real-slide-copy strong {
+      display: block;
+      margin-bottom: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--ink);
+    }
+
+    .real-slide-copy p {
+      margin: 0;
+      color: var(--muted);
+    }
+
     .video-grid {
       display: grid;
       grid-template-columns: 1.1fr .9fr;
@@ -985,6 +1073,7 @@
       .nav-tools { justify-content: space-between; }
       .section-head { flex-direction: column; align-items: flex-start; }
       .metric-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .real-work-slider { grid-auto-columns: minmax(300px, 70%); }
     }
 
     @media (max-width: 640px) {
@@ -1061,11 +1150,15 @@
       .booking-note { border-radius: 22px; }
       .media-copy { padding: 16px 16px 18px; }
       .work-copy { padding: 16px 16px 18px; }
+      .real-slide-copy { padding: 14px 16px 18px; }
       .video-wrap { border-radius: 22px; }
       .tag-row { gap: 8px; }
       .tag-row span { font-size: .82rem; padding: 7px 9px; }
       .area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .local-page-grid { grid-template-columns: 1fr; }
+      .real-work-slider { grid-auto-columns: 88%; }
+      .real-slide img { height: 240px; }
+      .slider-btn { width: 44px; height: 44px; border-radius: 14px; }
       h1 { font-size: 2.45rem; line-height: .96; max-width: 10ch; }
       h2 { font-size: 1.8rem; line-height: 1.02; }
       h3 { font-size: 1.12rem; }
@@ -1112,6 +1205,7 @@
       .legal-box { grid-template-columns: 1fr; }
       .reviews-grid .review-card { padding: 18px; }
       .area-grid { grid-template-columns: 1fr; }
+      .real-work-slider { grid-auto-columns: 92%; }
     }
   </style>
 </head>
@@ -1162,7 +1256,7 @@
           <a class="btn-soft" href="tel:+918112780010"><i class="ri-phone-line"></i> Call Now</a>
         </div>
         <div class="metric-row">
-          <div class="metric"><strong>30+ services completed</strong><span class="muted">real local rooftop visits in Lucknow</span></div>
+          <div class="metric"><strong>100+ customers served</strong><span class="muted">real rooftop cleaning support across Lucknow</span></div>
           <div class="metric"><strong>Residential &amp; Commercial</strong><span class="muted">homes, shops, offices, and mixed sites</span></div>
           <div class="metric"><strong>Real work proof</strong><span class="muted">before / after photos and service video</span></div>
           <div class="metric"><strong>Call + WhatsApp booking</strong><span class="muted">fast response without waiting too long</span></div>
@@ -1227,9 +1321,9 @@
       <div class="services-grid">
         <article class="service-card">
           <div class="mini-icon"><i class="ri-map-pin-line"></i></div>
-          <h3>30+ local rooftop services completed</h3>
-          <p class="muted">The business has already completed 30+ service visits across Lucknow and continues to cover Aliganj, Jankipuram, Gomti Nagar, Indira Nagar, Vikas Nagar, Kamta Chauraha, and nearby localities.</p>
-          <div class="tag-row"><span>30+ visits</span><span>Area pages</span><span>Nearby support</span></div>
+          <h3>100+ customers served in Lucknow</h3>
+          <p class="muted">IMSOLARCARE has already served 100+ customers across Lucknow and continues to cover Aliganj, Jankipuram, Gomti Nagar, Indira Nagar, Vikas Nagar, Kamta Chauraha, Kadra, Aminabad, and nearby localities.</p>
+          <div class="tag-row"><span>100+ customers</span><span>Area pages</span><span>Nearby support</span></div>
         </article>
         <article class="service-card">
           <div class="mini-icon"><i class="ri-home-office-line"></i></div>
@@ -1330,16 +1424,18 @@
         </div>
         <p>We provide rooftop cleaning and maintenance support across residential, shop, and commercial areas in Lucknow including Aliganj, Gomti Nagar, Jankipuram, Indira Nagar, Hazratganj, Ashiyana, Vikas Nagar, Kamta Chauraha, and nearby localities.</p>
       </div>
-      <div class="area-grid">
-        <div class="area-pill">Aliganj</div>
-        <div class="area-pill">Mehndi Tola</div>
-        <div class="area-pill">Gomti Nagar</div>
-        <div class="area-pill">Gomti Nagar Extension</div>
-        <div class="area-pill">Indira Nagar</div>
-        <div class="area-pill">Kamta Chauraha</div>
-        <div class="area-pill">Jankipuram</div>
-        <div class="area-pill">Mahanagar</div>
-        <div class="area-pill">Vikas Nagar</div>
+        <div class="area-grid">
+          <div class="area-pill">Aliganj</div>
+          <div class="area-pill">Aminabad</div>
+          <div class="area-pill">Mehndi Tola</div>
+          <div class="area-pill">Gomti Nagar</div>
+          <div class="area-pill">Gomti Nagar Extension</div>
+          <div class="area-pill">Indira Nagar</div>
+          <div class="area-pill">Kamta Chauraha</div>
+          <div class="area-pill">Kadra</div>
+          <div class="area-pill">Jankipuram</div>
+          <div class="area-pill">Mahanagar</div>
+          <div class="area-pill">Vikas Nagar</div>
         <div class="area-pill">Kalyanpur</div>
         <div class="area-pill">Hazratganj</div>
         <div class="area-pill">Chowk</div>
@@ -1400,6 +1496,16 @@
           <p class="muted">A service page for Kamta Chauraha rooftops that need real local cleaning proof, rooftop care, and nearby support.</p>
           <a class="btn-soft" href="kamta-chauraha-solar-panel-cleaning.html">Open page</a>
         </article>
+        <article class="local-page-card">
+          <h3>Kadra page</h3>
+          <p class="muted">A service page for Kadra rooftops with real before / after work proof, dust cleanup, and local booking support.</p>
+          <a class="btn-soft" href="kadra-solar-panel-cleaning.html">Open page</a>
+        </article>
+        <article class="local-page-card">
+          <h3>Aminabad page</h3>
+          <p class="muted">A service page for Aminabad rooftops that need nearby solar cleaning, bird-dropping cleanup, and real work visuals.</p>
+          <a class="btn-soft" href="aminabad-solar-panel-cleaning.html">Open page</a>
+        </article>
       </div>
       <div class="hero-actions" style="margin-top:22px">
         <a class="btn-main" href="before-after-gallery.html"><i class="ri-gallery-line"></i> View gallery</a>
@@ -1423,7 +1529,9 @@
         <a class="chip-link" href="solar-panel-repair-service.html">Solar repair in Lucknow</a>
         <a class="chip-link" href="service-areas.html">Solar cleaning near me</a>
         <a class="chip-link" href="aliganj-solar-panel-cleaning.html">Near Aliganj</a>
+        <a class="chip-link" href="aminabad-solar-panel-cleaning.html">Near Aminabad</a>
         <a class="chip-link" href="jankipuram-solar-panel-cleaning.html">Near Jankipuram</a>
+        <a class="chip-link" href="kadra-solar-panel-cleaning.html">Near Kadra</a>
         <a class="chip-link" href="gomti-nagar-solar-panel-cleaning.html">Near Gomti Nagar</a>
         <a class="chip-link" href="indira-nagar-solar-panel-cleaning.html">Near Indira Nagar</a>
       </div>
@@ -1471,6 +1579,76 @@
       </div>
     </section>
 
+    <section id="real-work-slider" class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Real Work Slider</span>
+          <h2 style="margin-top:12px">100+ customers served with real rooftop work proof.</h2>
+        </div>
+        <p>Slide through real rooftop photos from Kadra, Aminabad, Aliganj, and other Lucknow service visits.</p>
+      </div>
+      <div class="slider-shell">
+        <div class="slider-toolbar">
+          <p>Real images from recent solar cleaning jobs across Lucknow.</p>
+          <div class="slider-controls">
+            <button class="slider-btn" type="button" data-slider-target="#realWorkSliderTrack" data-slider-dir="-1" aria-label="Previous real work image"><i class="ri-arrow-left-s-line"></i></button>
+            <button class="slider-btn" type="button" data-slider-target="#realWorkSliderTrack" data-slider-dir="1" aria-label="Next real work image"><i class="ri-arrow-right-s-line"></i></button>
+          </div>
+        </div>
+        <div class="real-work-slider" id="realWorkSliderTrack">
+          <article class="real-slide">
+            <img src="assets/commercial-rooftop-cleaning-evening.jpg" alt="Commercial rooftop solar panels after cleaning in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Commercial rooftop result</strong>
+              <p>After-cleaning finish from a larger rooftop service visit in Lucknow.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/kadra-rooftop-before-1.jpeg" alt="Solar panels before cleaning in Kadra Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Kadra before cleaning</strong>
+              <p>Real panel condition before service at a Kadra rooftop site.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/kadra-rooftop-after-1.jpeg" alt="Solar panels after cleaning in Kadra Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Kadra after cleaning</strong>
+              <p>Clearer rooftop finish after the completed Kadra cleaning visit.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/aminabad-rooftop-before-1.jpeg" alt="Solar panels before cleaning near Aminabad Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Aminabad before cleaning</strong>
+              <p>Visible dirt and bird-dropping spots before the Aminabad-side visit.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/aminabad-rooftop-after-3.jpeg" alt="Solar panels after cleaning near Aminabad Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Aminabad after cleaning</strong>
+              <p>Glossy rooftop finish from the Aminabad-side service work.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/solar-cleaning-after-1.jpg" alt="Clean solar panels after service in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Home rooftop result</strong>
+              <p>Real after-cleaning proof from a residential Lucknow service visit.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/solar-amc-inverter-check.jpg" alt="Solar inverter inspection support in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Inspection support</strong>
+              <p>Real maintenance-side visual from inspection and AMC-related support.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="recent-work" class="section-box surface">
       <div class="section-head">
         <div>
@@ -1497,6 +1675,18 @@
           <h3>Aliganj - Home solar setup</h3>
           <p class="muted">A routine maintenance visit was completed for a home setup in Aliganj. The panels were cleaned and visually inspected to support better day-to-day condition.</p>
           <div class="tag-row"><span>Routine visit</span><span>Visual inspection</span><span>Lucknow local</span></div>
+        </article>
+        <article class="service-card">
+          <div class="mini-icon"><i class="ri-building-line"></i></div>
+          <h3>Kadra - Rooftop cleaning visit</h3>
+          <p class="muted">A Kadra rooftop site with visible dust and bird-dropping spots was cleaned to restore a clearer panel surface. Before and after proof from the site has now been added to the gallery.</p>
+          <div class="tag-row"><span>Kadra</span><span>Before / after</span><span>Dust cleanup</span></div>
+        </article>
+        <article class="service-card">
+          <div class="mini-icon"><i class="ri-community-line"></i></div>
+          <h3>Aminabad - Local rooftop work</h3>
+          <p class="muted">Aminabad service work included panel cleaning for a neighborhood rooftop setup with visible dirt buildup. The final result was captured through real after-cleaning photos and video.</p>
+          <div class="tag-row"><span>Aminabad</span><span>Real video</span><span>Local service</span></div>
         </article>
       </div>
       <div class="hero-actions" style="margin-top:22px">
@@ -1877,7 +2067,7 @@
         <p>IMSOLARCARE has real service activity in Lucknow with local area coverage, rooftop photos, direct booking support, repeat maintenance options, and growing customer review signals.</p>
       </div>
       <div class="reviews-grid">
-        <article class="review-card surface"><div class="stars"><i class="ri-checkbox-circle-line"></i> 30+ local services</div><p class="muted">IMSOLARCARE has completed 30+ solar cleaning and support visits in Lucknow across residential and commercial rooftops.</p><strong>Active local service record</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-checkbox-circle-line"></i> 100+ customers served</div><p class="muted">IMSOLARCARE has now served 100+ customers in Lucknow across residential and commercial rooftops with real cleaning and inspection support.</p><strong>Active local customer record</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-star-smile-line"></i> Google reviews</div><p class="muted">Google reviews and customer feedback help new clients check service quality, response speed, and overall booking experience before they call.</p><strong>Growing trust signal</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-image-2-line"></i> Before / after proof</div><p class="muted">Real rooftop photos and cleaning videos show actual panel condition before service and visible results after cleaning.</p><strong>Visual credibility</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-map-pin-2-line"></i> Local coverage</div><p class="muted">Area pages for Aliganj, Jankipuram, Gomti Nagar, Vikas Nagar, Indira Nagar, and Kamta Chauraha improve local intent and service clarity.</p><strong>Lucknow-focused presence</strong></article>
@@ -2007,6 +2197,18 @@
           lead_label: (link.textContent || 'WhatsApp').trim(),
           page_path: window.location.pathname
         });
+      });
+    });
+
+    document.querySelectorAll('[data-slider-target]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = document.querySelector(button.dataset.sliderTarget);
+        if (!target) return;
+        const firstSlide = target.querySelector('.real-slide');
+        const gap = 16;
+        const step = firstSlide ? firstSlide.getBoundingClientRect().width + gap : 320;
+        const direction = Number(button.dataset.sliderDir || 1);
+        target.scrollBy({ left: direction * step, behavior: 'smooth' });
       });
     });
 
