@@ -855,6 +855,12 @@
       color: var(--muted);
     }
 
+    .upload-note {
+      margin-top: 10px;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+
     .slider-shell {
       display: grid;
       gap: 18px;
@@ -983,6 +989,59 @@
       margin-top: 10px;
     }
 
+    .trust-map-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .map-card,
+    .trust-card {
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel-strong) 92%, transparent), color-mix(in srgb, var(--accent-soft) 24%, transparent));
+    }
+
+    .map-frame {
+      width: 100%;
+      min-height: 320px;
+      border: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #e7ece8;
+      box-shadow: var(--shadow);
+    }
+
+    .trust-badge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .trust-badge-item {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 94%, transparent);
+    }
+
+    .trust-badge-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--ink);
+    }
+
+    .footer-social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
     .booking-grid {
       display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; align-items: start;
     }
@@ -1067,7 +1126,7 @@
     }
 
     @media (max-width: 1024px) {
-      .topbar-inner, .hero, .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid, .booking-grid, .media-grid, .video-grid, .work-grid, .area-grid, .local-page-grid, .visual-card { grid-template-columns: 1fr; }
+      .topbar-inner, .hero, .services-grid, .steps-grid, .pricing-grid, .articles-grid, .reviews-grid, .contact-grid, .booking-grid, .media-grid, .video-grid, .work-grid, .area-grid, .local-page-grid, .visual-card, .trust-map-grid, .trust-badge-grid { grid-template-columns: 1fr; }
       .topbar-inner { display: flex; flex-direction: column; align-items: stretch; }
       .nav-links { justify-content: flex-start; }
       .nav-tools { justify-content: space-between; }
@@ -1242,9 +1301,9 @@
     <section class="hero">
       <div class="hero-copy surface">
         <span class="eyebrow"><i class="ri-flashlight-line"></i> Lucknow solar cleaning service</span>
-        <h1>Professional Solar Panel Cleaning in Lucknow</h1>
-        <p class="lead">Transparent capacity-based pricing for residential &amp; commercial rooftops.</p>
-        <p class="lead">IMSOLARCARE provides professional solar panel cleaning, inspection support, and selected maintenance availability for homes, shops, offices, and commercial rooftops in Lucknow.</p>
+        <h1>Increase Solar Power Output with Professional Cleaning</h1>
+        <p class="lead">Professional solar panel cleaning in Lucknow with transparent capacity-based pricing starting at ₹799.</p>
+        <p class="lead">IMSOLARCARE serves Aliganj, Gomti Nagar, Jankipuram, Indira Nagar, Ashiyana, Rajajipuram, Kadra, Aminabad, and nearby Lucknow rooftops for residential and commercial solar care.</p>
         <div class="hero-offer-row">
           <span class="offer-pill"><i class="ri-search-eye-line"></i> Free basic solar inspection included</span>
           <span class="offer-pill"><i class="ri-image-line"></i> Before / after photos shared on WhatsApp</span>
@@ -1332,6 +1391,12 @@
           <div class="tag-row"><span>Homes</span><span>Shops</span><span>Commercial</span></div>
         </article>
         <article class="service-card">
+          <div class="mini-icon"><i class="ri-shield-star-line"></i></div>
+          <h3>Same day service support</h3>
+          <p class="muted">When slots are open, the team can support same-day or next-day cleaning visits for customers who need a faster rooftop service response.</p>
+          <div class="tag-row"><span>Fast booking</span><span>Same day</span><span>Lucknow coverage</span></div>
+        </article>
+        <article class="service-card">
           <div class="mini-icon"><i class="ri-image-line"></i></div>
           <h3>Real before / after proof</h3>
           <p class="muted">Actual rooftop photos and service visuals build more trust than stock graphics and help customers judge cleanliness results faster.</p>
@@ -1397,14 +1462,15 @@
           <span class="eyebrow">Services</span>
           <h2 style="margin-top:12px">Choose the right support for your solar site.</h2>
         </div>
-        <p>Choose cleaning, inspection support, or pigeon-proofing based on rooftop condition, dust level, and service need.</p>
+        <p>Choose cleaning, installation support, AMC planning, repair help, or bird mesh work based on rooftop condition, dust level, and service need.</p>
       </div>
       <div class="services-grid">
         <article class="service-card"><div class="mini-icon"><i class="ri-brush-line"></i></div><h3>Solar Panel Cleaning</h3><p class="muted">Routine cleaning to remove dust, bird droppings, and surface buildup that can reduce energy output over time.</p><div class="tag-row"><span>Monthly</span><span>Quarterly</span></div><div style="margin-top:16px"><a class="btn-soft" href="solar-panel-cleaning-service.html">Open cleaning page</a></div></article>
-        <article class="service-card"><div class="mini-icon"><i class="ri-tools-line"></i></div><h3>Maintenance Availability</h3><p class="muted">Selected rooftops can enquire for maintenance availability when they need cleaning plus visual inspection and repeat care planning.</p><div class="tag-row"><span>Selected rooftops</span><span>Inspection support</span></div><div style="margin-top:16px"><a class="btn-soft" href="amc-plans.html">Enquire about maintenance</a></div></article>
+        <article class="service-card"><div class="mini-icon"><i class="ri-settings-5-line"></i></div><h3>Solar Installation Support</h3><p class="muted">For new rooftop solar setups, mounting guidance, installation-side support, and customers who want cleaning and care from the same local service brand.</p><div class="tag-row"><span>Installation support</span><span>Rooftop setup</span></div><div style="margin-top:16px"><a class="btn-soft" href="contact-solarcare.html">Ask about installation</a></div></article>
+        <article class="service-card"><div class="mini-icon"><i class="ri-tools-line"></i></div><h3>Solar AMC</h3><p class="muted">Selected rooftops can enquire for AMC availability when they need repeat cleaning, basic inspection support, and scheduled rooftop care planning.</p><div class="tag-row"><span>Selected rooftops</span><span>Inspection support</span></div><div style="margin-top:16px"><a class="btn-soft" href="amc-plans.html">Enquire about AMC</a></div></article>
         <article class="service-card"><div class="mini-icon"><i class="ri-flashlight-line"></i></div><h3>Repair / Inverter Check</h3><p class="muted">Focused assistance for output drop, inverter concerns, visible wiring issues, or site-specific inspection needs.</p><div class="tag-row"><span>Diagnostics</span><span>Site Visit</span></div><div style="margin-top:16px"><a class="btn-soft" href="solar-panel-repair-service.html">Open repair page</a></div></article>
         <article class="service-card"><div class="mini-icon"><i class="ri-battery-2-charge-line"></i></div><h3>Battery & Streetlight Services</h3><p class="muted">Support for battery health checks, replacement planning, and solar streetlight maintenance where applicable.</p></article>
-        <article class="service-card"><div class="mini-icon"><i class="ri-shield-star-line"></i></div><h3>Bird Net / Pigeon Proofing</h3><p class="muted">Protective solutions to reduce nesting, repeat dirt buildup, and under-panel access issues caused by birds.</p></article>
+        <article class="service-card"><div class="mini-icon"><i class="ri-shield-star-line"></i></div><h3>Bird Mesh Installation</h3><p class="muted">Protective bird mesh and pigeon-proofing support to reduce nesting, repeated dirt buildup, and under-panel access issues caused by birds.</p></article>
         <article class="service-card"><div class="mini-icon"><i class="ri-line-chart-line"></i></div><h3>Performance Monitoring</h3><p class="muted">Regular checks that help site owners understand whether the system is performing normally or needs attention.</p></article>
       </div>
       <div class="hero-actions" style="margin-top:22px">
@@ -1589,7 +1655,7 @@
       </div>
       <div class="slider-shell">
         <div class="slider-toolbar">
-          <p>Real images from recent solar cleaning jobs across Lucknow.</p>
+          <p>15+ real images from recent solar cleaning jobs across Lucknow.</p>
           <div class="slider-controls">
             <button class="slider-btn" type="button" data-slider-target="#realWorkSliderTrack" data-slider-dir="-1" aria-label="Previous real work image"><i class="ri-arrow-left-s-line"></i></button>
             <button class="slider-btn" type="button" data-slider-target="#realWorkSliderTrack" data-slider-dir="1" aria-label="Next real work image"><i class="ri-arrow-right-s-line"></i></button>
@@ -1597,10 +1663,31 @@
         </div>
         <div class="real-work-slider" id="realWorkSliderTrack">
           <article class="real-slide">
+            <img src="assets/solar-cleaning-before-1.jpg" alt="Solar panels before cleaning in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Before cleaning condition</strong>
+              <p>Visible rooftop dust and surface buildup before a cleaning visit.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/solar-cleaning-before-2.jpg" alt="Dusty solar panels before service in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Dust-heavy rooftop</strong>
+              <p>Another real before-cleaning view from a rooftop service request.</p>
+            </div>
+          </article>
+          <article class="real-slide">
             <img src="assets/commercial-rooftop-cleaning-evening.jpg" alt="Commercial rooftop solar panels after cleaning in Lucknow" loading="lazy">
             <div class="real-slide-copy">
               <strong>Commercial rooftop result</strong>
               <p>After-cleaning finish from a larger rooftop service visit in Lucknow.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/commercial-rooftop-wide-array.jpg" alt="Wide rooftop solar panel array after cleaning in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Wide rooftop finish</strong>
+              <p>Clean panel surface across a broader rooftop system after service.</p>
             </div>
           </article>
           <article class="real-slide">
@@ -1618,10 +1705,38 @@
             </div>
           </article>
           <article class="real-slide">
+            <img src="assets/kadra-rooftop-after-2.jpeg" alt="Wide rooftop view after cleaning in Kadra Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Kadra wide result</strong>
+              <p>A broader after-cleaning look from the same Kadra rooftop site.</p>
+            </div>
+          </article>
+          <article class="real-slide">
             <img src="assets/aminabad-rooftop-before-1.jpeg" alt="Solar panels before cleaning near Aminabad Lucknow" loading="lazy">
             <div class="real-slide-copy">
               <strong>Aminabad before cleaning</strong>
               <p>Visible dirt and bird-dropping spots before the Aminabad-side visit.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/aminabad-rooftop-before-2.jpeg" alt="Another before-cleaning angle near Aminabad Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Aminabad before angle</strong>
+              <p>Another real before-cleaning view from the Aminabad-side rooftop.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/aminabad-rooftop-after-1.jpeg" alt="Solar panels after cleaning near Aminabad Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Aminabad cleaned panels</strong>
+              <p>Clear panel finish after the rooftop cleaning visit was completed.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/aminabad-rooftop-after-2.jpeg" alt="Wide rooftop result after cleaning near Aminabad Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Aminabad wide result</strong>
+              <p>A wider rooftop view showing the overall finish after service.</p>
             </div>
           </article>
           <article class="real-slide">
@@ -1636,6 +1751,13 @@
             <div class="real-slide-copy">
               <strong>Home rooftop result</strong>
               <p>Real after-cleaning proof from a residential Lucknow service visit.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/solar-cleaning-after-2.jpg" alt="Solar panels after service in Lucknow rooftop setup" loading="lazy">
+            <div class="real-slide-copy">
+              <strong>Residential after service</strong>
+              <p>Cleaner panel finish from another real home rooftop support visit.</p>
             </div>
           </article>
           <article class="real-slide">
@@ -1999,17 +2121,23 @@
           <div class="form-grid">
             <input name="name" class="form-control" placeholder="Your name" required>
             <input name="phone" class="form-control" pattern="[0-9]{10}" placeholder="10 digit mobile number" required>
-            <input name="address" class="form-control" placeholder="Area / locality" required>
+            <input name="address" class="form-control" placeholder="Location / area" required>
             <select name="service" class="form-select">
               <option>Solar Panel Cleaning</option>
-              <option>Premium Maintenance</option>
+              <option>Solar Installation</option>
+              <option>Solar AMC</option>
               <option>Repair / Inverter Check</option>
+              <option>Bird Mesh Installation</option>
               <option>Battery & Streetlight Services</option>
-              <option>Bird Net / Pigeon Proofing</option>
               <option>Performance Monitoring</option>
             </select>
-            <input name="panels" type="number" min="1" class="form-control" placeholder="Solar KW or approx. panel count">
-            <textarea name="notes" rows="4" class="form-control full" placeholder="Roof access details, issue description, cleaning frequency, ladder availability, or any other notes"></textarea>
+            <input name="kw_size" class="form-control" placeholder="KW size (example: 3KW, 5KW)">
+            <input name="panel_count" type="number" min="1" class="form-control" placeholder="Number of panels">
+            <textarea name="message" rows="4" class="form-control full" placeholder="Message, issue details, ladder availability, or any other notes"></textarea>
+            <div class="full">
+              <input name="photo_upload" type="file" accept="image/*" class="form-control">
+              <p class="upload-note">Optional: if you select a rooftop photo here, we will include the file name in your enquiry and you can send the actual image on WhatsApp after submit.</p>
+            </div>
             <div class="full form-switch-row">
               <label><input type="checkbox" id="viaWhatsappBook" checked> Also open WhatsApp with my details</label>
               <span class="muted">We only use this information to respond to your request.</span>
@@ -2068,12 +2196,51 @@
       </div>
       <div class="reviews-grid">
         <article class="review-card surface"><div class="stars"><i class="ri-checkbox-circle-line"></i> 100+ customers served</div><p class="muted">IMSOLARCARE has now served 100+ customers in Lucknow across residential and commercial rooftops with real cleaning and inspection support.</p><strong>Active local customer record</strong></article>
-        <article class="review-card surface"><div class="stars"><i class="ri-star-smile-line"></i> Google reviews</div><p class="muted">Google reviews and customer feedback help new clients check service quality, response speed, and overall booking experience before they call.</p><strong>Growing trust signal</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-star-smile-line"></i> Review-ready profile</div><p class="muted">Google review screenshots and direct customer feedback can sit here cleanly once you share the real review assets, so this section is now ready for expansion.</p><strong>Ready for real screenshots</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-image-2-line"></i> Before / after proof</div><p class="muted">Real rooftop photos and cleaning videos show actual panel condition before service and visible results after cleaning.</p><strong>Visual credibility</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-map-pin-2-line"></i> Local coverage</div><p class="muted">Area pages for Aliganj, Jankipuram, Gomti Nagar, Vikas Nagar, Indira Nagar, and Kamta Chauraha improve local intent and service clarity.</p><strong>Lucknow-focused presence</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-whatsapp-line"></i> Quick response</div><p class="muted">Visible WhatsApp, direct call support, and a short booking form reduce friction for customers who want a fast answer.</p><strong>Faster conversions</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-shield-check-line"></i> Access policy</div><p class="muted">Clear roof-access and ladder requirements make the service look more practical and professional before the team reaches the site.</p><strong>Clear expectations</strong></article>
         <article class="review-card surface"><div class="stars"><i class="ri-home-office-line"></i> Repeat maintenance</div><p class="muted">One-time cleaning and selected maintenance availability are offered for customers who want regular rooftop care.</p><strong>Broader support range</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-rocket-line"></i> Same day booking</div><p class="muted">When slots are available, customers can request same-day or next-day support through call or WhatsApp without a long wait cycle.</p><strong>Quicker scheduling</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-building-2-line"></i> Commercial support</div><p class="muted">Larger rooftops, shops, office setups, and mixed-use properties can also enquire for broader cleaning or inspection support.</p><strong>Commercial-ready support</strong></article>
+        <article class="review-card surface"><div class="stars"><i class="ri-settings-4-line"></i> Installation support</div><p class="muted">Customers who want cleaning plus solar installation-side help can use the same contact flow instead of searching for a different local vendor.</p><strong>Broader solar care brand</strong></article>
+      </div>
+    </section>
+
+    <section class="section-box surface">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Trust & Location</span>
+          <h2 style="margin-top:12px">Local business details, service map, and trust badges.</h2>
+        </div>
+        <p>Use the map, contact details, and direct links below if you want a quick local-trust check before booking.</p>
+      </div>
+      <div class="trust-map-grid">
+        <article class="map-card">
+          <iframe class="map-frame" title="IMSOLARCARE service map for Lucknow" src="https://www.google.com/maps?q=Lucknow%20Uttar%20Pradesh&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="hero-actions" style="margin-top:16px">
+            <a class="btn-main" href="https://maps.app.goo.gl/MGhfX9pQNCTkjzre8" target="_blank" rel="noopener noreferrer"><i class="ri-map-pin-line"></i> Open Google Maps</a>
+          </div>
+        </article>
+        <article class="trust-card">
+          <h3>Contact details</h3>
+          <p class="muted"><strong>Phone:</strong> <a href="tel:+918112780010">+91 8112780010</a></p>
+          <p class="muted"><strong>Email:</strong> <a href="mailto:imsolarcare@gmail.com">imsolarcare@gmail.com</a></p>
+          <p class="muted"><strong>Service area:</strong> Lucknow, Aliganj, Gomti Nagar, Jankipuram, Indira Nagar, Ashiyana, Rajajipuram, Kadra, Aminabad, and nearby areas.</p>
+          <p class="muted"><strong>Google Maps:</strong> <a href="https://maps.app.goo.gl/MGhfX9pQNCTkjzre8" target="_blank" rel="noopener noreferrer">Open business location</a></p>
+          <div class="footer-social-row">
+            <a class="btn-soft" href="https://wa.me/918112780010?text=Hello%20IMSOLARCARE%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer"><i class="ri-whatsapp-line"></i> WhatsApp Link</a>
+            <a class="btn-soft" href="tel:+918112780010"><i class="ri-phone-line"></i> Call Now</a>
+            <a class="btn-soft" href="mailto:imsolarcare@gmail.com"><i class="ri-mail-line"></i> Email</a>
+          </div>
+          <div class="trust-badge-grid">
+            <div class="trust-badge-item"><strong>Professional Service</strong><span class="muted">Real rooftop handling with clear communication.</span></div>
+            <div class="trust-badge-item"><strong>Satisfaction Guarantee</strong><span class="muted">Practical support with before and after proof.</span></div>
+            <div class="trust-badge-item"><strong>Local Business</strong><span class="muted">Lucknow-focused rooftop cleaning and support.</span></div>
+            <div class="trust-badge-item"><strong>Transparent Pricing</strong><span class="muted">Capacity-based pricing starting at ₹799.</span></div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -2213,11 +2380,30 @@
     });
 
     async function submitBooking(form) {
-      const data = Object.fromEntries(new FormData(form).entries());
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (value instanceof File) {
+          data[key] = value.name || '';
+          return;
+        }
+        data[key] = value;
+      });
       let serverResult = null;
 
       try {
-        serverResult = await postJson('/api/book', data);
+        serverResult = await postJson('/api/book', {
+          name: data.name || '',
+          phone: data.phone || '',
+          address: data.address || '',
+          service: data.service || '',
+          panels: data.panel_count || data.panels || '',
+          notes: [
+            data.kw_size ? `KW size: ${data.kw_size}` : '',
+            data.message ? `Message: ${data.message}` : '',
+            data.photo_upload ? `Photo selected: ${data.photo_upload}` : ''
+          ].filter(Boolean).join('\n')
+        });
       } catch (error) {
         console.warn('Booking API unavailable, using direct WhatsApp fallback.', error);
       }
@@ -2230,8 +2416,10 @@
           `Phone: ${data.phone || ''}\n` +
           `City / locality: ${data.address || ''}\n` +
           `Service: ${data.service || ''}\n` +
-          `Panels: ${data.panels || ''}\n` +
-          `Notes: ${data.notes || ''}`
+          `KW size: ${data.kw_size || ''}\n` +
+          `Number of panels: ${data.panel_count || ''}\n` +
+          `Message: ${data.message || ''}\n` +
+          `Photo selected: ${data.photo_upload || ''}`
         );
       }
 
@@ -2260,7 +2448,15 @@
       const form = event.currentTarget;
       if (!form.reportValidity()) return;
 
-      const data = Object.fromEntries(new FormData(form).entries());
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (value instanceof File) {
+          data[key] = value.name || '';
+          return;
+        }
+        data[key] = value;
+      });
       const combinedMessage = [
         data.city ? `City / locality: ${data.city}` : '',
         data.panels ? `Approx. panel count: ${data.panels}` : '',
