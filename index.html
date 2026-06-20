@@ -40,44 +40,92 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="site-chrome.js" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "HomeAndConstructionBusiness",
+      "@id": "https://imsolarcare.in/#business",
       "name": "IMSOLARCARE",
       "alternateName": "IMSolarCare",
       "url": "https://imsolarcare.in/",
-      "logo": "https://imsolarcare.in/assets/favicon-solarcare.svg",
-      "image": "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
-      "description": "Solar panel cleaning, maintenance availability, inspection, and bird netting support for rooftop solar systems in Lucknow, including Gomti Nagar, Aliganj, Jankipuram, Indira Nagar, Vikas Nagar, and Kamta Chauraha areas.",
+      "logo": "https://imsolarcare.in/assets/imsolarcare-logo.png",
+      "image": [
+        "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
+        "https://imsolarcare.in/assets/solar-cleaning-after-1.jpg",
+        "https://imsolarcare.in/assets/solar-amc-inverter-check.jpg"
+      ],
+      "description": "IMSOLARCARE provides professional solar panel cleaning, rooftop inspection support, inverter checks, bird-dropping cleanup, and maintenance planning for residential and commercial solar systems across Lucknow.",
       "telephone": "+91 8112780010",
       "email": "imsolarcare@gmail.com",
       "priceRange": "₹799 onwards",
+      "hasMap": "https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac",
+      "sameAs": [
+        "https://www.instagram.com/imsolarcare?igsh=MTA2ODZ4ZmtseHlvcg==",
+        "https://www.facebook.com/share/17XE6ewVoq/",
+        "https://www.youtube.com/@imsolarcare",
+        "https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac"
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lucknow",
         "addressRegion": "Uttar Pradesh",
         "addressCountry": "IN"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 26.8467,
+        "longitude": 80.9462
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "08:00",
+          "closes": "19:00"
+        }
+      ],
       "areaServed": [
         "Lucknow",
         "Aliganj",
-        "Mehndi Tola",
+        "Aminabad",
+        "Ashiyana",
         "Gomti Nagar",
-        "Kamta Chauraha",
-        "Jankipuram",
         "Indira Nagar",
-        "Vikas Nagar",
-        "Uttar Pradesh",
-        "Kanpur",
-        "Unnao"
+        "Jankipuram",
+        "Kadra",
+        "Kamta Chauraha",
+        "Mehndi Tola",
+        "Rajajipuram",
+        "Vikas Nagar"
       ],
       "serviceType": [
         "Solar panel cleaning",
         "Solar maintenance",
+        "Basic solar inspection",
         "Inverter inspection",
-        "Bird netting",
-        "Solar maintenance support"
+        "Bird netting support",
+        "Rooftop solar care"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91 8112780010",
+          "contactType": "customer service",
+          "areaServed": "Lucknow",
+          "availableLanguage": [
+            "en",
+            "hi"
+          ]
+        }
       ]
     }
   </script>
@@ -240,7 +288,7 @@
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
-    .shell { width: min(1180px, calc(100% - 28px)); margin: 0 auto; }
+    .shell { width: min(1100px, calc(100% - 28px)); margin: 0 auto; }
     .surface { background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); backdrop-filter: blur(18px); }
 
     .topbar {
@@ -1136,7 +1184,7 @@
     }
 
     @media (max-width: 640px) {
-      .shell { width: min(100% - 18px, 1180px); }
+      .shell { width: min(100% - 18px, 1100px); }
       .topbar { position: sticky; top: 0; }
       .topbar-inner { gap: 10px; padding: 12px 0; }
       .brand { min-width: 0; justify-content: flex-start; }
@@ -1239,11 +1287,19 @@
       .floating-wa {
         right: 14px;
         bottom: 14px;
-        width: 58px;
-        height: 58px;
-        border-radius: 20px;
+        width: 54px;
+        height: 54px;
+        border-radius: 18px;
+      }
+      .floating-call {
+        right: 14px;
+        bottom: 76px;
+        width: 54px;
+        height: 54px;
+        border-radius: 18px;
       }
       .floating-wa::before { display: none; }
+      .floating-call::before { display: none; }
       .offer-popup { padding: 22px 18px; border-radius: 24px; }
       .offer-popup h3 { font-size: 1.72rem; }
       .offer-popup-points div {
@@ -1253,7 +1309,7 @@
     }
 
     @media (max-width: 420px) {
-      .shell { width: min(100% - 14px, 1180px); }
+      .shell { width: min(100% - 14px, 1100px); }
       .topbar-inner { padding: 10px 0; }
       .brand small { font-size: .78rem; }
       .phone-chip { font-size: .92rem; padding: 10px 12px; }
@@ -1324,7 +1380,7 @@
 
       <aside class="hero-panel surface">
         <div class="stack-card hero-photo-card">
-            <img src="assets/commercial-rooftop-cleaning-evening.jpg" alt="Clean solar panels after rooftop service in Lucknow">
+            <img src="assets/commercial-rooftop-cleaning-evening.jpg" alt="Clean solar panels after rooftop service in Lucknow" decoding="async" fetchpriority="high">
           <div class="hero-photo-overlay">
             <span class="eyebrow">Local solar support</span>
             <h3>Professional solar panel cleaning in Lucknow.</h3>
@@ -1623,11 +1679,11 @@
         </article>
         <article class="media-card">
           <div class="media-art">
-            <img src="assets/commercial-rooftop-cleaning-evening.jpg" alt="Solar panels after cleaning service in Lucknow" loading="lazy">
+            <img src="assets/commercial-10kw-after-1.jpeg" alt="10KW commercial solar panels after cleaning service in Lucknow" loading="lazy">
           </div>
           <div class="media-copy">
-            <h3>Real after-cleaning result</h3>
-            <p>Shows the cleaner panel surface after service and the kind of visible finish customers expect from a proper visit.</p>
+            <h3>10KW commercial rooftop result</h3>
+            <p>Real after-cleaning finish from a larger commercial rooftop in Lucknow, now added as fresh proof for higher-capacity solar work.</p>
           </div>
         </article>
         <article class="media-card">
@@ -1637,6 +1693,18 @@
           <div class="media-copy">
             <h3>Maintenance and inverter inspection</h3>
             <p>Real maintenance-side photo from service work, useful for maintenance discussions and inverter-related support.</p>
+          </div>
+        </article>
+        <article class="media-card">
+          <div class="media-art">
+            <video controls preload="metadata" playsinline style="width:100%;border-radius:24px;background:#000">
+              <source src="assets/commercial-10kw-cleaning.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="media-copy">
+            <h3>Commercial cleaning video</h3>
+            <p>Fresh on-site video from a 10KW commercial rooftop cleaning visit, useful for customers comparing real large-rooftop work.</p>
           </div>
         </article>
       </div>
@@ -1651,11 +1719,11 @@
           <span class="eyebrow">Real Work Slider</span>
           <h2 style="margin-top:12px">100+ customers served with real rooftop work proof.</h2>
         </div>
-        <p>Slide through real rooftop photos from Kadra, Aminabad, Aliganj, and other Lucknow service visits.</p>
+          <p>Slide through real rooftop photos from Kadra, Aminabad, Aliganj, commercial 10KW sites, and other Lucknow service visits.</p>
       </div>
       <div class="slider-shell">
         <div class="slider-toolbar">
-          <p>15+ real images from recent solar cleaning jobs across Lucknow.</p>
+          <p>20+ real images from residential and commercial solar cleaning jobs across Lucknow.</p>
           <div class="slider-controls">
             <button class="slider-btn" type="button" data-slider-target="#realWorkSliderTrack" data-slider-dir="-1" aria-label="Previous real work image"><i class="ri-arrow-left-s-line"></i></button>
             <button class="slider-btn" type="button" data-slider-target="#realWorkSliderTrack" data-slider-dir="1" aria-label="Next real work image"><i class="ri-arrow-right-s-line"></i></button>
@@ -1688,6 +1756,30 @@
             <div class="real-slide-copy">
               <strong>Wide rooftop finish</strong>
               <p>Clean panel surface across a broader rooftop system after service.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/commercial-10kw-after-2.jpeg" alt="10KW commercial rooftop solar panels after cleaning in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <p class="eyebrow" style="margin-bottom:10px">10KW Commercial</p>
+              <strong>Commercial rooftop sun-finish</strong>
+              <p>Fresh after-service view from a 10KW commercial site with a broader panel surface and cleaner top layer.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/commercial-10kw-detail-1.jpeg" alt="10KW commercial solar panel close view after cleaning in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <p class="eyebrow" style="margin-bottom:10px">High Capacity Site</p>
+              <strong>Closer 10KW panel view</strong>
+              <p>A closer proof angle from the same commercial rooftop, useful for showing the finish quality after cleaning.</p>
+            </div>
+          </article>
+          <article class="real-slide">
+            <img src="assets/commercial-10kw-detail-2.jpeg" alt="Clean commercial rooftop solar panels after service in Lucknow" loading="lazy">
+            <div class="real-slide-copy">
+              <p class="eyebrow" style="margin-bottom:10px">Commercial Ready</p>
+              <strong>10KW clean panel surface</strong>
+              <p>Another commercial after-cleaning visual that helps visitors see the consistency across a bigger rooftop installation.</p>
             </div>
           </article>
           <article class="real-slide">
@@ -1777,7 +1869,7 @@
           <span class="eyebrow">Recent Work</span>
           <h2 style="margin-top:12px">Recent solar cleaning work in Lucknow.</h2>
         </div>
-        <p>Real rooftop work from Lucknow including home setups, shop installations, and small commercial solar cleaning visits.</p>
+        <p>Real rooftop work from Lucknow including home setups, shop installations, and higher-capacity commercial solar cleaning visits.</p>
       </div>
       <div class="services-grid">
         <article class="service-card">
@@ -1809,6 +1901,12 @@
           <h3>Aminabad - Local rooftop work</h3>
           <p class="muted">Aminabad service work included panel cleaning for a neighborhood rooftop setup with visible dirt buildup. The final result was captured through real after-cleaning photos and video.</p>
           <div class="tag-row"><span>Aminabad</span><span>Real video</span><span>Local service</span></div>
+        </article>
+        <article class="service-card">
+          <div class="mini-icon"><i class="ri-building-4-line"></i></div>
+          <h3>Lucknow - 10KW commercial rooftop</h3>
+          <p class="muted">A new commercial 10KW rooftop cleaning visit has now been added with real photos and service video. This helps larger rooftop owners see proof beyond small home setups.</p>
+          <div class="tag-row"><span>10KW Commercial</span><span>Fresh proof</span><span>Large rooftop</span></div>
         </article>
       </div>
       <div class="hero-actions" style="margin-top:22px">
@@ -2220,7 +2318,8 @@
         <article class="map-card">
           <iframe class="map-frame" title="IMSOLARCARE service map for Lucknow" src="https://www.google.com/maps?q=Lucknow%20Uttar%20Pradesh&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           <div class="hero-actions" style="margin-top:16px">
-            <a class="btn-main" href="https://maps.app.goo.gl/MGhfX9pQNCTkjzre8" target="_blank" rel="noopener noreferrer"><i class="ri-map-pin-line"></i> Open Google Maps</a>
+            <a class="btn-main" href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer"><i class="ri-map-pin-line"></i> Open Google Maps</a>
+            <a class="btn-soft" href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer"><i class="ri-star-line"></i> Leave a Review</a>
           </div>
         </article>
         <article class="trust-card">
@@ -2228,11 +2327,17 @@
           <p class="muted"><strong>Phone:</strong> <a href="tel:+918112780010">+91 8112780010</a></p>
           <p class="muted"><strong>Email:</strong> <a href="mailto:imsolarcare@gmail.com">imsolarcare@gmail.com</a></p>
           <p class="muted"><strong>Service area:</strong> Lucknow, Aliganj, Gomti Nagar, Jankipuram, Indira Nagar, Ashiyana, Rajajipuram, Kadra, Aminabad, and nearby areas.</p>
-          <p class="muted"><strong>Google Maps:</strong> <a href="https://maps.app.goo.gl/MGhfX9pQNCTkjzre8" target="_blank" rel="noopener noreferrer">Open business location</a></p>
+          <p class="muted"><strong>Google Maps:</strong> <a href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer">Open business location</a></p>
           <div class="footer-social-row">
             <a class="btn-soft" href="https://wa.me/918112780010?text=Hello%20IMSOLARCARE%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer"><i class="ri-whatsapp-line"></i> WhatsApp Link</a>
             <a class="btn-soft" href="tel:+918112780010"><i class="ri-phone-line"></i> Call Now</a>
             <a class="btn-soft" href="mailto:imsolarcare@gmail.com"><i class="ri-mail-line"></i> Email</a>
+          </div>
+          <div class="footer-social-row" style="margin-top:12px">
+            <a class="btn-soft" href="https://www.instagram.com/imsolarcare?igsh=MTA2ODZ4ZmtseHlvcg==" target="_blank" rel="noopener noreferrer"><i class="ri-instagram-line"></i> Instagram</a>
+            <a class="btn-soft" href="https://www.facebook.com/share/17XE6ewVoq/" target="_blank" rel="noopener noreferrer"><i class="ri-facebook-circle-line"></i> Facebook</a>
+            <a class="btn-soft" href="https://www.youtube.com/@imsolarcare" target="_blank" rel="noopener noreferrer"><i class="ri-youtube-line"></i> YouTube</a>
+            <a class="btn-soft" href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer"><i class="ri-star-smile-line"></i> Review Us</a>
           </div>
           <div class="trust-badge-grid">
             <div class="trust-badge-item"><strong>Professional Service</strong><span class="muted">Real rooftop handling with clear communication.</span></div>
