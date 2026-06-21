@@ -56,7 +56,7 @@
       <a class="site-brand" href="index.html" aria-label="IMSOLARCARE home">
         <img class="site-brand-image" src="assets/imsolarcare-navbar-logo.png" alt="IM Solar Care logo">
       </a>
-      <button class="site-theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+      <button class="site-theme-toggle site-theme-toggle-mobile" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
         <i class="ri-contrast-2-line" aria-hidden="true"></i>
       </button>
       <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="siteNavMenu">Menu</button>
@@ -74,6 +74,9 @@
         </details>
       </nav>
       <div class="site-header-actions">
+        <button class="site-theme-toggle site-theme-toggle-desktop" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <i class="ri-contrast-2-line" aria-hidden="true"></i>
+        </button>
         <a class="site-action-link site-action-link-call" href="tel:+918112780010">Call Now</a>
         <a class="site-action-link site-action-link-strong" href="https://wa.me/918112780010?text=Hello%20IMSOLARCARE%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </div>
@@ -146,7 +149,7 @@
   const nav = header.querySelector('[data-site-nav]');
   const toggle = header.querySelector('.site-nav-toggle');
   const bar = header.querySelector('.site-chrome-bar');
-  const themeToggle = header.querySelector('.site-theme-toggle');
+  const themeToggles = [...header.querySelectorAll('.site-theme-toggle')];
 
   function ensureThemeMeta() {
     let meta = document.querySelector('meta[name="theme-color"]');
@@ -159,14 +162,15 @@
   }
 
   function setThemeIcon(theme) {
-    if (!themeToggle) return;
     const isDark = theme === 'dark';
-    themeToggle.innerHTML = isDark
-      ? '<i class="ri-sun-line" aria-hidden="true"></i>'
-      : '<i class="ri-contrast-2-line" aria-hidden="true"></i>';
     const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-    themeToggle.setAttribute('aria-label', label);
-    themeToggle.setAttribute('title', label);
+    themeToggles.forEach((themeToggle) => {
+      themeToggle.innerHTML = isDark
+        ? '<i class="ri-sun-line" aria-hidden="true"></i>'
+        : '<i class="ri-contrast-2-line" aria-hidden="true"></i>';
+      themeToggle.setAttribute('aria-label', label);
+      themeToggle.setAttribute('title', label);
+    });
   }
 
   function getInitialTheme() {
@@ -219,12 +223,12 @@
 
   applyTheme(getInitialTheme(), false);
 
-  if (themeToggle) {
+  themeToggles.forEach((themeToggle) => {
     themeToggle.addEventListener('click', () => {
       const currentTheme = rootEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
       applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
-  }
+  });
 
   const yearNode = footer.querySelector('[data-year]');
   if (yearNode) {

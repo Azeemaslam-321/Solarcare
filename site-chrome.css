@@ -310,6 +310,14 @@ html[data-theme='dark'] body {
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
+.site-theme-toggle-mobile {
+  display: none;
+}
+
+.site-theme-toggle-desktop {
+  display: inline-flex;
+}
+
 .site-theme-toggle i {
   display: block;
   line-height: 1;
@@ -679,6 +687,14 @@ html[data-theme='dark'] .checklist-panel .check-list i {
     font-size: 0.98rem;
     order: 2;
     align-self: center;
+  }
+
+  .site-theme-toggle-mobile {
+    display: inline-flex;
+  }
+
+  .site-theme-toggle-desktop {
+    display: none;
   }
 
   .site-nav-toggle {
