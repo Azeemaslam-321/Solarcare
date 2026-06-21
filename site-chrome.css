@@ -293,8 +293,8 @@ html[data-theme='dark'] body {
 }
 
 .site-theme-toggle {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 999px;
   border: 1px solid var(--theme-line);
   background: var(--theme-chip-strong);
@@ -307,15 +307,16 @@ html[data-theme='dark'] body {
   flex: 0 0 auto;
   line-height: 1;
   order: 3;
+  box-shadow: 0 10px 24px rgba(22, 33, 28, 0.1);
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .site-theme-toggle-mobile {
-  display: none;
+  display: none !important;
 }
 
 .site-theme-toggle-desktop {
-  display: inline-flex;
+  display: inline-flex !important;
 }
 
 .site-theme-toggle i {
@@ -690,11 +691,11 @@ html[data-theme='dark'] .checklist-panel .check-list i {
   }
 
   .site-theme-toggle-mobile {
-    display: inline-flex;
+    display: inline-flex !important;
   }
 
   .site-theme-toggle-desktop {
-    display: none;
+    display: none !important;
   }
 
   .site-nav-toggle {
