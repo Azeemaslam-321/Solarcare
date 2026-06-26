@@ -34,7 +34,8 @@
 
   const secondaryNavItems = [
     { href: 'before-after-gallery.html', label: 'Gallery', icon: 'ri-gallery-line', match: ['before-after-gallery.html'] },
-    { href: 'blog.html', label: 'Blog', icon: 'ri-article-line', match: ['blog.html', 'why-solar-panel-cleaning-is-important.html', 'how-dust-affects-solar-panel-performance.html', 'best-time-to-clean-solar-panels-india.html', 'solar-panel-cleaning-guide.html', 'solar-panel-cleaning-cost-lucknow.html', 'solar-maintenance-guide-lucknow.html', 'solar-amc-guide.html', 'solar-maintenance-tips-homeowners.html', 'solar-maintenance-myths.html', 'common-mistakes-in-solar-panel-cleaning.html'] },
+    { href: 'index.html#reviews', label: 'Reviews', icon: 'ri-star-smile-line', match: [] },
+    { href: 'blog.html', label: 'Blogs', icon: 'ri-article-line', match: ['blog.html', 'why-solar-panel-cleaning-is-important.html', 'how-dust-affects-solar-panel-performance.html', 'best-time-to-clean-solar-panels-india.html', 'solar-panel-cleaning-guide.html', 'solar-panel-cleaning-cost-lucknow.html', 'solar-maintenance-guide-lucknow.html', 'solar-amc-guide.html', 'solar-maintenance-tips-homeowners.html', 'solar-maintenance-myths.html', 'common-mistakes-in-solar-panel-cleaning.html'] },
     { href: 'service-areas.html', label: 'Areas', icon: 'ri-map-pin-line', match: ['service-areas.html', 'lucknow-solar-panel-cleaning.html', 'aliganj-solar-panel-cleaning.html', 'aminabad-solar-panel-cleaning.html', 'ashiyana-solar-panel-cleaning.html', 'gomti-nagar-solar-panel-cleaning.html', 'indira-nagar-solar-panel-cleaning.html', 'jankipuram-solar-panel-cleaning.html', 'kadra-solar-panel-cleaning.html', 'kamta-chauraha-solar-panel-cleaning.html', 'mehndi-tola-solar-maintenance.html', 'rajajipuram-solar-panel-cleaning.html', 'vikas-nagar-solar-panel-cleaning.html', 'solar-panel-cleaning-near-me-lucknow.html'] }
   ];
 
