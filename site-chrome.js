@@ -91,7 +91,7 @@
   header.innerHTML = `
     <div class="site-chrome-bar">
       <a class="site-brand" href="index.html" aria-label="IMSOLARCARE home">
-        <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-logo.png')}" alt="IM Solar Care logo">
+        <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care logo">
       </a>
       <button class="site-theme-toggle site-theme-toggle-mobile" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
         <i class="ri-contrast-2-line" aria-hidden="true"></i>
@@ -136,7 +136,7 @@
     <div class="site-footer-shell">
       <div class="site-footer-top">
         <section class="site-footer-brand-block">
-          <img class="site-footer-brand-image" src="${rootHref('assets/imsolarcare-navbar-logo.png')}" alt="IM Solar Care logo">
+          <img class="site-footer-brand-image" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care logo">
           <p class="site-footer-tagline">Care Today, Power Tomorrow</p>
         </section>
         <nav class="site-footer-column" aria-label="Services footer links">
