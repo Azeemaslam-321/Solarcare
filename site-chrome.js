@@ -1,4 +1,7 @@
 (() => {
+  const initialPathParts = window.location.pathname.split('/').filter(Boolean);
+  const initialRootPrefix = initialPathParts.includes('locations') ? '../' : '';
+
   if (!document.querySelector('link[href*="remixicon"]')) {
     const iconLink = document.createElement('link');
     iconLink.rel = 'stylesheet';
@@ -9,7 +12,7 @@
   if (!document.querySelector('link[href$="site-chrome.css"]')) {
     const chromeLink = document.createElement('link');
     chromeLink.rel = 'stylesheet';
-    chromeLink.href = 'site-chrome.css';
+    chromeLink.href = `${initialRootPrefix}site-chrome.css`;
     document.head.appendChild(chromeLink);
   }
 
@@ -23,16 +26,43 @@
   const lightThemeColor = '#f4efe6';
   const darkThemeColor = '#0d1511';
 
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const currentPage = pathParts[pathParts.length - 1] || 'index.html';
+  const isLocationPage = pathParts.includes('locations');
+  const rootPrefix = isLocationPage ? '../' : '';
+  const rootHref = (href) => {
+    if (/^(https?:|mailto:|tel:|#|javascript:)/i.test(href)) {
+      return href;
+    }
+    return `${rootPrefix}${href}`;
+  };
   const primaryNavItems = [
     { href: 'index.html', label: 'Home', icon: 'ri-home-5-line', match: ['index.html', ''] },
     { href: 'about-solarcare.html', label: 'About', icon: 'ri-information-line', match: ['about-solarcare.html'] },
     { href: 'services.html', label: 'Services', icon: 'ri-brush-line', match: ['services.html', 'solar-panel-cleaning-service.html', 'solar-panel-maintenance-service.html', 'solar-panel-repair-service.html', 'amc-plans.html'] },
-    { href: 'pricing.html', label: 'Pricing', icon: 'ri-price-tag-3-line', match: ['pricing.html'] },
     { href: 'contact-solarcare.html', label: 'Contact', icon: 'ri-phone-line', match: ['contact-solarcare.html'] }
   ];
 
+  const locationNavItems = [
+    { href: 'locations/solar-panel-cleaning-lucknow.html', label: 'Lucknow', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-lucknow.html'] },
+    { href: 'locations/solar-panel-cleaning-kanpur.html', label: 'Kanpur', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-kanpur.html'] },
+    { href: 'locations/solar-panel-cleaning-noida.html', label: 'Noida', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-noida.html'] },
+    { href: 'locations/solar-panel-cleaning-greater-noida.html', label: 'Greater Noida', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-greater-noida.html'] },
+    { href: 'locations/solar-panel-cleaning-ghaziabad.html', label: 'Ghaziabad', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-ghaziabad.html'] },
+    { href: 'locations/solar-panel-cleaning-agra.html', label: 'Agra', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-agra.html'] },
+    { href: 'locations/solar-panel-cleaning-prayagraj.html', label: 'Prayagraj', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-prayagraj.html'] },
+    { href: 'locations/solar-panel-cleaning-varanasi.html', label: 'Varanasi', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-varanasi.html'] },
+    { href: 'locations/solar-panel-cleaning-meerut.html', label: 'Meerut', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-meerut.html'] },
+    { href: 'locations/solar-panel-cleaning-gorakhpur.html', label: 'Gorakhpur', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-gorakhpur.html'] },
+    { href: 'locations/solar-panel-cleaning-unnao.html', label: 'Unnao', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-unnao.html'] },
+    { href: 'locations/solar-panel-cleaning-basti.html', label: 'Basti', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-basti.html'] },
+    { href: 'locations/solar-panel-cleaning-uttar-pradesh.html', label: 'All Uttar Pradesh', icon: 'ri-road-map-line', match: ['solar-panel-cleaning-uttar-pradesh.html'] }
+  ];
+
   const secondaryNavItems = [
+    { href: 'pricing.html', label: 'Pricing', icon: 'ri-price-tag-3-line', match: ['pricing.html'] },
+    { href: 'solar-panel-installation-service.html', label: 'Installation', icon: 'ri-sun-line', match: ['solar-panel-installation-service.html'] },
+    { href: 'commercial-solar-solutions.html', label: 'Commercial Solar', icon: 'ri-building-4-line', match: ['commercial-solar-solutions.html'] },
     { href: 'before-after-gallery.html', label: 'Gallery', icon: 'ri-gallery-line', match: ['before-after-gallery.html'] },
     { href: 'index.html#reviews', label: 'Reviews', icon: 'ri-star-smile-line', match: [] },
     { href: 'blog.html', label: 'Blogs', icon: 'ri-article-line', match: ['blog.html', 'why-solar-panel-cleaning-is-important.html', 'how-dust-affects-solar-panel-performance.html', 'best-time-to-clean-solar-panels-india.html', 'solar-panel-cleaning-guide.html', 'solar-panel-cleaning-cost-lucknow.html', 'solar-maintenance-guide-lucknow.html', 'solar-amc-guide.html', 'solar-maintenance-tips-homeowners.html', 'solar-maintenance-myths.html', 'common-mistakes-in-solar-panel-cleaning.html'] },
@@ -41,13 +71,19 @@
 
   const navLinks = primaryNavItems.map((item) => {
     const activeClass = item.match.includes(currentPage) ? ' is-active' : '';
-    return `<a class="site-nav-link${activeClass}" href="${item.href}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
+    return `<a class="site-nav-link${activeClass}" href="${rootHref(item.href)}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
+  }).join('');
+
+  const locationActive = locationNavItems.some((item) => item.match.includes(currentPage)) ? ' is-active' : '';
+  const locationLinks = locationNavItems.map((item) => {
+    const activeClass = item.match.includes(currentPage) ? ' is-active' : '';
+    return `<a class="site-nav-dropdown-link${activeClass}" href="${rootHref(item.href)}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
   }).join('');
 
   const dropdownActive = secondaryNavItems.some((item) => item.match.includes(currentPage)) ? ' is-active' : '';
   const dropdownLinks = secondaryNavItems.map((item) => {
     const activeClass = item.match.includes(currentPage) ? ' is-active' : '';
-    return `<a class="site-nav-dropdown-link${activeClass}" href="${item.href}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
+    return `<a class="site-nav-dropdown-link${activeClass}" href="${rootHref(item.href)}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
   }).join('');
 
   const header = document.createElement('header');
@@ -55,7 +91,7 @@
   header.innerHTML = `
     <div class="site-chrome-bar">
       <a class="site-brand" href="index.html" aria-label="IMSOLARCARE home">
-        <img class="site-brand-image" src="assets/imsolarcare-navbar-logo.png" alt="IM Solar Care logo">
+        <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-logo.png')}" alt="IM Solar Care logo">
       </a>
       <button class="site-theme-toggle site-theme-toggle-mobile" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
         <i class="ri-contrast-2-line" aria-hidden="true"></i>
@@ -63,6 +99,16 @@
       <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="siteNavMenu">Menu</button>
       <nav class="site-nav" id="siteNavMenu" data-site-nav>
         ${navLinks}
+        <details class="site-nav-dropdown site-nav-locations${locationActive}">
+          <summary class="site-nav-link site-nav-dropdown-trigger">
+            <i class="ri-map-pin-2-line" aria-hidden="true"></i>
+            <span>Locations</span>
+            <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
+          </summary>
+          <div class="site-nav-dropdown-menu">
+            ${locationLinks}
+          </div>
+        </details>
         <details class="site-nav-dropdown${dropdownActive}">
           <summary class="site-nav-link site-nav-dropdown-trigger">
             <i class="ri-more-2-fill" aria-hidden="true"></i>
@@ -90,30 +136,55 @@
     <div class="site-footer-shell">
       <div class="site-footer-top">
         <section class="site-footer-brand-block">
-          <img class="site-footer-brand-image" src="assets/imsolarcare-navbar-logo.png" alt="IM Solar Care logo">
+          <img class="site-footer-brand-image" src="${rootHref('assets/imsolarcare-navbar-logo.png')}" alt="IM Solar Care logo">
           <p class="site-footer-tagline">Care Today, Power Tomorrow</p>
         </section>
         <nav class="site-footer-column" aria-label="Services footer links">
-          <a href="services.html">Services</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="before-after-gallery.html">Gallery</a>
+          <a href="${rootHref('services.html')}">Services</a>
+          <a href="${rootHref('solar-panel-installation-service.html')}">Installation</a>
+          <a href="${rootHref('commercial-solar-solutions.html')}">Commercial Solar</a>
+          <a href="${rootHref('solar-amc-service.html')}">Solar AMC</a>
         </nav>
         <nav class="site-footer-column" aria-label="Support footer links">
-          <a href="why-choose-us.html">Why Choose Us</a>
-          <a href="faq.html">FAQ</a>
-          <a href="blog.html">Blog</a>
+          <a href="${rootHref('why-choose-us.html')}">Why Choose Us</a>
+          <a href="${rootHref('faq.html')}">FAQ</a>
+          <a href="${rootHref('blog.html')}">Blog</a>
         </nav>
         <nav class="site-footer-column" aria-label="Local footer links">
-          <a href="service-areas.html">Service Areas</a>
+          <a href="${rootHref('service-areas.html')}">Service Areas</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-uttar-pradesh.html')}">All Uttar Pradesh</a>
           <a href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer">Google Review</a>
-          <a href="https://www.youtube.com/@imsolarcare" target="_blank" rel="noopener noreferrer">YouTube</a>
         </nav>
         <nav class="site-footer-column" aria-label="Company footer links">
-          <a href="about-solarcare.html">About Us</a>
-          <a href="contact-solarcare.html">Contact Us</a>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms & Conditions</a>
+          <a href="${rootHref('about-solarcare.html')}">About Us</a>
+          <a href="${rootHref('contact-solarcare.html')}">Contact Us</a>
+          <a href="${rootHref('privacy.html')}">Privacy Policy</a>
+          <a href="${rootHref('terms.html')}">Terms & Conditions</a>
         </nav>
+      </div>
+      <div class="site-footer-area-links" aria-label="Solar panel cleaning service areas in Uttar Pradesh">
+        <strong>Solar Panel Cleaning Service Areas in Uttar Pradesh</strong>
+        <div>
+          <a href="${rootHref('locations/solar-panel-cleaning-lucknow.html')}">Lucknow</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-kanpur.html')}">Kanpur</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-noida.html')}">Noida</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-greater-noida.html')}">Greater Noida</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-ghaziabad.html')}">Ghaziabad</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-agra.html')}">Agra</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-prayagraj.html')}">Prayagraj</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-varanasi.html')}">Varanasi</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-meerut.html')}">Meerut</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-gorakhpur.html')}">Gorakhpur</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-bareilly.html')}">Bareilly</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-aligarh.html')}">Aligarh</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-moradabad.html')}">Moradabad</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-ayodhya.html')}">Ayodhya</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-jhansi.html')}">Jhansi</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-mathura.html')}">Mathura</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-saharanpur.html')}">Saharanpur</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-unnao.html')}">Unnao</a>
+          <a href="${rootHref('locations/solar-panel-cleaning-basti.html')}">Basti</a>
+        </div>
       </div>
       <div class="site-footer-divider" aria-hidden="true"></div>
       <div class="site-footer-social-row">
@@ -151,6 +222,7 @@
   const toggle = header.querySelector('.site-nav-toggle');
   const bar = header.querySelector('.site-chrome-bar');
   const themeToggles = [...header.querySelectorAll('.site-theme-toggle')];
+  const navDropdowns = [...header.querySelectorAll('.site-nav-dropdown')];
 
   function ensureThemeMeta() {
     let meta = document.querySelector('meta[name="theme-color"]');
@@ -222,6 +294,30 @@
     });
   }
 
+  navDropdowns.forEach((dropdown) => {
+    dropdown.addEventListener('toggle', () => {
+      if (!dropdown.open) {
+        return;
+      }
+
+      navDropdowns.forEach((otherDropdown) => {
+        if (otherDropdown !== dropdown) {
+          otherDropdown.open = false;
+        }
+      });
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (header.contains(event.target)) {
+      return;
+    }
+
+    navDropdowns.forEach((dropdown) => {
+      dropdown.open = false;
+    });
+  });
+
   applyTheme(getInitialTheme(), false);
 
   themeToggles.forEach((themeToggle) => {
@@ -248,6 +344,9 @@
       if (toggle) {
         toggle.setAttribute('aria-expanded', 'false');
       }
+      navDropdowns.forEach((dropdown) => {
+        dropdown.open = false;
+      });
     }
   });
 })();
