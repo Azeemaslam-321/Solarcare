@@ -75,40 +75,26 @@
     document.head.appendChild(schemaScript);
   }
 
-  // Client-Side Lightweight Version Check & Single Reload Strategy with Loop Protection
-  async function checkForAppUpdates() {
+  // Pure Static Client-Side Application Version Tracking & Single Reload Strategy
+  function checkForAppUpdates() {
     try {
-      const versionUrl = rootHref('api/version');
-      const res = await fetch(versionUrl, {
-        cache: 'no-store',
-        headers: { 'Cache-Control': 'no-cache' }
-      });
-      if (!res.ok) return;
-
-      const data = await res.json();
-      const serverVersion = data && data.version;
-      if (!serverVersion) return;
-
       const storedVersion = localStorage.getItem('solarcare_app_version');
       const reloadedVersion = sessionStorage.getItem('solarcare_reloaded_version');
 
       if (!storedVersion) {
-        localStorage.setItem('solarcare_app_version', serverVersion);
+        localStorage.setItem('solarcare_app_version', APP_VERSION);
         return;
       }
 
-      if (storedVersion !== serverVersion) {
-        // Version mismatch detected!
-        localStorage.setItem('solarcare_app_version', serverVersion);
-
-        // Perform ONE automatic reload for this version, with reload loop protection
-        if (reloadedVersion !== serverVersion) {
-          sessionStorage.setItem('solarcare_reloaded_version', serverVersion);
+      if (storedVersion !== APP_VERSION) {
+        localStorage.setItem('solarcare_app_version', APP_VERSION);
+        if (reloadedVersion !== APP_VERSION) {
+          sessionStorage.setItem('solarcare_reloaded_version', APP_VERSION);
           window.location.reload(true);
         }
       }
     } catch (e) {
-      // Non-blocking background version check
+      // Non-blocking client storage check
     }
   }
 
@@ -250,7 +236,7 @@
           <div class="site-footer-col">
             <h4>Contact Info</h4>
             <ul class="site-footer-links">
-              <li><i class="ri-phone-fill" style="color: var(--solar-gold);"></i> +91 8112780010</li>
+              <li><i class="ri-phone-fill" style="color: var(--solar-gold);"></i> <a href="tel:+918112780010" style="color:inherit; text-decoration:none;">+91 8112780010</a></li>
               <li><i class="ri-mail-send-fill" style="color: var(--solar-gold);"></i> imsolarcare@gmail.com</li>
               <li><i class="ri-map-pin-2-fill" style="color: var(--solar-gold);"></i> Lucknow & Uttar Pradesh</li>
               <li><i class="ri-time-fill" style="color: var(--solar-gold);"></i> Mon-Sun: 8:00 AM - 7:00 PM</li>
@@ -300,17 +286,17 @@
     }
   }
 
-  // Helper function to send booking data to WhatsApp & Backend API
+  // Pure Static Client-Side WhatsApp Dispatch Helper
   function sendBookingToWhatsApp(data) {
     const lines = [
-      '*☀️ NEW SOLARCARE SERVICE BOOKING*',
+      'SolarCare Booking Request',
       '----------------------------------------',
-      `👤 *Name:* ${data.name || 'Not provided'}`,
-      `📞 *Phone:* ${data.phone || 'Not provided'}`,
-      `⚡ *Service:* ${data.service || 'Solar Panel Cleaning'}`,
-      `📅 *Preferred Date:* ${data.pref_date || data.date || 'Flexible'}`,
-      `📍 *Address/Locality:* ${data.address || 'Not provided'}`,
-      `📝 *Notes:* ${data.notes || 'None'}`,
+      `Name: ${data.name || 'Not provided'}`,
+      `Phone: ${data.phone || 'Not provided'}`,
+      `Service: ${data.service || 'Solar Panel Cleaning'}`,
+      `Preferred Date: ${data.pref_date || data.date || 'Flexible'}`,
+      `Address: ${data.address || 'Not provided'}`,
+      `Message: ${data.notes || 'None'}`,
       '----------------------------------------',
       'Sent via imsolarcare.in'
     ];
@@ -318,15 +304,10 @@
     const waMessage = encodeURIComponent(lines.join('\n'));
     const waUrl = `https://wa.me/918112780010?text=${waMessage}`;
 
-    // Send asynchronous background backup request to backend API
-    fetch(rootHref('api/book'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }).catch(() => {});
-
-    // Open WhatsApp directly for instant delivery
-    window.open(waUrl, '_blank');
+    const win = window.open(waUrl, '_blank');
+    if (!win) {
+      window.location.href = waUrl;
+    }
   }
 
   // Render Quick Booking Modal
@@ -381,7 +362,7 @@
           </div>
 
           <button type="submit" class="sp-btn sp-btn-primary" style="width: 100%;">
-            <i class="ri-whatsapp-line" style="font-size: 1.2rem; color: #25d366;"></i> Submit & Send via WhatsApp
+            <i class="ri-whatsapp-line" style="font-size: 1.2rem; color: #25d366;"></i> Confirm & Send via WhatsApp
           </button>
         </form>
       </div>
@@ -515,7 +496,7 @@
             <option value="Commercial 10kW+">Commercial Plant (10kW+)</option>
           </select>
           <button type="button" id="spChatInlineSubmit" class="sp-btn sp-btn-primary sp-btn-sm" style="margin-top: 4px;">
-            <i class="ri-whatsapp-line" style="color: #25d366;"></i> Submit to WhatsApp
+            <i class="ri-whatsapp-line" style="color: #25d366;"></i> Send via WhatsApp
           </button>
         </div>
       `);
@@ -536,7 +517,7 @@
             const data = { name, phone, service, address: 'In-Chat Booking' };
             sendBookingToWhatsApp(data);
 
-            appendMessage(`✅ Thank you, <b>${name}</b>! Opening WhatsApp to send your booking details directly to our team!`, 'bot');
+            appendMessage(`✅ Your booking details are ready. Please send the WhatsApp message to confirm your request. (Or call us directly at <a href="tel:+918112780010">+91 8112780010</a>)`, 'bot');
           });
         }
       }, 200);
@@ -675,7 +656,7 @@
 
         sendBookingToWhatsApp(data);
 
-        alert('✅ Booking Details Opening in WhatsApp! Click Send on WhatsApp to confirm your slot with our Lucknow team.');
+        alert('Your booking details are ready. Please send the WhatsApp message to confirm your request. (If WhatsApp does not open, please call us directly at +91 8112780010)');
         form.reset();
         if (modal) modal.classList.remove('is-open');
       });
@@ -699,7 +680,7 @@
         const data = { name, phone, service: 'Contact Form Inquiry', notes: message };
         sendBookingToWhatsApp(data);
 
-        alert('✅ Message Opening in WhatsApp! Click Send to connect directly with our support team.');
+        alert('Your message details are ready. Please send the WhatsApp message to connect with our support team. (If WhatsApp does not open, please call us directly at +91 8112780010)');
         contactForm.reset();
       });
     }
