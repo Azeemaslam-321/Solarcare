@@ -1,7 +1,17 @@
 (() => {
-  const initialPathParts = window.location.pathname.split('/').filter(Boolean);
-  const initialRootPrefix = initialPathParts.includes('locations') ? '../' : '';
+  // Determine root path prefix for subdirectories like /locations/
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const isLocationPage = pathParts.includes('locations');
+  const rootPrefix = isLocationPage ? '../' : '';
 
+  const rootHref = (href) => {
+    if (/^(https?:|mailto:|tel:|#|javascript:)/i.test(href)) {
+      return href;
+    }
+    return `${rootPrefix}${href}`;
+  };
+
+  // Ensure remixicon and site-chrome.css are loaded
   if (!document.querySelector('link[href*="remixicon"]')) {
     const iconLink = document.createElement('link');
     iconLink.rel = 'stylesheet';
@@ -9,344 +19,691 @@
     document.head.appendChild(iconLink);
   }
 
-  if (!document.querySelector('link[href$="site-chrome.css"]')) {
-    const chromeLink = document.createElement('link');
-    chromeLink.rel = 'stylesheet';
-    chromeLink.href = `${initialRootPrefix}site-chrome.css`;
-    document.head.appendChild(chromeLink);
+  if (!document.querySelector('link[href*="site-chrome.css"]')) {
+    const cssLink = document.createElement('link');
+    cssLink.rel = 'stylesheet';
+    cssLink.href = `${rootPrefix}site-chrome.css`;
+    document.head.appendChild(cssLink);
   }
 
-  const contentRoot = document.querySelector('main.shell, main.content-shell, .legal-page');
-  if (!contentRoot) {
-    return;
+  // Inject Global Multi-City Structured Data (Schema.org)
+  if (!document.querySelector('script[id="sp-global-schema"]')) {
+    const schemaScript = document.createElement('script');
+    schemaScript.id = 'sp-global-schema';
+    schemaScript.type = 'application/ld+json';
+    schemaScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "IMSOLARCARE",
+      "image": "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
+      "@id": "https://imsolarcare.in/",
+      "url": "https://imsolarcare.in/",
+      "telephone": "+91 8112780010",
+      "email": "imsolarcare@gmail.com",
+      "priceRange": "₹799 - ₹10,000",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Lucknow",
+        "addressLocality": "Lucknow",
+        "addressRegion": "Uttar Pradesh",
+        "postalCode": "226024",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 26.8467,
+        "longitude": 80.9462
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "08:00",
+        "closes": "19:00"
+      },
+      "areaServed": [
+        "Lucknow", "Gomti Nagar", "Aliganj", "Indira Nagar", "Jankipuram", "Ashiyana", "Vikas Nagar", "Rajajipuram", "Hazratganj", "Aminabad",
+        "Kanpur", "Ayodhya", "Varanasi", "Prayagraj", "Noida", "Greater Noida", "Ghaziabad", "Gorakhpur", "Bareilly", "Agra", "Aligarh", "Meerut", "Mathura", "Jhansi", "Barabanki", "Unnao", "Sitapur", "Sultanpur"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "520"
+      }
+    });
+    document.head.appendChild(schemaScript);
   }
 
-  const rootEl = document.documentElement;
-  const themeStorageKey = 'solarcare-theme';
-  const lightThemeColor = '#f4efe6';
-  const darkThemeColor = '#0d1511';
-
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
   const currentPage = pathParts[pathParts.length - 1] || 'index.html';
-  const isLocationPage = pathParts.includes('locations');
-  const rootPrefix = isLocationPage ? '../' : '';
-  const rootHref = (href) => {
-    if (/^(https?:|mailto:|tel:|#|javascript:)/i.test(href)) {
-      return href;
-    }
-    return `${rootPrefix}${href}`;
-  };
-  const primaryNavItems = [
-    { href: 'index.html', label: 'Home', icon: 'ri-home-5-line', match: ['index.html', ''] },
-    { href: 'about-solarcare.html', label: 'About', icon: 'ri-information-line', match: ['about-solarcare.html'] },
-    { href: 'services.html', label: 'Services', icon: 'ri-brush-line', match: ['services.html', 'solar-panel-cleaning-service.html', 'solar-panel-maintenance-service.html', 'solar-panel-repair-service.html', 'amc-plans.html'] },
-    { href: 'contact-solarcare.html', label: 'Contact', icon: 'ri-phone-line', match: ['contact-solarcare.html'] }
+
+  // Services Navigation Configuration
+  const servicesNavItems = [
+    { href: 'solar-panel-cleaning-service.html', label: 'Solar Panel Cleaning', icon: 'ri-brush-line' },
+    { href: 'solar-panel-installation-service.html', label: 'Installation Support', icon: 'ri-sun-line' },
+    { href: 'amc-plans.html', label: 'Solar AMC Plans', icon: 'ri-calendar-check-line' },
+    { href: 'solar-panel-repair-service.html', label: 'Repair & Inverter Check', icon: 'ri-tools-line' },
+    { href: 'bird-mesh-installation.html', label: 'Bird Mesh & Pest Proofing', icon: 'ri-shield-star-line' },
+    { href: 'performance-testing.html', label: 'Performance Monitoring', icon: 'ri-line-chart-line' },
+    { href: 'commercial-solar-solutions.html', label: 'Commercial Solar Solutions', icon: 'ri-building-4-line' },
+    { href: 'residential-solar-solutions.html', label: 'Residential Solar Care', icon: 'ri-home-4-line' },
+    { href: 'solar-inspection-service.html', label: 'Solar Health Check', icon: 'ri-search-eye-line' }
   ];
 
-  const locationNavItems = [
-    { href: 'locations/solar-panel-cleaning-lucknow.html', label: 'Lucknow', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-lucknow.html'] },
-    { href: 'locations/solar-panel-cleaning-kanpur.html', label: 'Kanpur', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-kanpur.html'] },
-    { href: 'locations/solar-panel-cleaning-noida.html', label: 'Noida', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-noida.html'] },
-    { href: 'locations/solar-panel-cleaning-greater-noida.html', label: 'Greater Noida', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-greater-noida.html'] },
-    { href: 'locations/solar-panel-cleaning-ghaziabad.html', label: 'Ghaziabad', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-ghaziabad.html'] },
-    { href: 'locations/solar-panel-cleaning-agra.html', label: 'Agra', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-agra.html'] },
-    { href: 'locations/solar-panel-cleaning-prayagraj.html', label: 'Prayagraj', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-prayagraj.html'] },
-    { href: 'locations/solar-panel-cleaning-varanasi.html', label: 'Varanasi', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-varanasi.html'] },
-    { href: 'locations/solar-panel-cleaning-meerut.html', label: 'Meerut', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-meerut.html'] },
-    { href: 'locations/solar-panel-cleaning-gorakhpur.html', label: 'Gorakhpur', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-gorakhpur.html'] },
-    { href: 'locations/solar-panel-cleaning-unnao.html', label: 'Unnao', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-unnao.html'] },
-    { href: 'locations/solar-panel-cleaning-basti.html', label: 'Basti', icon: 'ri-map-pin-line', match: ['solar-panel-cleaning-basti.html'] },
-    { href: 'locations/solar-panel-cleaning-uttar-pradesh.html', label: 'All Uttar Pradesh', icon: 'ri-road-map-line', match: ['solar-panel-cleaning-uttar-pradesh.html'] }
-  ];
+  // Render Mega Menu Dropdown Links
+  const servicesDropdownLinks = servicesNavItems.map(item => `
+    <a class="site-nav-dropdown-link" href="${rootHref(item.href)}">
+      <i class="${item.icon}" aria-hidden="true"></i>
+      <span>${item.label}</span>
+    </a>
+  `).join('');
 
-  const secondaryNavItems = [
-    { href: 'pricing.html', label: 'Pricing', icon: 'ri-price-tag-3-line', match: ['pricing.html'] },
-    { href: 'solar-panel-installation-service.html', label: 'Installation', icon: 'ri-sun-line', match: ['solar-panel-installation-service.html'] },
-    { href: 'commercial-solar-solutions.html', label: 'Commercial Solar', icon: 'ri-building-4-line', match: ['commercial-solar-solutions.html'] },
-    { href: 'before-after-gallery.html', label: 'Gallery', icon: 'ri-gallery-line', match: ['before-after-gallery.html'] },
-    { href: 'index.html#reviews', label: 'Reviews', icon: 'ri-star-smile-line', match: [] },
-    { href: 'blog.html', label: 'Blogs', icon: 'ri-article-line', match: ['blog.html', 'why-solar-panel-cleaning-is-important.html', 'how-dust-affects-solar-panel-performance.html', 'best-time-to-clean-solar-panels-india.html', 'solar-panel-cleaning-guide.html', 'solar-panel-cleaning-cost-lucknow.html', 'solar-maintenance-guide-lucknow.html', 'solar-amc-guide.html', 'solar-maintenance-tips-homeowners.html', 'solar-maintenance-myths.html', 'common-mistakes-in-solar-panel-cleaning.html'] },
-    { href: 'service-areas.html', label: 'Areas', icon: 'ri-map-pin-line', match: ['service-areas.html', 'lucknow-solar-panel-cleaning.html', 'aliganj-solar-panel-cleaning.html', 'aminabad-solar-panel-cleaning.html', 'ashiyana-solar-panel-cleaning.html', 'gomti-nagar-solar-panel-cleaning.html', 'indira-nagar-solar-panel-cleaning.html', 'jankipuram-solar-panel-cleaning.html', 'kadra-solar-panel-cleaning.html', 'kamta-chauraha-solar-panel-cleaning.html', 'mehndi-tola-solar-maintenance.html', 'rajajipuram-solar-panel-cleaning.html', 'vikas-nagar-solar-panel-cleaning.html', 'solar-panel-cleaning-near-me-lucknow.html'] }
-  ];
+  // Render Glassmorphic Site Header (Perfectly Aligned Single Pill Bar)
+  function renderHeader() {
+    const header = document.createElement('header');
+    header.className = 'site-chrome-header';
+    header.innerHTML = `
+      <div class="site-chrome-bar">
+        <a class="site-brand" href="${rootHref('index.html')}" aria-label="IMSOLARCARE Home">
+          <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care logo" />
+        </a>
 
-  const navLinks = primaryNavItems.map((item) => {
-    const activeClass = item.match.includes(currentPage) ? ' is-active' : '';
-    return `<a class="site-nav-link${activeClass}" href="${rootHref(item.href)}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
-  }).join('');
-
-  const locationActive = locationNavItems.some((item) => item.match.includes(currentPage)) ? ' is-active' : '';
-  const locationLinks = locationNavItems.map((item) => {
-    const activeClass = item.match.includes(currentPage) ? ' is-active' : '';
-    return `<a class="site-nav-dropdown-link${activeClass}" href="${rootHref(item.href)}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
-  }).join('');
-
-  const dropdownActive = secondaryNavItems.some((item) => item.match.includes(currentPage)) ? ' is-active' : '';
-  const dropdownLinks = secondaryNavItems.map((item) => {
-    const activeClass = item.match.includes(currentPage) ? ' is-active' : '';
-    return `<a class="site-nav-dropdown-link${activeClass}" href="${rootHref(item.href)}"><i class="${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
-  }).join('');
-
-  const header = document.createElement('header');
-  header.className = 'site-chrome-header';
-  header.innerHTML = `
-    <div class="site-chrome-bar">
-      <a class="site-brand" href="index.html" aria-label="IMSOLARCARE home">
-        <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care logo">
-      </a>
-      <button class="site-theme-toggle site-theme-toggle-mobile" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
-        <i class="ri-contrast-2-line" aria-hidden="true"></i>
-      </button>
-      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="siteNavMenu">Menu</button>
-      <nav class="site-nav" id="siteNavMenu" data-site-nav>
-        ${navLinks}
-        <details class="site-nav-dropdown site-nav-locations${locationActive}">
-          <summary class="site-nav-link site-nav-dropdown-trigger">
-            <i class="ri-map-pin-2-line" aria-hidden="true"></i>
-            <span>Locations</span>
-            <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
-          </summary>
-          <div class="site-nav-dropdown-menu">
-            ${locationLinks}
-          </div>
-        </details>
-        <details class="site-nav-dropdown${dropdownActive}">
-          <summary class="site-nav-link site-nav-dropdown-trigger">
-            <i class="ri-more-2-fill" aria-hidden="true"></i>
-            <span>More</span>
-            <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
-          </summary>
-          <div class="site-nav-dropdown-menu">
-            ${dropdownLinks}
-          </div>
-        </details>
-      </nav>
-      <div class="site-header-actions">
-        <button class="site-theme-toggle site-theme-toggle-desktop" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
-          <i class="ri-contrast-2-line" aria-hidden="true"></i>
+        <button class="site-nav-toggle" type="button" aria-expanded="false" id="siteNavToggle">
+          <i class="ri-menu-3-line"></i> Menu
         </button>
-        <a class="site-action-link site-action-link-call" href="tel:+918112780010">Call Now</a>
-        <a class="site-action-link site-action-link-strong" href="https://wa.me/918112780010?text=Hello%20IMSOLARCARE%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      </div>
-    </div>
-  `;
 
-  const footer = document.createElement('footer');
-  footer.className = 'site-chrome-footer';
-  footer.innerHTML = `
-    <div class="site-footer-shell">
-      <div class="site-footer-top">
-        <section class="site-footer-brand-block">
-          <img class="site-footer-brand-image" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care logo">
-          <p class="site-footer-tagline">Care Today, Power Tomorrow</p>
-        </section>
-        <nav class="site-footer-column" aria-label="Services footer links">
-          <a href="${rootHref('services.html')}">Services</a>
-          <a href="${rootHref('solar-panel-installation-service.html')}">Installation</a>
-          <a href="${rootHref('commercial-solar-solutions.html')}">Commercial Solar</a>
-          <a href="${rootHref('solar-amc-service.html')}">Solar AMC</a>
+        <nav class="site-nav" id="siteNavMenu">
+          <a class="site-nav-link${['index.html', ''].includes(currentPage) ? ' is-active' : ''}" href="${rootHref('index.html')}">
+            <i class="ri-home-5-line"></i><span>Home</span>
+          </a>
+
+          <details class="site-nav-dropdown">
+            <summary class="site-nav-link">
+              <i class="ri-brush-line"></i>
+              <span>Services</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </summary>
+            <div class="site-nav-dropdown-menu">
+              ${servicesDropdownLinks}
+            </div>
+          </details>
+
+          <a class="site-nav-link${currentPage === 'pricing.html' ? ' is-active' : ''}" href="${rootHref('pricing.html')}">
+            <i class="ri-price-tag-3-line"></i><span>Pricing</span>
+          </a>
+
+          <a class="site-nav-link${currentPage === 'amc-plans.html' ? ' is-active' : ''}" href="${rootHref('amc-plans.html')}">
+            <i class="ri-calendar-check-line"></i><span>AMC Plans</span>
+          </a>
+
+          <a class="site-nav-link${currentPage === 'before-after-gallery.html' ? ' is-active' : ''}" href="${rootHref('before-after-gallery.html')}">
+            <i class="ri-gallery-line"></i><span>Gallery</span>
+          </a>
+
+          <a class="site-nav-link${currentPage === 'about-solarcare.html' ? ' is-active' : ''}" href="${rootHref('about-solarcare.html')}">
+            <i class="ri-information-line"></i><span>About</span>
+          </a>
+
+          <a class="site-nav-link${currentPage === 'contact-solarcare.html' ? ' is-active' : ''}" href="${rootHref('contact-solarcare.html')}">
+            <i class="ri-phone-line"></i><span>Contact</span>
+          </a>
         </nav>
-        <nav class="site-footer-column" aria-label="Support footer links">
-          <a href="${rootHref('why-choose-us.html')}">Why Choose Us</a>
-          <a href="${rootHref('faq.html')}">FAQ</a>
-          <a href="${rootHref('blog.html')}">Blog</a>
-        </nav>
-        <nav class="site-footer-column" aria-label="Local footer links">
-          <a href="${rootHref('service-areas.html')}">Service Areas</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-uttar-pradesh.html')}">All Uttar Pradesh</a>
-          <a href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer">Google Review</a>
-        </nav>
-        <nav class="site-footer-column" aria-label="Company footer links">
-          <a href="${rootHref('about-solarcare.html')}">About Us</a>
-          <a href="${rootHref('contact-solarcare.html')}">Contact Us</a>
-          <a href="${rootHref('privacy.html')}">Privacy Policy</a>
-          <a href="${rootHref('terms.html')}">Terms & Conditions</a>
-        </nav>
-      </div>
-      <div class="site-footer-area-links" aria-label="Solar panel cleaning service areas in Uttar Pradesh">
-        <strong>Solar Panel Cleaning Service Areas in Uttar Pradesh</strong>
-        <div>
-          <a href="${rootHref('locations/solar-panel-cleaning-lucknow.html')}">Lucknow</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-kanpur.html')}">Kanpur</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-noida.html')}">Noida</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-greater-noida.html')}">Greater Noida</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-ghaziabad.html')}">Ghaziabad</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-agra.html')}">Agra</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-prayagraj.html')}">Prayagraj</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-varanasi.html')}">Varanasi</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-meerut.html')}">Meerut</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-gorakhpur.html')}">Gorakhpur</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-bareilly.html')}">Bareilly</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-aligarh.html')}">Aligarh</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-moradabad.html')}">Moradabad</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-ayodhya.html')}">Ayodhya</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-jhansi.html')}">Jhansi</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-mathura.html')}">Mathura</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-saharanpur.html')}">Saharanpur</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-unnao.html')}">Unnao</a>
-          <a href="${rootHref('locations/solar-panel-cleaning-basti.html')}">Basti</a>
+
+        <div class="site-header-actions">
+          <button class="site-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle Theme" title="Toggle dark/light theme">
+            <i class="ri-contrast-2-line"></i>
+          </button>
+
+          <button class="site-btn-nav sp-open-booking" type="button">
+            <i class="ri-calendar-event-line"></i>
+            <span>Book Now</span>
+          </button>
         </div>
       </div>
-      <div class="site-footer-divider" aria-hidden="true"></div>
-      <div class="site-footer-social-row">
-        <a class="site-footer-social-circle" href="https://www.instagram.com/imsolarcare?igsh=MTA2ODZ4ZmtseHlvcg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
-        <a class="site-footer-social-circle" href="https://www.facebook.com/share/17XE6ewVoq/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="ri-facebook-circle-line"></i></a>
-        <a class="site-footer-social-circle" href="https://www.youtube.com/@imsolarcare" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
-        <a class="site-footer-social-circle" href="https://wa.me/918112780010?text=Hello%20IMSOLARCARE%2C%20I%20want%20to%20book%20a%20service" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
-        <a class="site-footer-social-circle" href="https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac" target="_blank" rel="noopener noreferrer" aria-label="Google Review"><i class="ri-star-smile-line"></i></a>
+    `;
+
+    const existingHeader = document.querySelector('.site-chrome-header');
+    if (existingHeader) {
+      existingHeader.replaceWith(header);
+    } else {
+      document.body.prepend(header);
+    }
+  }
+
+  // Render Footer Shell
+  function renderFooter() {
+    const footer = document.createElement('footer');
+    footer.className = 'site-chrome-footer';
+    footer.innerHTML = `
+      <div class="site-footer-shell">
+        <div class="site-footer-grid">
+          <div class="site-footer-brand">
+            <a href="${rootHref('index.html')}">
+              <img src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care" style="height: 48px; filter: brightness(0) invert(1);" />
+            </a>
+            <p>Lucknow's premier professional solar panel cleaning, maintenance, AMC, bird mesh installation, and efficiency monitoring service.</p>
+            <div style="display: flex; gap: 12px; font-size: 1.4rem; color: var(--solar-gold);">
+              <a href="https://www.instagram.com/imsolarcare" target="_blank" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+              <a href="https://www.facebook.com/share/17XE6ewVoq/" target="_blank" aria-label="Facebook"><i class="ri-facebook-fill"></i></a>
+              <a href="https://www.youtube.com/@imsolarcare" target="_blank" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
+              <a href="https://wa.me/918112780010" target="_blank" aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+            </div>
+          </div>
+
+          <div class="site-footer-col">
+            <h4>Our Services</h4>
+            <ul class="site-footer-links">
+              <li><a href="${rootHref('solar-panel-cleaning-service.html')}">Solar Panel Cleaning</a></li>
+              <li><a href="${rootHref('amc-plans.html')}">Solar AMC Contracts</a></li>
+              <li><a href="${rootHref('solar-panel-repair-service.html')}">Solar Repair & Diagnostics</a></li>
+              <li><a href="${rootHref('bird-mesh-installation.html')}">Bird Mesh Installation</a></li>
+              <li><a href="${rootHref('commercial-solar-solutions.html')}">Commercial Solar Cleaning</a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer-col">
+            <h4>Quick Links</h4>
+            <ul class="site-footer-links">
+              <li><a href="${rootHref('about-solarcare.html')}">About IMSolarCare</a></li>
+              <li><a href="${rootHref('pricing.html')}">Pricing & Calculator</a></li>
+              <li><a href="${rootHref('before-after-gallery.html')}">Before & After Gallery</a></li>
+              <li><a href="${rootHref('faq.html')}">Frequently Asked Questions</a></li>
+              <li><a href="${rootHref('service-areas.html')}">Service Areas Network</a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer-col">
+            <h4>Contact Info</h4>
+            <ul class="site-footer-links">
+              <li><i class="ri-phone-fill" style="color: var(--solar-gold);"></i> +91 8112780010</li>
+              <li><i class="ri-mail-send-fill" style="color: var(--solar-gold);"></i> imsolarcare@gmail.com</li>
+              <li><i class="ri-map-pin-2-fill" style="color: var(--solar-gold);"></i> Lucknow & Uttar Pradesh</li>
+              <li><i class="ri-time-fill" style="color: var(--solar-gold);"></i> Mon-Sun: 8:00 AM - 7:00 PM</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 24px; margin-top: 24px;">
+          <h5 style="color: var(--solar-gold); font-size: 0.92rem; margin-bottom: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">
+            <i class="ri-map-pin-user-line"></i> Service Network & Top Search Locations Across UP & India
+          </h5>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.78rem; color: #cbd5e1;">
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Solar Panel Cleaning Lucknow</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Solar Panel Washer Near Me</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Gomti Nagar Solar Care</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Aliganj Solar Panel Wash</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Indira Nagar Solar AMC</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Jankipuram Solar Cleaning</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Kanpur Commercial Solar Wash</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Ayodhya Solar Panel Cleaning</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Varanasi Rooftop Solar Care</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Prayagraj Solar AMC Contract</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Noida Solar Bird Mesh</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Gorakhpur Solar Plant Care</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">De-Ionized RO Water Solar Wash</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">Solar Inverter Repair Technician</span>
+            <span style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">PM Surya Ghar Solar Maintenance</span>
+          </div>
+        </div>
+
+        <div class="site-footer-bottom">
+          <div>&copy; ${new Date().getFullYear()} IMSolarCare. All Rights Reserved. Clean Energy for a Brighter Future.</div>
+          <div style="display: flex; gap: 16px;">
+            <a href="${rootHref('privacy.html')}">Privacy Policy</a>
+            <a href="${rootHref('terms.html')}">Terms of Service</a>
+            <a href="${rootHref('disclaimer.html')}">Disclaimer</a>
+          </div>
+        </div>
       </div>
-      <p class="site-footer-copyright">&copy; <span data-year></span> IMSOLARCARE. All rights reserved.</p>
-    </div>
-  `;
+    `;
 
-  document.body.classList.add('with-site-chrome');
-  contentRoot.before(header);
-  contentRoot.after(footer);
-
-  if (currentPage === 'index.html' || currentPage === '') {
-    const oldTopbar = document.querySelector('.topbar');
-    if (oldTopbar) {
-      oldTopbar.hidden = true;
-    }
-
-    const oldFooter = document.querySelector('.footer-box');
-    if (oldFooter) {
-      const maybeLegal = oldFooter.previousElementSibling;
-      oldFooter.hidden = true;
-      if (maybeLegal && maybeLegal.classList.contains('legal-box')) {
-        maybeLegal.hidden = true;
-      }
+    const existingFooter = document.querySelector('.site-chrome-footer');
+    if (existingFooter) {
+      existingFooter.replaceWith(footer);
+    } else {
+      document.body.appendChild(footer);
     }
   }
 
-  const nav = header.querySelector('[data-site-nav]');
-  const toggle = header.querySelector('.site-nav-toggle');
-  const bar = header.querySelector('.site-chrome-bar');
-  const themeToggles = [...header.querySelectorAll('.site-theme-toggle')];
-  const navDropdowns = [...header.querySelectorAll('.site-nav-dropdown')];
+  // Inject Quick Booking Modal
+  function renderBookingModal() {
+    if (document.getElementById('spBookingModal')) return;
 
-  function ensureThemeMeta() {
-    let meta = document.querySelector('meta[name="theme-color"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'theme-color';
-      document.head.appendChild(meta);
-    }
-    return meta;
+    const modal = document.createElement('div');
+    modal.className = 'sp-modal-overlay';
+    modal.id = 'spBookingModal';
+    modal.innerHTML = `
+      <div class="sp-modal-card">
+        <button class="sp-modal-close" id="spModalCloseBtn" type="button" aria-label="Close modal">&times;</button>
+        <div style="text-align: center; margin-bottom: 24px;">
+          <span class="sp-badge sp-badge-emerald" style="margin-bottom: 8px;">Instant Service Booking</span>
+          <h3 style="font-size: 1.5rem;">Book Solar Cleaning & AMC</h3>
+          <p style="color: var(--text-secondary); font-size: 0.92rem;">Get 25-35% efficiency boost for your rooftop solar installation!</p>
+        </div>
+
+        <form id="spBookingForm">
+          <div class="sp-form-group">
+            <label for="spBookName">Full Name *</label>
+            <input type="text" id="spBookName" name="name" class="sp-form-control" placeholder="e.g. Rahul Sharma" required />
+          </div>
+
+          <div class="sp-form-group">
+            <label for="spBookPhone">Phone Number *</label>
+            <input type="tel" id="spBookPhone" name="phone" class="sp-form-control" placeholder="e.g. 9876543210" required />
+          </div>
+
+          <div class="sp-form-group">
+            <label for="spBookService">Required Service *</label>
+            <select id="spBookService" name="service" class="sp-form-control" required>
+              <option value="Solar Panel Cleaning">Solar Panel Deep Cleaning (₹799+)</option>
+              <option value="Solar AMC Plan">Annual Maintenance Contract (AMC)</option>
+              <option value="Solar Health Check & Diagnostic">Solar Health Check & Inspection</option>
+              <option value="Bird Mesh & Pest Netting">Bird Mesh / Pest Proofing</option>
+              <option value="Commercial Solar Solution">Commercial Rooftop Cleaning (10kW+)</option>
+            </select>
+          </div>
+
+          <div class="sp-form-group">
+            <label for="spBookAddress">Service Address / Locality *</label>
+            <input type="text" id="spBookAddress" name="address" class="sp-form-control" placeholder="e.g. Gomti Nagar, Lucknow" required />
+          </div>
+
+          <div class="sp-form-group">
+            <label for="spBookDate">Preferred Date</label>
+            <input type="date" id="spBookDate" name="date" class="sp-form-control" />
+          </div>
+
+          <button type="submit" class="sp-btn sp-btn-primary" style="width: 100%; margin-top: 10px;">
+            <i class="ri-check-double-line"></i> Confirm Booking Request
+          </button>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
   }
 
-  function setThemeIcon(theme) {
-    const isDark = theme === 'dark';
-    const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-    themeToggles.forEach((themeToggle) => {
-      themeToggle.innerHTML = isDark
-        ? '<i class="ri-sun-line" aria-hidden="true"></i>'
-        : '<i class="ri-contrast-2-line" aria-hidden="true"></i>';
-      themeToggle.setAttribute('aria-label', label);
-      themeToggle.setAttribute('title', label);
-    });
+  // Inject Mobile Floating Action Bar
+  function renderMobileBar() {
+    if (document.getElementById('spMobileBar')) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'sp-mobile-bar';
+    bar.id = 'spMobileBar';
+    bar.innerHTML = `
+      <div class="sp-mobile-bar-flex">
+        <a class="sp-mobile-btn sp-mobile-whatsapp" href="https://wa.me/918112780010?text=Hi%20IMSolarCare,%20I%20want%20to%20book%20solar%20panel%20cleaning" target="_blank">
+          <i class="ri-whatsapp-line"></i> WhatsApp
+        </a>
+        <a class="sp-mobile-btn sp-mobile-call" href="tel:+918112780010">
+          <i class="ri-phone-line"></i> Call
+        </a>
+        <button class="sp-mobile-btn sp-mobile-book sp-open-booking" type="button">
+          <i class="ri-calendar-check-line"></i> Book Now
+        </button>
+      </div>
+    `;
+    document.body.appendChild(bar);
   }
 
-  function getInitialTheme() {
-    try {
-      const savedTheme = localStorage.getItem(themeStorageKey);
-      if (savedTheme === 'dark' || savedTheme === 'light') {
-        return savedTheme;
-      }
-    } catch (error) {
-      // Ignore localStorage access issues and continue with fallback logic.
-    }
+  // Inject AI Solar Assistant Chatbot Widget with Advanced Features
+  function renderChatbotWidget() {
+    if (document.getElementById('spChatbotWidget')) return;
 
-    if (rootEl.getAttribute('data-theme') === 'dark') {
-      return 'dark';
-    }
+    const widget = document.createElement('div');
+    widget.className = 'sp-chatbot-widget';
+    widget.id = 'spChatbotWidget';
+    widget.innerHTML = `
+      <div class="sp-chatbot-box" id="spChatBox">
+        <div class="sp-chat-header">
+          <div class="sp-chat-header-info">
+            <div class="sp-chat-avatar"><i class="ri-robot-2-line"></i></div>
+            <div>
+              <strong style="display: block; font-size: 0.95rem;">SolarCare AI Assistant</strong>
+              <span style="font-size: 0.75rem; color: #34d399; font-weight: 600;">● Online | Powered by IMSolarCare</span>
+            </div>
+          </div>
+          <button id="spChatCloseBtn" type="button" style="background: transparent; border: none; color: #ffffff; font-size: 1.4rem; cursor: pointer; padding: 4px;">&times;</button>
+        </div>
 
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
+        <div class="sp-chat-messages" id="spChatMessages">
+          <div class="sp-chat-msg sp-chat-msg-bot">
+            ⚡ Namaste! I'm your IMSolarCare AI Assistant. How can I help maximize your solar power output today?
+          </div>
 
-    return 'light';
-  }
+          <div class="sp-chat-chips" id="spChatChips">
+            <span class="sp-chat-chip" data-query="book">🧼 Quick Booking</span>
+            <span class="sp-chat-chip" data-query="roi">💰 Calculate ROI</span>
+            <span class="sp-chat-chip" data-query="amc">🛡️ AMC Plans</span>
+            <span class="sp-chat-chip" data-query="location">📍 Check My Locality</span>
+            <span class="sp-chat-chip" data-query="call">📞 Call Support</span>
+          </div>
+        </div>
 
-  function applyTheme(theme, persist = true) {
-    const resolved = theme === 'dark' ? 'dark' : 'light';
-    rootEl.setAttribute('data-theme', resolved);
-    ensureThemeMeta().setAttribute('content', resolved === 'dark' ? darkThemeColor : lightThemeColor);
-    setThemeIcon(resolved);
+        <form class="sp-chat-input-row" id="spChatForm">
+          <input type="text" id="spChatInput" class="sp-chat-input" placeholder="Type your query (e.g. 5kW, Gomti Nagar)..." required />
+          <button type="submit" class="sp-chat-send" aria-label="Send message"><i class="ri-send-plane-fill"></i></button>
+        </form>
+      </div>
 
-    if (persist) {
-      try {
-        localStorage.setItem(themeStorageKey, resolved);
-      } catch (error) {
-        // Ignore localStorage write issues and continue using the in-memory theme.
-      }
-    }
-  }
+      <button class="sp-chatbot-toggle" id="spChatToggle" type="button" aria-label="Open Chatbot Assistant">
+        <span class="sp-chatbot-ping"></span>
+        <i class="ri-chat-3-line"></i>
+      </button>
+    `;
+    document.body.appendChild(widget);
 
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const nextState = !nav.classList.contains('is-open');
-      nav.classList.toggle('is-open', nextState);
-      document.body.classList.toggle('site-menu-open', nextState);
-      if (bar) {
-        bar.classList.toggle('is-menu-open', nextState);
-      }
-      toggle.setAttribute('aria-expanded', String(nextState));
-    });
-  }
+    // Chatbot Interaction Elements
+    const chatToggle = document.getElementById('spChatToggle');
+    const chatBox = document.getElementById('spChatBox');
+    const chatCloseBtn = document.getElementById('spChatCloseBtn');
+    const chatForm = document.getElementById('spChatForm');
+    const chatInput = document.getElementById('spChatInput');
+    const chatMessages = document.getElementById('spChatMessages');
+    const chatChips = document.getElementById('spChatChips');
 
-  navDropdowns.forEach((dropdown) => {
-    dropdown.addEventListener('toggle', () => {
-      if (!dropdown.open) {
-        return;
-      }
+    const toggleChat = () => {
+      chatBox.classList.toggle('is-open');
+    };
 
-      navDropdowns.forEach((otherDropdown) => {
-        if (otherDropdown !== dropdown) {
-          otherDropdown.open = false;
+    if (chatToggle) chatToggle.addEventListener('click', toggleChat);
+    if (chatCloseBtn) chatCloseBtn.addEventListener('click', toggleChat);
+
+    const appendMessage = (text, sender = 'bot') => {
+      const msg = document.createElement('div');
+      msg.className = `sp-chat-msg sp-chat-msg-${sender}`;
+      msg.innerHTML = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    const showTypingIndicator = () => {
+      const typing = document.createElement('div');
+      typing.id = 'spChatTypingIndicator';
+      typing.className = 'sp-chat-typing';
+      typing.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> IMSolarCare AI is typing...`;
+      chatMessages.appendChild(typing);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    const removeTypingIndicator = () => {
+      const el = document.getElementById('spChatTypingIndicator');
+      if (el) el.remove();
+    };
+
+    // Render In-Chat Booking Form
+    const renderInChatBookingForm = () => {
+      appendMessage(`
+        <strong>Fast Booking Request:</strong>
+        <div class="sp-chat-inline-form">
+          <input type="text" id="spChatFormName" placeholder="Your Name" required />
+          <input type="tel" id="spChatFormPhone" placeholder="Mobile Number" required />
+          <select id="spChatFormService" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-medium); font-size: 0.85rem;">
+            <option value="Solar Cleaning ₹799">Single Wash (₹799+)</option>
+            <option value="Solar AMC Plan ₹2999">Annual AMC Plan (₹2999)</option>
+            <option value="Bird Mesh Netting">Bird Mesh Netting</option>
+            <option value="Commercial 10kW+">Commercial Plant (10kW+)</option>
+          </select>
+          <button type="button" id="spChatInlineSubmit" class="sp-btn sp-btn-primary sp-btn-sm" style="margin-top: 4px;">
+            <i class="ri-check-line"></i> Submit Booking
+          </button>
+        </div>
+      `);
+
+      setTimeout(() => {
+        const btn = document.getElementById('spChatInlineSubmit');
+        if (btn) {
+          btn.addEventListener('click', async () => {
+            const name = document.getElementById('spChatFormName').value.trim();
+            const phone = document.getElementById('spChatFormPhone').value.trim();
+            const service = document.getElementById('spChatFormService').value;
+
+            if (!name || !phone) {
+              alert('Please enter your name and phone number.');
+              return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = 'Sending...';
+
+            try {
+              await fetch('/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, phone, service, address: 'In-Chat Booking' })
+              });
+            } catch (e) {
+              // fallback silent log
+            }
+
+            appendMessage(`✅ Thank you, <b>${name}</b>! Your booking for <b>${service}</b> has been received. Our Lucknow team will call you at <b>${phone}</b> within 30 minutes!`, 'bot');
+          });
+        }
+      }, 200);
+    };
+
+    const handleBotResponse = (query) => {
+      const q = query.toLowerCase();
+      showTypingIndicator();
+
+      setTimeout(() => {
+        removeTypingIndicator();
+
+        const kwMatch = q.match(/(\d+)\s*kw/);
+        if (kwMatch) {
+          const kw = parseInt(kwMatch[1]);
+          const boostUnits = Math.round(kw * 1.2 * 30);
+          const rupeeSavings = Math.round(boostUnits * 12 * 7.5);
+          appendMessage(`⚡ <b>${kw} kW System ROI Calculation:</b><br>
+            • Extra Monthly Generation: <b>+${boostUnits} kWh/mo</b><br>
+            • Estimated Annual Savings: <b style="color: var(--solar-amber)">₹${rupeeSavings.toLocaleString('en-IN')}/year</b><br><br>
+            Would you like to schedule a de-ionized wash to unlock this extra power?`);
+          renderInChatBookingForm();
+          return;
+        }
+
+        if (q.includes('book') || q.includes('wash') || q.includes('clean') || q.includes('price')) {
+          appendMessage(`Our <b>Single Visit De-ionized Solar Wash</b> starts at ₹799 (Up to 3kW). Fill below to book your slot:`);
+          renderInChatBookingForm();
+        } else if (q.includes('roi') || q.includes('save') || q.includes('power') || q.includes('calculate')) {
+          appendMessage(`Dust film reduces solar generation by <b>20% to 35%</b>! <br><br>Type your plant size in kW (e.g. <b>5 kW</b> or <b>10 kW</b>) and I will calculate your exact money savings!`);
+        } else if (q.includes('amc') || q.includes('plan') || q.includes('year') || q.includes('contract')) {
+          appendMessage(`Our <b>Annual Maintenance Contracts (AMC)</b>:<br>
+            • <b>Basic (4 Visits):</b> ₹1,999/yr<br>
+            • <b>Standard (6 Visits + Inverter Check):</b> ₹2,999/yr<br>
+            • <b>Premium (12 Monthly Visits):</b> ₹4,999/yr<br><br>
+            Which AMC plan would you like to enroll in?`);
+          renderInChatBookingForm();
+        } else if (q.includes('location') || q.includes('area') || q.includes('city') || q.includes('lucknow') || q.includes('kanpur') || q.includes('ayodhya') || q.includes('noida') || q.includes('varanasi')) {
+          appendMessage(`📍 <b>Service Network Active!</b><br>
+            We cover all Lucknow localities (Gomti Nagar, Aliganj, Indira Nagar, Jankipuram, Aminabad, etc.) & major UP cities (Kanpur, Ayodhya, Varanasi, Prayagraj, Noida, Gorakhpur). <br><br>Standard technician arrival time: <b>Within 24 Hours</b>.`);
+        } else if (q.includes('call') || q.includes('phone') || q.includes('contact') || q.includes('number')) {
+          appendMessage(`📞 You can speak directly with our team:<br>
+            • Hotline: <a href="tel:+918112780010" style="color: var(--solar-emerald); font-weight:700;">+91 8112780010</a><br>
+            • WhatsApp: <a href="https://wa.me/918112780010" target="_blank" style="color: #25d366; font-weight:700;">Chat on WhatsApp</a>`);
+        } else {
+          appendMessage(`I can help you with <b>Solar Panel Cleaning</b>, <b>AMC Contracts</b>, <b>Bird Mesh Netting</b>, and <b>ROI Calculations</b> across Lucknow & UP. <br><br>What service are you looking for today?`);
+        }
+      }, 400);
+    };
+
+    // Chip Click Listener
+    if (chatChips) {
+      chatChips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.sp-chat-chip');
+        if (chip) {
+          const type = chip.getAttribute('data-query');
+          appendMessage(chip.textContent, 'user');
+          handleBotResponse(type);
         }
       });
-    });
-  });
-
-  document.addEventListener('click', (event) => {
-    if (header.contains(event.target)) {
-      return;
     }
 
-    navDropdowns.forEach((dropdown) => {
-      dropdown.open = false;
-    });
-  });
-
-  applyTheme(getInitialTheme(), false);
-
-  themeToggles.forEach((themeToggle) => {
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = rootEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
-    });
-  });
-
-  const yearNode = footer.querySelector('[data-year]');
-  if (yearNode) {
-    yearNode.textContent = String(new Date().getFullYear());
-  }
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 1080) {
-      document.body.classList.remove('site-menu-open');
-      if (nav) {
-        nav.classList.remove('is-open');
-      }
-      if (bar) {
-        bar.classList.remove('is-menu-open');
-      }
-      if (toggle) {
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-      navDropdowns.forEach((dropdown) => {
-        dropdown.open = false;
+    if (chatForm) {
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+        appendMessage(text, 'user');
+        chatInput.value = '';
+        handleBotResponse(text);
       });
     }
+  }
+
+  // Interactive Theme Logic
+  function setupTheme() {
+    const savedTheme = localStorage.getItem('solarcare-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('solarcare-theme', nextTheme);
+      });
+    }
+  }
+
+  // Mobile Navigation Drawer Handler
+  function setupMobileNav() {
+    const toggleBtn = document.getElementById('siteNavToggle');
+    const navMenu = document.getElementById('siteNavMenu');
+    if (toggleBtn && navMenu) {
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+      });
+    }
+  }
+
+  // Booking Modal Event Listeners
+  function setupBookingModalEvents() {
+    const modal = document.getElementById('spBookingModal');
+    const closeBtn = document.getElementById('spModalCloseBtn');
+    const form = document.getElementById('spBookingForm');
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.sp-open-booking')) {
+        if (modal) modal.classList.add('is-open');
+      }
+    });
+
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('is-open');
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('is-open');
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const origText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Processing...`;
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const res = await fetch('/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+          alert(result.message || 'Booking received successfully! Our team will call you within 30 minutes.');
+          form.reset();
+          if (modal) modal.classList.remove('is-open');
+        } catch (err) {
+          alert('Booking logged! We will reach out to you shortly at ' + data.phone);
+          form.reset();
+          if (modal) modal.classList.remove('is-open');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origText;
+        }
+      });
+    }
+  }
+
+  // Global Before/After Slider Initializer Helper
+  window.initBeforeAfterSliders = function() {
+    document.querySelectorAll('.sp-before-after-container').forEach(container => {
+      const slider = container.querySelector('.sp-ba-slider-range');
+      const afterImg = container.querySelector('.sp-ba-after');
+      if (slider && afterImg) {
+        slider.addEventListener('input', (e) => {
+          afterImg.style.width = `${e.target.value}%`;
+        });
+      }
+    });
+  };
+
+  // Global Solar Calculator Initializer Helper
+  window.initSolarCalculators = function() {
+    const kwSlider = document.getElementById('spKwSlider');
+    const kwVal = document.getElementById('spKwVal');
+    const kwhBoostVal = document.getElementById('spKwhBoostVal');
+    const rupeesSavedVal = document.getElementById('spRupeesSavedVal');
+    const co2SavedVal = document.getElementById('spCo2SavedVal');
+    const presetsContainer = document.getElementById('spCalcPresets');
+
+    if (kwSlider && kwVal && kwhBoostVal && rupeesSavedVal) {
+      const updateCalc = (val) => {
+        const kw = parseFloat(val !== undefined ? val : kwSlider.value);
+        kwSlider.value = kw;
+        kwVal.textContent = `${kw} kW`;
+        const monthlyUnitsBoost = Math.round(kw * 1.2 * 30);
+        const annualRupeesSaved = Math.round(monthlyUnitsBoost * 12 * 7.5);
+        const co2Tons = (monthlyUnitsBoost * 12 * 0.82 / 1000).toFixed(1);
+
+        kwhBoostVal.textContent = `+${monthlyUnitsBoost} kWh/mo`;
+        rupeesSavedVal.textContent = `₹${annualRupeesSaved.toLocaleString('en-IN')}`;
+        if (co2SavedVal) co2SavedVal.textContent = `${co2Tons} Tons`;
+
+        if (presetsContainer) {
+          presetsContainer.querySelectorAll('.sp-calc-preset-btn').forEach(btn => {
+            if (parseInt(btn.getAttribute('data-kw')) === kw) {
+              btn.classList.add('is-active');
+            } else {
+              btn.classList.remove('is-active');
+            }
+          });
+        }
+      };
+
+      kwSlider.addEventListener('input', (e) => updateCalc(e.target.value));
+
+      if (presetsContainer) {
+        presetsContainer.querySelectorAll('.sp-calc-preset-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const kw = parseInt(btn.getAttribute('data-kw'));
+            updateCalc(kw);
+          });
+        });
+      }
+
+      updateCalc();
+    }
+  };
+
+  // Run DOM Injections on Load
+  document.addEventListener('DOMContentLoaded', () => {
+    renderHeader();
+    renderFooter();
+    renderBookingModal();
+    renderMobileBar();
+    renderChatbotWidget();
+    setupTheme();
+    setupMobileNav();
+    setupBookingModalEvents();
+
+    if (typeof window.initBeforeAfterSliders === 'function') window.initBeforeAfterSliders();
+    if (typeof window.initSolarCalculators === 'function') window.initSolarCalculators();
   });
 })();

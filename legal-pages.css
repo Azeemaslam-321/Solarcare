@@ -1,10 +1,9 @@
+@import url('site-chrome.css');
+
 body {
-  font-family: 'Source Sans 3', Arial, sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(239, 143, 53, 0.16), transparent 28%),
-    radial-gradient(circle at right, rgba(29, 91, 67, 0.12), transparent 24%),
-    linear-gradient(180deg, #f5efe5, #eee6d9);
-  color: #1f241f;
+  font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  background-color: var(--theme-bg, #f4efe6);
+  color: var(--theme-text, #0f172a);
   line-height: 1.7;
   margin: 0;
 }
@@ -15,9 +14,9 @@ a {
 
 .content-shell,
 .legal-page {
-  width: min(1100px, calc(100% - 28px));
+  width: min(1180px, calc(100% - 28px));
   margin: 0 auto;
-  padding: 30px 0 42px;
+  padding: 24px 0 48px;
 }
 
 .page-hero,
@@ -25,42 +24,44 @@ a {
 .feature-section,
 .split-panel,
 .cta-banner,
-.legal-page {
-  background: rgba(255, 251, 243, 0.92);
-  border: 1px solid rgba(31, 36, 31, 0.1);
-  box-shadow: 0 18px 50px rgba(22, 33, 28, 0.12);
-  backdrop-filter: blur(12px);
+.legal-page,
+.feature-card,
+.visual-card {
+  background: color-mix(in srgb, var(--theme-chip-strong, #ffffff) 94%, transparent);
+  border: 1px solid var(--theme-line, rgba(15, 23, 42, 0.12));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
 }
 
 .page-hero {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 18px;
-  padding: 34px;
-  border-radius: 32px;
+  gap: 24px;
+  padding: 38px;
   overflow: hidden;
   position: relative;
+  border-top: 3px solid var(--theme-solar-amber, #f59e0b);
 }
 
 .page-hero::after {
   content: '';
   position: absolute;
-  right: -30px;
-  top: -30px;
-  width: 240px;
-  height: 240px;
+  right: -40px;
+  top: -40px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(239, 143, 53, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.18), transparent 70%);
+  pointer-events: none;
 }
 
 .page-hero-about {
-  background:
-    linear-gradient(180deg, rgba(255, 251, 243, 0.94), rgba(255, 246, 234, 0.94));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--theme-chip-strong) 96%, transparent), color-mix(in srgb, var(--theme-solar-amber) 8%, var(--theme-chip-strong)));
 }
 
 .page-hero-contact {
-  background:
-    linear-gradient(180deg, rgba(255, 251, 243, 0.94), rgba(240, 249, 243, 0.94));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--theme-chip-strong) 96%, transparent), color-mix(in srgb, var(--theme-emerald) 8%, var(--theme-chip-strong)));
 }
 
 .page-kicker,
