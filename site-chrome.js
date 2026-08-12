@@ -1,4 +1,6 @@
 (() => {
+  const APP_VERSION = '1.0.1';
+
   // Determine root path prefix for subdirectories like /locations/
   const pathParts = window.location.pathname.split('/').filter(Boolean);
   const isLocationPage = pathParts.includes('locations');
@@ -11,7 +13,7 @@
     return `${rootPrefix}${href}`;
   };
 
-  // Ensure remixicon and site-chrome.css are loaded
+  // Ensure remixicon and site-chrome.css (versioned) are loaded
   if (!document.querySelector('link[href*="remixicon"]')) {
     const iconLink = document.createElement('link');
     iconLink.rel = 'stylesheet';
@@ -22,7 +24,7 @@
   if (!document.querySelector('link[href*="site-chrome.css"]')) {
     const cssLink = document.createElement('link');
     cssLink.rel = 'stylesheet';
-    cssLink.href = `${rootPrefix}site-chrome.css`;
+    cssLink.href = `${rootPrefix}site-chrome.css?v=${APP_VERSION}`;
     document.head.appendChild(cssLink);
   }
 
@@ -71,6 +73,43 @@
       }
     });
     document.head.appendChild(schemaScript);
+  }
+
+  // Client-Side Lightweight Version Check & Single Reload Strategy with Loop Protection
+  async function checkForAppUpdates() {
+    try {
+      const versionUrl = rootHref('api/version');
+      const res = await fetch(versionUrl, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+      if (!res.ok) return;
+
+      const data = await res.json();
+      const serverVersion = data && data.version;
+      if (!serverVersion) return;
+
+      const storedVersion = localStorage.getItem('solarcare_app_version');
+      const reloadedVersion = sessionStorage.getItem('solarcare_reloaded_version');
+
+      if (!storedVersion) {
+        localStorage.setItem('solarcare_app_version', serverVersion);
+        return;
+      }
+
+      if (storedVersion !== serverVersion) {
+        // Version mismatch detected!
+        localStorage.setItem('solarcare_app_version', serverVersion);
+
+        // Perform ONE automatic reload for this version, with reload loop protection
+        if (reloadedVersion !== serverVersion) {
+          sessionStorage.setItem('solarcare_reloaded_version', serverVersion);
+          window.location.reload(true);
+        }
+      }
+    } catch (e) {
+      // Non-blocking background version check
+    }
   }
 
   const currentPage = pathParts[pathParts.length - 1] || 'index.html';
@@ -148,13 +187,11 @@
         </nav>
 
         <div class="site-header-actions">
-          <button class="site-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle Theme" title="Toggle dark/light theme">
-            <i class="ri-contrast-2-line"></i>
+          <button class="site-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle theme mode">
+            <i class="ri-sun-line"></i>
           </button>
-
-          <button class="site-btn-nav sp-open-booking" type="button">
-            <i class="ri-calendar-event-line"></i>
-            <span>Book Now</span>
+          <button type="button" class="site-btn-nav sp-open-booking">
+            <i class="ri-calendar-check-line"></i> Book Now
           </button>
         </div>
       </div>
@@ -263,7 +300,36 @@
     }
   }
 
-  // Inject Quick Booking Modal
+  // Helper function to send booking data to WhatsApp & Backend API
+  function sendBookingToWhatsApp(data) {
+    const lines = [
+      '*☀️ NEW SOLARCARE SERVICE BOOKING*',
+      '----------------------------------------',
+      `👤 *Name:* ${data.name || 'Not provided'}`,
+      `📞 *Phone:* ${data.phone || 'Not provided'}`,
+      `⚡ *Service:* ${data.service || 'Solar Panel Cleaning'}`,
+      `📅 *Preferred Date:* ${data.pref_date || data.date || 'Flexible'}`,
+      `📍 *Address/Locality:* ${data.address || 'Not provided'}`,
+      `📝 *Notes:* ${data.notes || 'None'}`,
+      '----------------------------------------',
+      'Sent via imsolarcare.in'
+    ];
+
+    const waMessage = encodeURIComponent(lines.join('\n'));
+    const waUrl = `https://wa.me/918112780010?text=${waMessage}`;
+
+    // Send asynchronous background backup request to backend API
+    fetch(rootHref('api/book'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(() => {});
+
+    // Open WhatsApp directly for instant delivery
+    window.open(waUrl, '_blank');
+  }
+
+  // Render Quick Booking Modal
   function renderBookingModal() {
     if (document.getElementById('spBookingModal')) return;
 
@@ -291,28 +357,31 @@
           </div>
 
           <div class="sp-form-group">
-            <label for="spBookService">Required Service *</label>
+            <label for="spBookService">Select Required Service *</label>
             <select id="spBookService" name="service" class="sp-form-control" required>
-              <option value="Solar Panel Cleaning">Solar Panel Deep Cleaning (₹799+)</option>
-              <option value="Solar AMC Plan">Annual Maintenance Contract (AMC)</option>
-              <option value="Solar Health Check & Diagnostic">Solar Health Check & Inspection</option>
-              <option value="Bird Mesh & Pest Netting">Bird Mesh / Pest Proofing</option>
-              <option value="Commercial Solar Solution">Commercial Rooftop Cleaning (10kW+)</option>
+              <option value="Solar Panel Cleaning (1-3 kW)">Solar Panel Cleaning (1-3 kW) - ₹799</option>
+              <option value="Solar Panel Cleaning (4-5 kW)">Solar Panel Cleaning (4-5 kW) - ₹999</option>
+              <option value="Solar Panel Cleaning (6-10 kW)">Solar Panel Cleaning (6-10 kW) - ₹1499</option>
+              <option value="Solar AMC Plan Basic">Solar AMC Plan Basic - ₹1999/yr</option>
+              <option value="Solar AMC Plan Standard">Solar AMC Plan Standard - ₹2999/yr</option>
+              <option value="Bird Mesh Installation">Bird Mesh Netting Installation</option>
+              <option value="Solar Repair & Diagnostics">Solar Inverter Repair & Diagnostics</option>
+              <option value="Commercial Solar Plant (10kW+)">Commercial Solar Plant (10kW+)</option>
             </select>
           </div>
 
           <div class="sp-form-group">
-            <label for="spBookAddress">Service Address / Locality *</label>
-            <input type="text" id="spBookAddress" name="address" class="sp-form-control" placeholder="e.g. Gomti Nagar, Lucknow" required />
+            <label for="spBookDate">Preferred Date</label>
+            <input type="date" id="spBookDate" name="pref_date" class="sp-form-control" />
           </div>
 
           <div class="sp-form-group">
-            <label for="spBookDate">Preferred Date</label>
-            <input type="date" id="spBookDate" name="date" class="sp-form-control" />
+            <label for="spBookAddress">Full Rooftop Address & Locality</label>
+            <textarea id="spBookAddress" name="address" class="sp-form-control" rows="2" placeholder="e.g. Plot 45, Sector 5, Gomti Nagar, Lucknow"></textarea>
           </div>
 
-          <button type="submit" class="sp-btn sp-btn-primary" style="width: 100%; margin-top: 10px;">
-            <i class="ri-check-double-line"></i> Confirm Booking Request
+          <button type="submit" class="sp-btn sp-btn-primary" style="width: 100%;">
+            <i class="ri-whatsapp-line" style="font-size: 1.2rem; color: #25d366;"></i> Submit & Send via WhatsApp
           </button>
         </form>
       </div>
@@ -320,7 +389,7 @@
     document.body.appendChild(modal);
   }
 
-  // Inject Mobile Floating Action Bar
+  // Render Mobile Floating Action Bar
   function renderMobileBar() {
     if (document.getElementById('spMobileBar')) return;
 
@@ -329,21 +398,21 @@
     bar.id = 'spMobileBar';
     bar.innerHTML = `
       <div class="sp-mobile-bar-flex">
-        <a class="sp-mobile-btn sp-mobile-whatsapp" href="https://wa.me/918112780010?text=Hi%20IMSolarCare,%20I%20want%20to%20book%20solar%20panel%20cleaning" target="_blank">
+        <a class="sp-mobile-btn sp-mobile-whatsapp" href="https://wa.me/918112780010?text=Hi%20IMSolarCare,%20I%20want%20to%20book%20solar%20cleaning" target="_blank" aria-label="WhatsApp Us">
           <i class="ri-whatsapp-line"></i> WhatsApp
         </a>
-        <a class="sp-mobile-btn sp-mobile-call" href="tel:+918112780010">
-          <i class="ri-phone-line"></i> Call
+        <a class="sp-mobile-btn sp-mobile-call" href="tel:+918112780010" aria-label="Call Us">
+          <i class="ri-phone-line"></i> Call Now
         </a>
-        <button class="sp-mobile-btn sp-mobile-book sp-open-booking" type="button">
-          <i class="ri-calendar-check-line"></i> Book Now
+        <button type="button" class="sp-mobile-btn sp-mobile-book sp-open-booking" aria-label="Book Service">
+          <i class="ri-calendar-check-line"></i> Book Slot
         </button>
       </div>
     `;
     document.body.appendChild(bar);
   }
 
-  // Inject AI Solar Assistant Chatbot Widget with Advanced Features
+  // Render Interactive AI Chatbot Widget
   function renderChatbotWidget() {
     if (document.getElementById('spChatbotWidget')) return;
 
@@ -351,98 +420,102 @@
     widget.className = 'sp-chatbot-widget';
     widget.id = 'spChatbotWidget';
     widget.innerHTML = `
-      <div class="sp-chatbot-box" id="spChatBox">
+      <div class="sp-chatbot-box" id="spChatbotBox">
         <div class="sp-chat-header">
           <div class="sp-chat-header-info">
             <div class="sp-chat-avatar"><i class="ri-robot-2-line"></i></div>
             <div>
-              <strong style="display: block; font-size: 0.95rem;">SolarCare AI Assistant</strong>
-              <span style="font-size: 0.75rem; color: #34d399; font-weight: 600;">● Online | Powered by IMSolarCare</span>
+              <strong style="display: block; font-size: 0.95rem; color: #ffffff;">SolarCare AI Assistant</strong>
+              <span style="font-size: 0.75rem; color: #34d399;">● Online | 24/7 Solar Expert</span>
             </div>
           </div>
-          <button id="spChatCloseBtn" type="button" style="background: transparent; border: none; color: #ffffff; font-size: 1.4rem; cursor: pointer; padding: 4px;">&times;</button>
+          <button type="button" id="spChatCloseBtn" style="background: transparent; border: none; color: #ffffff; font-size: 1.3rem; cursor: pointer;">&times;</button>
         </div>
 
         <div class="sp-chat-messages" id="spChatMessages">
           <div class="sp-chat-msg sp-chat-msg-bot">
-            ⚡ Namaste! I'm your IMSolarCare AI Assistant. How can I help maximize your solar power output today?
+            👋 Namaste! Welcome to <b>IMSolarCare</b>! I am your AI Solar Assistant.<br><br>How can I assist you with your rooftop solar plant today?
           </div>
-
           <div class="sp-chat-chips" id="spChatChips">
-            <span class="sp-chat-chip" data-query="book">🧼 Quick Booking</span>
-            <span class="sp-chat-chip" data-query="roi">💰 Calculate ROI</span>
-            <span class="sp-chat-chip" data-query="amc">🛡️ AMC Plans</span>
-            <span class="sp-chat-chip" data-query="location">📍 Check My Locality</span>
-            <span class="sp-chat-chip" data-query="call">📞 Call Support</span>
+            <span class="sp-chat-chip" data-query="cleaning rates">💰 Solar Wash Rates</span>
+            <span class="sp-chat-chip" data-query="amc plans">📅 AMC Contract Tiers</span>
+            <span class="sp-chat-chip" data-query="bird mesh">🛡️ Bird Netting</span>
+            <span class="sp-chat-chip" data-query="calculate roi">⚡ Calculate ROI</span>
           </div>
         </div>
 
         <form class="sp-chat-input-row" id="spChatForm">
-          <input type="text" id="spChatInput" class="sp-chat-input" placeholder="Type your query (e.g. 5kW, Gomti Nagar)..." required />
+          <input type="text" id="spChatInput" class="sp-chat-input" placeholder="Type your solar question or kW size..." required />
           <button type="submit" class="sp-chat-send" aria-label="Send message"><i class="ri-send-plane-fill"></i></button>
         </form>
       </div>
 
-      <button class="sp-chatbot-toggle" id="spChatToggle" type="button" aria-label="Open Chatbot Assistant">
-        <span class="sp-chatbot-ping"></span>
+      <button type="button" class="sp-chatbot-toggle" id="spChatbotToggle" aria-label="Open solar assistant chatbot">
         <i class="ri-chat-3-line"></i>
+        <span class="sp-chatbot-ping"></span>
       </button>
     `;
     document.body.appendChild(widget);
 
-    // Chatbot Interaction Elements
-    const chatToggle = document.getElementById('spChatToggle');
-    const chatBox = document.getElementById('spChatBox');
-    const chatCloseBtn = document.getElementById('spChatCloseBtn');
+    // Chatbot Event Handlers
+    const toggleBtn = document.getElementById('spChatbotToggle');
+    const box = document.getElementById('spChatbotBox');
+    const closeBtn = document.getElementById('spChatCloseBtn');
+    const chatMessages = document.getElementById('spChatMessages');
     const chatForm = document.getElementById('spChatForm');
     const chatInput = document.getElementById('spChatInput');
-    const chatMessages = document.getElementById('spChatMessages');
     const chatChips = document.getElementById('spChatChips');
 
-    const toggleChat = () => {
-      chatBox.classList.toggle('is-open');
-    };
+    if (toggleBtn && box) {
+      toggleBtn.addEventListener('click', () => {
+        box.classList.toggle('is-open');
+      });
+    }
 
-    if (chatToggle) chatToggle.addEventListener('click', toggleChat);
-    if (chatCloseBtn) chatCloseBtn.addEventListener('click', toggleChat);
+    if (closeBtn && box) {
+      closeBtn.addEventListener('click', () => {
+        box.classList.remove('is-open');
+      });
+    }
 
-    const appendMessage = (text, sender = 'bot') => {
+    const appendMessage = (content, sender = 'bot') => {
       const msg = document.createElement('div');
       msg.className = `sp-chat-msg sp-chat-msg-${sender}`;
-      msg.innerHTML = text;
+      msg.innerHTML = content;
       chatMessages.appendChild(msg);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 
     const showTypingIndicator = () => {
       const typing = document.createElement('div');
-      typing.id = 'spChatTypingIndicator';
+      typing.id = 'spChatTyping';
       typing.className = 'sp-chat-typing';
-      typing.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> IMSolarCare AI is typing...`;
+      typing.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> SolarCare Bot is typing...`;
       chatMessages.appendChild(typing);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 
     const removeTypingIndicator = () => {
-      const el = document.getElementById('spChatTypingIndicator');
-      if (el) el.remove();
+      const typing = document.getElementById('spChatTyping');
+      if (typing) typing.remove();
     };
 
-    // Render In-Chat Booking Form
     const renderInChatBookingForm = () => {
       appendMessage(`
-        <strong>Fast Booking Request:</strong>
         <div class="sp-chat-inline-form">
-          <input type="text" id="spChatFormName" placeholder="Your Name" required />
-          <input type="tel" id="spChatFormPhone" placeholder="Mobile Number" required />
-          <select id="spChatFormService" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-medium); font-size: 0.85rem;">
-            <option value="Solar Cleaning ₹799">Single Wash (₹799+)</option>
+          <strong style="color: var(--text-primary); font-size: 0.88rem;">Quick Service Slot Booking:</strong>
+          <input type="text" id="spChatFormName" placeholder="Your Full Name *" required />
+          <input type="tel" id="spChatFormPhone" placeholder="Your Phone Number *" required />
+          <select id="spChatFormService" style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-medium); font-size: 0.85rem;">
+            <option value="Solar Cleaning 1-3 kW">Solar Cleaning (1-3 kW) - ₹799</option>
+            <option value="Solar Cleaning 4-5 kW">Solar Cleaning (4-5 kW) - ₹999</option>
+            <option value="Solar AMC Plan ₹1999">Basic AMC Plan (₹1999)</option>
             <option value="Solar AMC Plan ₹2999">Annual AMC Plan (₹2999)</option>
             <option value="Bird Mesh Netting">Bird Mesh Netting</option>
             <option value="Commercial 10kW+">Commercial Plant (10kW+)</option>
           </select>
           <button type="button" id="spChatInlineSubmit" class="sp-btn sp-btn-primary sp-btn-sm" style="margin-top: 4px;">
-            <i class="ri-check-line"></i> Submit Booking
+            <i class="ri-whatsapp-line" style="color: #25d366;"></i> Submit to WhatsApp
           </button>
         </div>
       `);
@@ -450,7 +523,7 @@
       setTimeout(() => {
         const btn = document.getElementById('spChatInlineSubmit');
         if (btn) {
-          btn.addEventListener('click', async () => {
+          btn.addEventListener('click', () => {
             const name = document.getElementById('spChatFormName').value.trim();
             const phone = document.getElementById('spChatFormPhone').value.trim();
             const service = document.getElementById('spChatFormService').value;
@@ -460,20 +533,10 @@
               return;
             }
 
-            btn.disabled = true;
-            btn.innerHTML = 'Sending...';
+            const data = { name, phone, service, address: 'In-Chat Booking' };
+            sendBookingToWhatsApp(data);
 
-            try {
-              await fetch('/api/bookings', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, service, address: 'In-Chat Booking' })
-              });
-            } catch (e) {
-              // fallback silent log
-            }
-
-            appendMessage(`✅ Thank you, <b>${name}</b>! Your booking for <b>${service}</b> has been received. Our Lucknow team will call you at <b>${phone}</b> within 30 minutes!`, 'bot');
+            appendMessage(`✅ Thank you, <b>${name}</b>! Opening WhatsApp to send your booking details directly to our team!`, 'bot');
           });
         }
       }, 200);
@@ -576,7 +639,7 @@
     }
   }
 
-  // Booking Modal Event Listeners
+  // Booking Modal & Contact Page Event Listeners
   function setupBookingModalEvents() {
     const modal = document.getElementById('spBookingModal');
     const closeBtn = document.getElementById('spModalCloseBtn');
@@ -599,34 +662,45 @@
     }
 
     if (form) {
-      form.addEventListener('submit', async (e) => {
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const origText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Processing...`;
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        try {
-          const res = await fetch('/api/bookings', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-          const result = await res.json();
-          alert(result.message || 'Booking received successfully! Our team will call you within 30 minutes.');
-          form.reset();
-          if (modal) modal.classList.remove('is-open');
-        } catch (err) {
-          alert('Booking logged! We will reach out to you shortly at ' + data.phone);
-          form.reset();
-          if (modal) modal.classList.remove('is-open');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = origText;
+        if (!data.name || !data.phone) {
+          alert('Please fill in your name and phone number.');
+          return;
         }
+
+        sendBookingToWhatsApp(data);
+
+        alert('✅ Booking Details Opening in WhatsApp! Click Send on WhatsApp to confirm your slot with our Lucknow team.');
+        form.reset();
+        if (modal) modal.classList.remove('is-open');
+      });
+    }
+
+    // Contact Page Form Handler (#spContactPageForm)
+    const contactForm = document.getElementById('spContactPageForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('cName')?.value.trim() || '';
+        const phone = document.getElementById('cPhone')?.value.trim() || '';
+        const message = document.getElementById('cMessage')?.value.trim() || '';
+
+        if (!name || !phone) {
+          alert('Please enter your name and phone number.');
+          return;
+        }
+
+        const data = { name, phone, service: 'Contact Form Inquiry', notes: message };
+        sendBookingToWhatsApp(data);
+
+        alert('✅ Message Opening in WhatsApp! Click Send to connect directly with our support team.');
+        contactForm.reset();
       });
     }
   }
@@ -692,8 +766,9 @@
     }
   };
 
-  // Run DOM Injections on Load
+  // Run DOM Injections and Version Check on Load
   document.addEventListener('DOMContentLoaded', () => {
+    checkForAppUpdates();
     renderHeader();
     renderFooter();
     renderBookingModal();

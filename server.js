@@ -4,6 +4,14 @@ const express = require('express');
 
 loadLocalEnv();
 
+let packageVersion = '1.0.1';
+try {
+  const pkg = require('./package.json');
+  if (pkg && pkg.version) packageVersion = pkg.version;
+} catch (e) {}
+
+const APP_VERSION = process.env.APP_VERSION || packageVersion;
+
 const app = express();
 const port = process.env.PORT || 5000;
 const useMySql = Boolean(
@@ -34,15 +42,43 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
 
-app.get('/sitemap.xml', (req, res) => {
+// Production Application Version Endpoint (Safely exposes version only, no secrets)
+app.get('/api/version', (_req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.set('Pragma', 'no-cache');
+  res.json({ version: APP_VERSION });
+});
+
+// Express Static middleware with production Cache-Control strategy
+const staticOptions = {
+  setHeaders: (res, filePath) => {
+    const ext = path.extname(filePath).toLowerCase();
+    if (ext === '.html') {
+      // HTML documents must be revalidated so browsers/CDNs pick up new versions immediately
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+    } else if (['.css', '.js'].includes(ext)) {
+      // Versioned CSS and JS are safe to cache with revalidation
+      res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate');
+    } else if (['.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp', '.ico', '.mp4', '.woff', '.woff2', '.ttf'].includes(ext)) {
+      // Media, images, fonts stay cached long-term
+      res.setHeader('Cache-Control', 'public, max-age=2592000');
+    }
+  }
+};
+
+app.use(express.static(__dirname, staticOptions));
+
+app.get('/sitemap.xml', (_req, res) => {
   res.type('application/xml');
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.sendFile(path.join(__dirname, 'sitemap.xml'));
 });
 
-app.get('/robots.txt', (req, res) => {
+app.get('/robots.txt', (_req, res) => {
   res.type('text/plain');
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.sendFile(path.join(__dirname, 'robots.txt'));
 });
 
@@ -252,8 +288,6 @@ async function allQuery(sql, values = []) {
   });
 }
 
-
-
 function requireAdminAuth(req, res, next) {
   const expectedUser = process.env.ADMIN_USERNAME;
   const expectedPassword = process.env.ADMIN_PASSWORD;
@@ -285,79 +319,6 @@ function requireAdminAuth(req, res, next) {
   next();
 }
 
-
-async function sendWhatsappNotification(message) {
-  const notifyUrl = process.env.WHATSAPP_NOTIFY_URL;
-  if (notifyUrl) {
-    const response = await fetch(notifyUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message })
-    });
-
-    if (!response.ok) {
-      throw new Error(`custom webhook failed with status ${response.status}`);
-    }
-
-    return { delivered: true, provider: 'custom-webhook' };
-  }
-
-  const textMeBotPhone = process.env.WHATSAPP_TEXTMEBOT_PHONE;
-  const textMeBotApiKey = process.env.WHATSAPP_TEXTMEBOT_API_KEY;
-  if (textMeBotPhone && textMeBotApiKey) {
-    const url = `https://api.textmebot.com/send.php?recipient=${encodeURIComponent(textMeBotPhone)}&text=${encodeURIComponent(message)}&apikey=${encodeURIComponent(textMeBotApiKey)}`;
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`textmebot failed with status ${response.status}`);
-    }
-
-    const body = await response.text();
-    if (!/sent|success|queued/i.test(body)) {
-      throw new Error(`textmebot returned unexpected response: ${body}`);
-    }
-
-    return { delivered: true, provider: 'textmebot' };
-  }
-
-  const phone = process.env.WHATSAPP_CALLMEBOT_PHONE;
-  const apiKey = process.env.WHATSAPP_CALLMEBOT_API_KEY;
-  if (phone && apiKey) {
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phone)}&text=${encodeURIComponent(message)}&apikey=${encodeURIComponent(apiKey)}`;
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`callmebot failed with status ${response.status}`);
-    }
-
-    return { delivered: true, provider: 'callmebot' };
-  }
-
-  return { delivered: false, provider: 'not-configured' };
-}
-
-function buildBookingMessage(payload) {
-  return [
-    'New SolarCare booking request',
-    `Name: ${payload.name}`,
-    `Phone: ${payload.phone}`,
-    `Service: ${payload.service}`,
-    `Preferred: ${payload.date || 'Not provided'}`,
-    `Panels: ${payload.panels || 'Not provided'}`,
-    `Address: ${payload.address || 'Not provided'}`,
-    `Notes: ${payload.notes || 'Not provided'}`
-  ].join('\n');
-}
-
-function buildContactMessage(payload) {
-  return [
-    'New SolarCare contact request',
-    `Name: ${payload.name}`,
-    `Phone: ${payload.phone}`,
-    `Message: ${payload.message || 'No message provided'}`
-  ].join('\n');
-}
-
 async function handleBookingRequest(req, res) {
   const payload = {
     name: String(req.body?.name || '').trim(),
@@ -385,7 +346,10 @@ async function handleBookingRequest(req, res) {
   }
 }
 
+// Endpoints
 app.post('/api/book', handleBookingRequest);
+app.post('/api/bookings', handleBookingRequest); // Compatibility alias
+app.post('/book', handleBookingRequest);         // Legacy alias
 
 app.post('/api/contact', async (req, res) => {
   const payload = {
@@ -437,13 +401,13 @@ app.get('/api/admin/leads', requireAdminAuth, async (_req, res) => {
   }
 });
 
-app.post('/book', handleBookingRequest);
-
 app.get('/', (_req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/admin', requireAdminAuth, (_req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
@@ -459,8 +423,7 @@ async function startServer() {
     }
 
     app.listen(port, () => {
-      console.log(`SolarCare server running on port ${port}`);
-      console.log('Direct WhatsApp links are enabled. API notifications are currently disabled.');
+      console.log(`SolarCare server running on port ${port} (Version: ${APP_VERSION})`);
     });
   } catch (error) {
     console.error('Failed to initialize server', error);
@@ -469,6 +432,3 @@ async function startServer() {
 }
 
 startServer();
-
-
-
