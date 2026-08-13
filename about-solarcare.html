@@ -27,24 +27,43 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "name": "About IMSolarCare | Solar Cleaning Hub in Lucknow",
-      "url": "https://imsolarcare.in/about-solarcare.html",
-      "description": "IM Solar Care is a Lucknow-based professional solar panel cleaning company providing scientific de-ionized water washing, AMC maintenance, thermal hotspot checks, and installation support across Uttar Pradesh.",
-      "mainEntity": {
-        "@type": "LocalBusiness",
-        "name": "IMSOLARCARE",
-        "telephone": "+91 8112780010",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Lucknow",
-          "addressRegion": "Uttar Pradesh",
-          "addressCountry": "IN"
-        }
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://imsolarcare.in/about-solarcare.html#webpage",
+        "url": "https://imsolarcare.in/about-solarcare.html",
+        "name": "About IMSolarCare | Solar Cleaning Hub in Lucknow",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "description": "IM Solar Care is a Lucknow-based professional solar panel cleaning company providing scientific de-ionized water washing, AMC maintenance, thermal hotspot checks, and installation support across Uttar Pradesh.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/about-solarcare.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About Us",
+            "item": "https://imsolarcare.in/about-solarcare.html"
+          }
+        ]
       }
-    }
+    ]
+  }
   </script>
 </head>
 <body>

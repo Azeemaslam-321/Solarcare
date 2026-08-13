@@ -52,73 +52,191 @@
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "HomeAndConstructionBusiness",
-      "@id": "https://imsolarcare.in/#business",
-      "name": "IMSOLARCARE",
-      "alternateName": "IMSolarCare",
-      "url": "https://imsolarcare.in/",
-      "logo": "https://imsolarcare.in/assets/imsolarcare-logo.png",
-      "image": [
-        "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
-        "https://imsolarcare.in/assets/solar-cleaning-after-1.jpg",
-        "https://imsolarcare.in/assets/solar-amc-inverter-check.jpg"
-      ],
-      "description": "IM Solar Care is a Lucknow-based professional solar panel cleaning company providing cleaning, maintenance, AMC, inspection and installation support across Lucknow and Uttar Pradesh.",
-      "telephone": "+91 8112780010",
-      "email": "imsolarcare@gmail.com",
-      "priceRange": "₹799 onwards",
-      "hasMap": "https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac",
-      "sameAs": [
-        "https://www.instagram.com/imsolarcare?igsh=MTA2ODZ4ZmtseHlvcg==",
-        "https://www.facebook.com/share/17XE6ewVoq/",
-        "https://www.youtube.com/@imsolarcare"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Lucknow",
-        "addressRegion": "Uttar Pradesh",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 26.8467,
-        "longitude": 80.9462
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-          "opens": "08:00",
-          "closes": "19:00"
-        }
-      ]
-    }
-  </script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "How often should solar panels be cleaned?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "In dusty areas like Lucknow and Uttar Pradesh, cleaning solar panels every 15 to 30 days is essential to maintain peak efficiency."
-          }
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+        "@id": "https://imsolarcare.in/#organization",
+        "name": "IM Solar Care",
+        "alternateName": ["IMSolarCare", "IM SOLAR CARE"],
+        "url": "https://imsolarcare.in/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://imsolarcare.in/#logo",
+          "url": "https://imsolarcare.in/assets/imsolarcare-logo.png",
+          "contentUrl": "https://imsolarcare.in/assets/imsolarcare-logo.png",
+          "width": 512,
+          "height": 512,
+          "caption": "IM Solar Care logo"
         },
-        {
-          "@type": "Question",
-          "name": "Does solar panel cleaning increase power generation?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! Regular de-ionized cleaning removes dust, grime, and bird droppings, restoring electricity output by up to 25% to 35%."
+        "image": [
+          "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
+          "https://imsolarcare.in/assets/solar-cleaning-after-1.jpg",
+          "https://imsolarcare.in/assets/solar-amc-inverter-check.jpg"
+        ],
+        "telephone": "+91-8112780010",
+        "email": "imsolarcare@gmail.com",
+        "priceRange": "₹799 - ₹₹₹ (custom commercial quotes)",
+        "description": "Professional solar panel cleaning, installation, maintenance, AMC and commercial solar services in Lucknow, serving customers across Uttar Pradesh.",
+        "hasMap": "https://maps.app.goo.gl/DCYgXagkDjTen2yq8?g_st=ac",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lucknow",
+          "addressRegion": "Uttar Pradesh",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 26.8467,
+          "longitude": 80.9462
+        },
+        "areaServed": [
+          { "@type": "State", "name": "Uttar Pradesh" },
+          { "@type": "City", "name": "Lucknow" },
+          { "@type": "City", "name": "Kanpur" },
+          { "@type": "City", "name": "Varanasi" },
+          { "@type": "City", "name": "Ayodhya" },
+          { "@type": "City", "name": "Prayagraj" },
+          { "@type": "City", "name": "Noida" },
+          { "@type": "City", "name": "Gorakhpur" }
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            "opens": "08:00",
+            "closes": "19:00"
           }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/imsolarcare?igsh=MTA2ODZ4ZmtseHlvcg==",
+          "https://www.facebook.com/share/17XE6ewVoq/",
+          "https://www.youtube.com/@imsolarcare"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Solar Panel Care Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://imsolarcare.in/solar-panel-cleaning-service.html#service"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://imsolarcare.in/amc-plans.html#service"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://imsolarcare.in/bird-mesh-installation.html#service"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://imsolarcare.in/solar-inspection-service.html#service"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://imsolarcare.in/commercial-solar-solutions.html#service"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://imsolarcare.in/solar-panel-repair-service.html#service"
+              }
+            }
+          ]
         }
-      ]
-    }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://imsolarcare.in/#website",
+        "url": "https://imsolarcare.in/",
+        "name": "IM Solar Care",
+        "publisher": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/#webpage",
+        "url": "https://imsolarcare.in/",
+        "name": "Solar Panel Cleaning in Lucknow | Installation & Maintenance | IM Solar Care",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
+          "width": 1200,
+          "height": 800
+        },
+        "description": "Professional solar panel cleaning, installation, maintenance, AMC and commercial solar services in Lucknow by IM Solar Care.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How often should solar panels be cleaned in Lucknow?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Due to ambient dust, vehicle exhaust, and seasonal pollen in Lucknow and UP, cleaning rooftop solar panels every 15 to 30 days is recommended for optimal performance."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why shouldn't I clean solar panels with ordinary tap water?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tap water in UP has high mineral hardness (calcium & magnesium). When it evaporates in sunlight it forms a white hard scale layer on the panel glass, permanently degrading generation capacity. IM Solar Care uses purified de-ionized water instead."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is included in the Solar AMC Plan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The AMC includes scheduled cleaning visits, an inverter diagnostic scan, string voltage measurement, an earthing check, hotspot inspection, and priority customer service dispatch."
+            }
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>

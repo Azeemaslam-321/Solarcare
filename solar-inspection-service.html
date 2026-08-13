@@ -27,18 +27,79 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Solar Inspection Service in Lucknow",
-      "serviceType": "Solar panel and rooftop inspection",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "IMSOLARCARE",
-        "telephone": "+91 8112780010"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://imsolarcare.in/solar-inspection-service.html#service",
+        "serviceType": "Solar Panel Thermal Inspection & Diagnostics",
+        "name": "Solar Panel Thermal Inspection Service",
+        "description": "Comprehensive solar rooftop plant diagnostic inspection featuring thermal hotspot camera scans, string voltage measurements, earthing continuity checks, and micro-crack detection.",
+        "provider": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Lucknow" },
+          { "@type": "State", "name": "Uttar Pradesh" }
+        ]
       },
-      "url": "https://imsolarcare.in/solar-inspection-service.html"
-    }
+      {
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/solar-inspection-service.html#webpage",
+        "url": "https://imsolarcare.in/solar-inspection-service.html",
+        "name": "Solar Inspection Service in Lucknow | Thermal Hotspot Scans | IMSolarCare",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/solar-inspection-service.html#service"
+        },
+        "description": "Book expert solar plant inspection in Lucknow. Thermal imaging hotspot scan, MC4 connector testing, inverter diagnostics, and health audit reports.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/solar-inspection-service.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Solar Inspection Service",
+            "item": "https://imsolarcare.in/solar-inspection-service.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/solar-inspection-service.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is thermal imaging important for solar panels?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Thermal infrared cameras detect invisible electrical hotspots, shorted bypass diodes, and cracked silicon cells before they burn out or cause panel failure."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will I receive a detailed health report after inspection?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our certified solar technicians provide a written diagnostic report detailing string voltages, thermal anomaly images, and recommended corrective actions."
+            }
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>

@@ -17,65 +17,98 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../legal-pages.css">
-  <script type="application/ld+json">[
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    "@id": "https://imsolarcare.in/#business",
-    "name": "IM Solar Care",
-    "url": "https://imsolarcare.in/",
-    "telephone": "+91 8112780010",
-    "email": "imsolarcare@gmail.com",
-    "priceRange": "₹799 onwards",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Lucknow",
-      "addressRegion": "Uttar Pradesh",
-      "addressCountry": "IN"
-    },
-    "areaServed": [
-      "Noida, Uttar Pradesh"
-    ],
-    "serviceType": [
-      "Solar Panel Cleaning",
-      "Solar Panel Installation Support",
-      "Solar Panel Maintenance",
-      "Solar AMC",
-      "Commercial Solar Services"
-    ],
-    "description": "Professional solar panel cleaning, installation, maintenance, AMC and inspection services in Noida, Uttar Pradesh for residential, commercial and industrial solar sites."
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
+    "@graph": [
       {
-        "@type": "Question",
-        "name": "How much does solar panel cleaning cost in Noida?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Pricing depends on system capacity, panel count, roof access and panel condition."
+        "@type": "Service",
+        "@id": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html#service",
+        "serviceType": "Solar Panel Cleaning",
+        "name": "Solar Panel Cleaning in Noida",
+        "description": "Professional solar panel cleaning, installation support, maintenance, AMC and inspection services in Noida, Uttar Pradesh.",
+        "provider": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Noida"
+        },
+        "isRelatedTo": {
+          "@id": "https://imsolarcare.in/solar-panel-cleaning-service.html#service"
         }
       },
       {
-        "@type": "Question",
-        "name": "Do you provide solar installation in Noida?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, installation quote support is available, including an offer of 3 free cleaning visits within 1 year after installation."
-        }
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html#webpage",
+        "url": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html",
+        "name": "Solar Panel Cleaning in Noida | IMSolarCare",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html#service"
+        },
+        "inLanguage": "en-IN"
       },
       {
-        "@type": "Question",
-        "name": "Do you provide commercial solar services in Noida?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, commercial solar cleaning and maintenance enquiries are available for larger rooftops and institutions."
-        }
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Service Areas",
+            "item": "https://imsolarcare.in/service-areas.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Noida",
+            "item": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/locations/solar-panel-cleaning-noida.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does solar panel cleaning cost in Noida?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pricing depends on system capacity, panel count, roof access and panel condition."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you provide solar installation in Noida?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, installation quote support is available, including an offer of 3 free cleaning visits within 1 year after installation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you provide commercial solar services in Noida?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, commercial solar cleaning and maintenance enquiries are available for larger rooftops and institutions."
+            }
+          }
+        ]
       }
     ]
   }
-]</script>
+  </script>
   <script src="../site-chrome.js" defer></script>
 </head>
 <body>

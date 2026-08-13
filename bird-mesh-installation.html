@@ -27,18 +27,79 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Bird Mesh Netting for Solar Panels in Lucknow",
-      "serviceType": "Bird mesh netting and pest proofing",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "IMSOLARCARE",
-        "telephone": "+91 8112780010"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://imsolarcare.in/bird-mesh-installation.html#service",
+        "serviceType": "Solar Panel Bird Mesh Installation",
+        "name": "Bird Mesh & Pigeon Proofing for Solar Panels",
+        "description": "Professional SS-304 stainless steel PVC coated bird netting installation with non-invasive clips. Protects wiring under solar panels from pigeons, monkeys, and pest nesting.",
+        "provider": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Lucknow" },
+          { "@type": "State", "name": "Uttar Pradesh" }
+        ]
       },
-      "url": "https://imsolarcare.in/bird-mesh-installation.html"
-    }
+      {
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/bird-mesh-installation.html#webpage",
+        "url": "https://imsolarcare.in/bird-mesh-installation.html",
+        "name": "Bird Mesh Netting for Solar Panels in Lucknow | IMSolarCare",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/bird-mesh-installation.html#service"
+        },
+        "description": "Prevent pigeon nesting and wire damage under solar panels with durable stainless steel PVC mesh installation by IMSolarCare.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/bird-mesh-installation.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bird Mesh Installation",
+            "item": "https://imsolarcare.in/bird-mesh-installation.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/bird-mesh-installation.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does installing bird mesh require drilling into solar panels?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No! We use specialized non-drilling UV-resistant nylon clips that securely lock onto panel aluminum frame lips without damaging or voiding warranties."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why are pigeons under solar panels dangerous?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pigeons peck at DC cable insulation creating short circuits, build flammable twigs nests, and block airflow which creates localized thermal hotspots and panel damage."
+            }
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>

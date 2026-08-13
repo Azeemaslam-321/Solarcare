@@ -24,6 +24,115 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="site-chrome.css?v=1.0.1">
   <script src="site-chrome.js?v=1.0.1" defer></script>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://imsolarcare.in/amc-plans.html#service",
+        "serviceType": "Solar Annual Maintenance Contract (AMC)",
+        "name": "Solar Panel AMC Service Plans",
+        "description": "Comprehensive annual solar panel maintenance contracts including scheduled de-ionized water washing, inverter health diagnostics, string voltage checks, and priority dispatch.",
+        "provider": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Lucknow" },
+          { "@type": "State", "name": "Uttar Pradesh" }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Solar AMC Subscription Tiers",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Basic Solar Care AMC",
+              "price": "1999",
+              "priceCurrency": "INR",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "1999",
+                "priceCurrency": "INR",
+                "unitText": "per year"
+              },
+              "availability": "https://schema.org/InStock"
+            },
+            {
+              "@type": "Offer",
+              "name": "Standard Solar Care AMC",
+              "price": "2999",
+              "priceCurrency": "INR",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "2999",
+                "priceCurrency": "INR",
+                "unitText": "per year"
+              },
+              "availability": "https://schema.org/InStock"
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/amc-plans.html#webpage",
+        "url": "https://imsolarcare.in/amc-plans.html",
+        "name": "Solar AMC Plans in Lucknow | Annual Maintenance Contracts | IMSolarCare",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/amc-plans.html#service"
+        },
+        "description": "Compare solar AMC plans in Lucknow from IMSOLARCARE. Basic and Standard annual maintenance contracts for residential and commercial rooftop solar systems.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/amc-plans.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Solar AMC Plans",
+            "item": "https://imsolarcare.in/amc-plans.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/amc-plans.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does a Solar AMC cover?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A Solar AMC covers scheduled de-ionized water panel washing, inverter error log scanning, string voltage readings, earthing integrity checks, and priority technician dispatch."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I upgrade my AMC tier mid-year?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, you can upgrade from Basic to Standard AMC at any time by paying the prorated tier difference."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 

@@ -27,18 +27,79 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Solar Panel Repair Service in Lucknow",
-      "serviceType": "Solar repair and inverter inspection",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "IMSOLARCARE",
-        "telephone": "+91 8112780010"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://imsolarcare.in/solar-panel-repair-service.html#service",
+        "serviceType": "Solar Panel & Inverter Repair",
+        "name": "Solar Panel Repair Service",
+        "description": "Expert solar panel, solar inverter, MC4 connector cable replacement, junction box fixing, and grounding repairs in Lucknow and UP.",
+        "provider": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Lucknow" },
+          { "@type": "State", "name": "Uttar Pradesh" }
+        ]
       },
-      "url": "https://imsolarcare.in/solar-panel-repair-service.html"
-    }
+      {
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/solar-panel-repair-service.html#webpage",
+        "url": "https://imsolarcare.in/solar-panel-repair-service.html",
+        "name": "Solar Panel Repair Service in Lucknow | Inverter & Wire Repair | IMSolarCare",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/solar-panel-repair-service.html#service"
+        },
+        "description": "Fast & reliable solar panel and inverter repair service in Lucknow. Fix zero generation, MC4 short circuits, tripping inverters, and damaged wiring.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/solar-panel-repair-service.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Solar Repair Service",
+            "item": "https://imsolarcare.in/solar-panel-repair-service.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/solar-panel-repair-service.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is my solar inverter red light glowing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A red warning light on a solar inverter usually indicates an isolation error, grid voltage fault, or string disconnection requiring immediate technician diagnosis."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can damaged solar wiring be repaired on-site?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our certified technicians carry replacement MC4 connectors, solar DC cables, and crimping equipment for immediate on-site wiring repairs."
+            }
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>

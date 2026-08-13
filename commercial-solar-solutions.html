@@ -27,18 +27,94 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Commercial Solar Cleaning & AMC in Lucknow",
-      "serviceType": "Commercial solar plant cleaning and AMC",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "IMSOLARCARE",
-        "telephone": "+91 8112780010"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://imsolarcare.in/commercial-solar-solutions.html#service",
+        "serviceType": "Commercial Solar Plant Maintenance & Cleaning",
+        "name": "Commercial & Industrial Solar Solutions",
+        "description": "Industrial and commercial solar power plant cleaning, maintenance, AMC, and efficiency optimization for factories, institutions, and office rooftops across Uttar Pradesh (10kW to 500kW+).",
+        "provider": {
+          "@id": "https://imsolarcare.in/#organization"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Lucknow" },
+          { "@type": "State", "name": "Uttar Pradesh" }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Commercial Solar Solutions Pricing",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Commercial Solar Maintenance & AMC",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "description": "Custom quote based on MW/kW capacity and site location"
+              },
+              "availability": "https://schema.org/InStock"
+            }
+          ]
+        }
       },
-      "url": "https://imsolarcare.in/commercial-solar-solutions.html"
-    }
+      {
+        "@type": "WebPage",
+        "@id": "https://imsolarcare.in/commercial-solar-solutions.html#webpage",
+        "url": "https://imsolarcare.in/commercial-solar-solutions.html",
+        "name": "Commercial Solar Cleaning & AMC in Lucknow | Industrial Plants | IMSolarCare",
+        "isPartOf": {
+          "@id": "https://imsolarcare.in/#website"
+        },
+        "about": {
+          "@id": "https://imsolarcare.in/commercial-solar-solutions.html#service"
+        },
+        "description": "Custom commercial solar maintenance plans in Lucknow and UP. Automated water washing system setup, scheduled high-volume cleaning, and GST billing.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://imsolarcare.in/commercial-solar-solutions.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://imsolarcare.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Commercial Solar Solutions",
+            "item": "https://imsolarcare.in/commercial-solar-solutions.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://imsolarcare.in/commercial-solar-solutions.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do you provide GST invoices for commercial solar AMC?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, all commercial solar maintenance contracts include valid GST invoices for input tax credit claims."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What size commercial solar plants do you clean?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We handle commercial rooftop plants and ground-mounted solar installations ranging from 10 kW to 500 kW and above across UP."
+            }
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>
