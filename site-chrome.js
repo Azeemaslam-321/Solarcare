@@ -1,10 +1,10 @@
 (() => {
   const APP_VERSION = '1.0.1';
 
-  // Determine root path prefix for subdirectories like /locations/
+  // Determine root path prefix for subdirectories like /locations/ and /projects/
   const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const isLocationPage = pathParts.includes('locations');
-  const rootPrefix = isLocationPage ? '../' : '';
+  const isNestedPage = pathParts.length > 1;
+  const rootPrefix = isNestedPage ? '../' : '';
 
   const rootHref = (href) => {
     if (/^(https?:|mailto:|tel:|#|javascript:)/i.test(href)) {
@@ -38,17 +38,15 @@
       "@type": "LocalBusiness",
       "name": "IMSOLARCARE",
       "image": "https://imsolarcare.in/assets/commercial-rooftop-cleaning-evening.jpg",
-      "@id": "https://imsolarcare.in/",
+      "@id": "https://imsolarcare.in/#business",
       "url": "https://imsolarcare.in/",
       "telephone": "+91 8112780010",
       "email": "imsolarcare@gmail.com",
       "priceRange": "₹799 - ₹10,000",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Lucknow",
         "addressLocality": "Lucknow",
         "addressRegion": "Uttar Pradesh",
-        "postalCode": "226024",
         "addressCountry": "IN"
       },
       "geo": {
@@ -200,7 +198,7 @@
         <div class="site-footer-grid">
           <div class="site-footer-brand">
             <a href="${rootHref('index.html')}">
-              <img src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care" style="height: 48px; filter: brightness(0) invert(1);" />
+              <img class="site-footer-logo" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care" />
             </a>
             <p>Lucknow's premier professional solar panel cleaning, maintenance, AMC, bird mesh installation, and efficiency monitoring service.</p>
             <div style="display: flex; gap: 12px; font-size: 1.4rem; color: var(--solar-gold);">
@@ -215,10 +213,10 @@
             <h4>Our Services</h4>
             <ul class="site-footer-links">
               <li><a href="${rootHref('solar-panel-cleaning-service.html')}">Solar Panel Cleaning</a></li>
-              <li><a href="${rootHref('amc-plans.html')}">Solar AMC Contracts</a></li>
-              <li><a href="${rootHref('solar-panel-repair-service.html')}">Solar Repair & Diagnostics</a></li>
+              <li><a href="${rootHref('solar-amc-service.html')}">Solar AMC</a></li>
+              <li><a href="${rootHref('solar-panel-maintenance-lucknow.html')}">Solar Maintenance</a></li>
               <li><a href="${rootHref('bird-mesh-installation.html')}">Bird Mesh Installation</a></li>
-              <li><a href="${rootHref('commercial-solar-solutions.html')}">Commercial Solar Cleaning</a></li>
+              <li><a href="${rootHref('commercial-solar-panel-cleaning-lucknow.html')}">Commercial Solar Cleaning</a></li>
             </ul>
           </div>
 
@@ -226,10 +224,12 @@
             <h4>Quick Links</h4>
             <ul class="site-footer-links">
               <li><a href="${rootHref('about-solarcare.html')}">About IMSolarCare</a></li>
-              <li><a href="${rootHref('pricing.html')}">Pricing & Calculator</a></li>
+              <li><a href="${rootHref('solar-panel-cleaning-cost-lucknow.html')}">Solar Cleaning Cost</a></li>
               <li><a href="${rootHref('before-after-gallery.html')}">Before & After Gallery</a></li>
-              <li><a href="${rootHref('faq.html')}">Frequently Asked Questions</a></li>
               <li><a href="${rootHref('service-areas.html')}">Service Areas Network</a></li>
+              <li><a href="${rootHref('contact-solarcare.html')}">Contact</a></li>
+              <li><a href="${rootHref('privacy.html')}">Privacy Policy</a></li>
+              <li><a href="${rootHref('terms.html')}">Terms</a></li>
             </ul>
           </div>
 
@@ -323,7 +323,7 @@
         <div style="text-align: center; margin-bottom: 24px;">
           <span class="sp-badge sp-badge-emerald" style="margin-bottom: 8px;">Instant Service Booking</span>
           <h3 style="font-size: 1.5rem;">Book Solar Cleaning & AMC</h3>
-          <p style="color: var(--text-secondary); font-size: 0.92rem;">Get 25-35% efficiency boost for your rooftop solar installation!</p>
+          <p style="color: var(--text-secondary); font-size: 0.92rem;">Recover generation lost due to dust, dirt and surface contamination on your rooftop solar installation.</p>
         </div>
 
         <form id="spBookingForm">
@@ -547,7 +547,7 @@
           appendMessage(`Our <b>Single Visit De-ionized Solar Wash</b> starts at ₹799 (Up to 3kW). Fill below to book your slot:`);
           renderInChatBookingForm();
         } else if (q.includes('roi') || q.includes('save') || q.includes('power') || q.includes('calculate')) {
-          appendMessage(`Dust film reduces solar generation by <b>20% to 35%</b>! <br><br>Type your plant size in kW (e.g. <b>5 kW</b> or <b>10 kW</b>) and I will calculate your exact money savings!`);
+          appendMessage(`Dust film can reduce solar generation over time. <br><br>Type your plant size in kW (e.g. <b>5 kW</b> or <b>10 kW</b>) and I will estimate possible money savings.`);
         } else if (q.includes('amc') || q.includes('plan') || q.includes('year') || q.includes('contract')) {
           appendMessage(`Our <b>Annual Maintenance Contracts (AMC)</b>:<br>
             • <b>Basic (4 Visits):</b> ₹1,999/yr<br>

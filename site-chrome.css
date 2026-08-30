@@ -1778,6 +1778,21 @@ table, .sp-table {
   max-width: 320px;
 }
 
+.site-footer-brand > a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 10px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.site-footer-logo {
+  height: 48px;
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+}
+
 .site-footer-col h4 {
   font-size: 1.1rem;
   color: var(--solar-gold);
