@@ -13,6 +13,31 @@
     return `${rootPrefix}${href}`;
   };
 
+  function showWhatsAppSuccess(message = 'Details ready. Opening WhatsApp...') {
+    let toast = document.getElementById('spWhatsAppSuccessToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'spWhatsAppSuccessToast';
+      toast.className = 'sp-whatsapp-success-toast';
+      document.body.appendChild(toast);
+    }
+
+    toast.innerHTML = `<i class="ri-check-line" aria-hidden="true"></i><span>${message}</span>`;
+    toast.classList.add('is-visible');
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => {
+      toast.classList.remove('is-visible');
+    }, 2400);
+  }
+
+  function openWhatsAppWithSuccess(url, message = 'Redirecting to WhatsApp...') {
+    showWhatsAppSuccess(message);
+    setTimeout(() => {
+      const win = window.open(url, '_blank');
+      if (!win) window.location.href = url;
+    }, 700);
+  }
+
   // Ensure remixicon and site-chrome.css (versioned) are loaded
   if (!document.querySelector('link[href*="remixicon"]')) {
     const iconLink = document.createElement('link');
@@ -226,7 +251,8 @@
               <li><a href="${rootHref('about-solarcare.html')}">About IMSolarCare</a></li>
               <li><a href="${rootHref('solar-panel-cleaning-cost-lucknow.html')}">Solar Cleaning Cost</a></li>
               <li><a href="${rootHref('before-after-gallery.html')}">Before & After Gallery</a></li>
-              <li><a href="${rootHref('service-areas.html')}">Service Areas Network</a></li>
+              <li><a href="${rootHref('service-network.html')}">Service Network</a></li>
+              <li><a href="${rootHref('service-areas.html')}">Areas We Serve</a></li>
               <li><a href="${rootHref('contact-solarcare.html')}">Contact</a></li>
               <li><a href="${rootHref('privacy.html')}">Privacy Policy</a></li>
               <li><a href="${rootHref('terms.html')}">Terms</a></li>
@@ -236,7 +262,7 @@
           <div class="site-footer-col">
             <h4>Contact Info</h4>
             <ul class="site-footer-links">
-              <li><i class="ri-phone-fill" style="color: var(--solar-gold);"></i> <a href="tel:+918112780010" style="color:inherit; text-decoration:none;">+91 8112780010</a></li>
+              <li><i class="ri-phone-fill" style="color: var(--solar-gold);"></i> <a href="tel:+918112780010" style="color:inherit; text-decoration:none;">Call Support</a></li>
               <li><i class="ri-mail-send-fill" style="color: var(--solar-gold);"></i> imsolarcare@gmail.com</li>
               <li><i class="ri-map-pin-2-fill" style="color: var(--solar-gold);"></i> Lucknow & Uttar Pradesh</li>
               <li><i class="ri-time-fill" style="color: var(--solar-gold);"></i> Mon-Sun: 8:00 AM - 7:00 PM</li>
@@ -294,7 +320,6 @@
       `Name: ${data.name || 'Not provided'}`,
       `Phone: ${data.phone || 'Not provided'}`,
       `Service: ${data.service || 'Solar Panel Cleaning'}`,
-      `Preferred Date: ${data.pref_date || data.date || 'Flexible'}`,
       `Address: ${data.address || 'Not provided'}`,
       `Message: ${data.notes || 'None'}`,
       '----------------------------------------',
@@ -303,11 +328,7 @@
 
     const waMessage = encodeURIComponent(lines.join('\n'));
     const waUrl = `https://wa.me/918112780010?text=${waMessage}`;
-
-    const win = window.open(waUrl, '_blank');
-    if (!win) {
-      window.location.href = waUrl;
-    }
+    openWhatsAppWithSuccess(waUrl, 'Details ready. Opening WhatsApp...');
   }
 
   // Render Quick Booking Modal
@@ -351,15 +372,13 @@
             </select>
           </div>
 
-          <div class="sp-form-group">
-            <label for="spBookDate">Preferred Date</label>
-            <input type="date" id="spBookDate" name="pref_date" class="sp-form-control" />
-          </div>
 
           <div class="sp-form-group">
             <label for="spBookAddress">Full Rooftop Address & Locality</label>
             <textarea id="spBookAddress" name="address" class="sp-form-control" rows="2" placeholder="e.g. Plot 45, Sector 5, Gomti Nagar, Lucknow"></textarea>
           </div>
+
+          <div class="sp-form-validation" id="spBookingValidation" role="alert" aria-live="polite"></div>
 
           <button type="submit" class="sp-btn sp-btn-primary" style="width: 100%;">
             <i class="ri-whatsapp-line" style="font-size: 1.2rem; color: #25d366;"></i> Confirm & Send via WhatsApp
@@ -431,7 +450,7 @@
         </form>
       </div>
 
-      <button type="button" class="sp-chatbot-toggle" id="spChatbotToggle" aria-label="Open solar assistant chatbot">
+      <button type="button" class="sp-chatbot-toggle" id="spChatbotToggle" aria-label="Chat with us" title="Chat with us">
         <i class="ri-chat-3-line"></i>
         <span class="sp-chatbot-ping"></span>
       </button>
@@ -517,7 +536,7 @@
             const data = { name, phone, service, address: 'In-Chat Booking' };
             sendBookingToWhatsApp(data);
 
-            appendMessage(`✅ Your booking details are ready. Please send the WhatsApp message to confirm your request. (Or call us directly at <a href="tel:+918112780010">+91 8112780010</a>)`, 'bot');
+            appendMessage(`✅ Your booking details are ready. Please send the WhatsApp message to confirm your request. (Or call us directly at <a href="tel:+918112780010">Call Support</a>)`, 'bot');
           });
         }
       }, 200);
@@ -560,7 +579,7 @@
             We cover all Lucknow localities (Gomti Nagar, Aliganj, Indira Nagar, Jankipuram, Aminabad, etc.) & major UP cities (Kanpur, Ayodhya, Varanasi, Prayagraj, Noida, Gorakhpur). <br><br>Standard technician arrival time: <b>Within 24 Hours</b>.`);
         } else if (q.includes('call') || q.includes('phone') || q.includes('contact') || q.includes('number')) {
           appendMessage(`📞 You can speak directly with our team:<br>
-            • Hotline: <a href="tel:+918112780010" style="color: var(--solar-emerald); font-weight:700;">+91 8112780010</a><br>
+            • Hotline: <a href="tel:+918112780010" style="color: var(--solar-emerald); font-weight:700;">Call Support</a><br>
             • WhatsApp: <a href="https://wa.me/918112780010" target="_blank" style="color: #25d366; font-weight:700;">Chat on WhatsApp</a>`);
         } else {
           appendMessage(`I can help you with <b>Solar Panel Cleaning</b>, <b>AMC Contracts</b>, <b>Bird Mesh Netting</b>, and <b>ROI Calculations</b> across Lucknow & UP. <br><br>What service are you looking for today?`);
@@ -592,6 +611,99 @@
     }
   }
 
+  function renderFloatingWhatsApp() {
+    if (document.querySelector('.site-whatsapp-float')) return;
+    const link = document.createElement('a');
+    link.className = 'site-whatsapp-float';
+    link.href = 'https://wa.me/918112780010';
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.setAttribute('aria-label', 'Chat with IMSolarCare on WhatsApp');
+    link.innerHTML = '<i class="ri-whatsapp-line" aria-hidden="true"></i>';
+    document.body.appendChild(link);
+  }
+
+  function setupInstantQuoteForms() {
+    const quotePlans = {
+      'One-Time Cleaning': {
+        desc: 'Includes: De-ionized water cleaning, visual inspection, dust and bird-dropping removal. One-time visit.',
+        pdf: rootHref('plans/onetime-cleaning-plan.pdf')
+      },
+      'AMC - 3 Cleanings/Year': {
+        desc: 'Includes: 3 scheduled cleanings/year, basic inverter check, priority booking, and service notes after each visit.',
+        pdf: rootHref('plans/amc-3-plan.pdf')
+      },
+      'AMC - 4 Cleanings/Year': {
+        desc: 'Includes: 4 scheduled cleanings/year, basic inverter check, bird mesh observation, priority booking, and detailed maintenance recommendations.',
+        pdf: rootHref('plans/amc-4-plan.pdf')
+      }
+    };
+
+    document.querySelectorAll('.sp-instant-quote-form').forEach((form) => {
+      if (form.dataset.quoteBound === 'true') return;
+      form.dataset.quoteBound = 'true';
+
+      const planSelect = form.querySelector('.sp-plan-select');
+      const detailsBox = form.querySelector('.sp-plan-details');
+      const detailsText = form.querySelector('.sp-plan-text');
+      const downloadLink = form.querySelector('.sp-plan-download');
+
+      const updatePlanDetails = () => {
+        const selected = planSelect?.value || '';
+        const plan = quotePlans[selected];
+        if (plan && detailsBox && detailsText && downloadLink) {
+          detailsText.textContent = plan.desc;
+          downloadLink.href = plan.pdf;
+          detailsBox.hidden = false;
+        } else if (detailsBox) {
+          detailsBox.hidden = true;
+        }
+      };
+
+      if (planSelect) {
+        planSelect.addEventListener('change', updatePlanDetails);
+        updatePlanDetails();
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        if (!data.name || !data.phone || !data.city || !data.service || data.consent !== 'yes') {
+          alert('Please fill all required fields and accept the consent checkbox.');
+          return;
+        }
+
+        const plan = quotePlans[data.service];
+        const message = [
+          'Naya Quote Request:',
+          `Name: ${data.name}`,
+          `Phone: ${data.phone}`,
+          `City: ${data.city}`,
+          `Roof Size: ${data.roofSize || 'Not selected'}`,
+          `Service: ${data.service}`,
+          plan ? `Plan Details: ${plan.desc}` : '',
+          'Sent via imsolarcare.in'
+        ].filter(Boolean).join('\n');
+
+        const quoteUrl = `https://wa.me/918112780010?text=${encodeURIComponent(message)}`;
+        openWhatsAppWithSuccess(quoteUrl, 'Details sent! Opening WhatsApp...');
+        setTimeout(() => { window.location.href = rootHref('thank-you.html'); }, 1400);
+      });
+    });
+  }
+
+
+  function setupWhatsAppRedirects() {
+    if (document.documentElement.dataset.whatsappRedirectBound === 'true') return;
+    document.documentElement.dataset.whatsappRedirectBound = 'true';
+
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest?.('a[href*="wa.me/"]');
+      if (!link || event.defaultPrevented) return;
+      event.preventDefault();
+      openWhatsAppWithSuccess(link.href, 'Redirecting to WhatsApp...');
+    });
+  }
   // Interactive Theme Logic
   function setupTheme() {
     const savedTheme = localStorage.getItem('solarcare-theme') || 'light';
@@ -643,20 +755,67 @@
     }
 
     if (form) {
+      const validationBox = document.getElementById('spBookingValidation');
+      const showBookingErrors = (errors, focusId) => {
+        if (validationBox) {
+          validationBox.innerHTML = errors.map((error) => `<div>${error}</div>`).join('');
+          validationBox.classList.add('is-visible');
+        } else {
+          alert(errors.join('\n'));
+        }
+        if (focusId) document.getElementById(focusId)?.focus();
+      };
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+        data.name = (data.name || '').trim();
+        data.phone = (data.phone || '').trim();
+        data.service = (data.service || '').trim();
+        data.address = (data.address || '').trim();
 
-        if (!data.name || !data.phone) {
-          alert('Please fill in your name and phone number.');
+        if (validationBox) {
+          validationBox.classList.remove('is-visible');
+          validationBox.innerHTML = '';
+        }
+
+        const errors = [];
+        let focusId = '';
+        const phoneDigits = data.phone.replace(/\D/g, '');
+
+        if (data.name.length < 3) {
+          errors.push('Please enter your full name.');
+          focusId ||= 'spBookName';
+        }
+
+        if (!/^[6-9]\d{9}$/.test(phoneDigits)) {
+          errors.push('Please enter a valid 10-digit Indian mobile number.');
+          focusId ||= 'spBookPhone';
+        } else {
+          data.phone = phoneDigits;
+        }
+
+        if (!data.service) {
+          errors.push('Please select a service.');
+          focusId ||= 'spBookService';
+        }
+
+
+        if (data.address && data.address.length < 10) {
+          errors.push('Please enter a more complete rooftop address/locality.');
+          focusId ||= 'spBookAddress';
+        }
+
+        if (errors.length) {
+          showBookingErrors(errors, focusId);
           return;
         }
 
         sendBookingToWhatsApp(data);
 
-        alert('Your booking details are ready. Please send the WhatsApp message to confirm your request. (If WhatsApp does not open, please call us directly at +91 8112780010)');
+        showWhatsAppSuccess('Booking details ready. Opening WhatsApp...');
         form.reset();
         if (modal) modal.classList.remove('is-open');
       });
@@ -680,7 +839,7 @@
         const data = { name, phone, service: 'Contact Form Inquiry', notes: message };
         sendBookingToWhatsApp(data);
 
-        alert('Your message details are ready. Please send the WhatsApp message to connect with our support team. (If WhatsApp does not open, please call us directly at +91 8112780010)');
+        showWhatsAppSuccess('Message ready. Opening WhatsApp...');
         contactForm.reset();
       });
     }
@@ -755,6 +914,8 @@
     renderBookingModal();
     renderMobileBar();
     renderChatbotWidget();
+    setupInstantQuoteForms();
+    setupWhatsAppRedirects();
     setupTheme();
     setupMobileNav();
     setupBookingModalEvents();
