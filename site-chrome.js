@@ -111,10 +111,6 @@
 
       if (storedVersion !== APP_VERSION) {
         localStorage.setItem('solarcare_app_version', APP_VERSION);
-        if (reloadedVersion !== APP_VERSION) {
-          sessionStorage.setItem('solarcare_reloaded_version', APP_VERSION);
-          window.location.reload(true);
-        }
       }
     } catch (e) {
       // Non-blocking client storage check
