@@ -88,12 +88,7 @@
       "areaServed": [
         "Lucknow", "Gomti Nagar", "Aliganj", "Indira Nagar", "Jankipuram", "Ashiyana", "Vikas Nagar", "Rajajipuram", "Hazratganj", "Aminabad",
         "Kanpur", "Ayodhya", "Varanasi", "Prayagraj", "Noida", "Greater Noida", "Ghaziabad", "Gorakhpur", "Bareilly", "Agra", "Aligarh", "Meerut", "Mathura", "Jhansi", "Barabanki", "Unnao", "Sitapur", "Sultanpur"
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "520"
-      }
+      ]
     });
     document.head.appendChild(schemaScript);
   }
