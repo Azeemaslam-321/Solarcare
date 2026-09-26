@@ -1,5 +1,5 @@
 (() => {
-  const APP_VERSION = '1.0.1';
+  const APP_VERSION = '1.0.3';
 
   // Determine root path prefix for subdirectories like /locations/ and /projects/
   const pathParts = window.location.pathname.split('/').filter(Boolean);
@@ -149,7 +149,7 @@
       </div>
       <div class="site-chrome-bar">
         <a class="site-brand" href="${rootHref('index.html')}" aria-label="IMSOLARCARE Home">
-          <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care logo" />
+          <img class="site-brand-image" src="${rootHref('assets/imsolarcare-navbar-logo-cropped.png')}" alt="IM Solar Care logo" />
         </a>
 
         <div class="site-header-trust" aria-label="IMSolarCare trust points">
@@ -158,8 +158,8 @@
           <span><i class="ri-map-pin-line" aria-hidden="true"></i> Lucknow Service</span>
         </div>
 
-        <button class="site-nav-toggle" type="button" aria-expanded="false" id="siteNavToggle">
-          <i class="ri-menu-3-line"></i> Menu
+        <button class="site-nav-toggle" type="button" aria-expanded="false" id="siteNavToggle" aria-label="Open navigation menu">
+          <i class="ri-menu-3-line" aria-hidden="true"></i><span class="site-nav-toggle-text">Menu</span>
         </button>
 
         <nav class="site-nav" id="siteNavMenu" aria-label="Primary navigation">
@@ -174,11 +174,16 @@
           <a class="site-nav-link${currentPage === 'service-areas.html' ? ' is-active' : ''}" href="${rootHref('service-areas.html')}"><i class="ri-map-pin-line"></i><span>Service Areas</span></a>
           <a class="site-nav-link${currentPage === 'blog.html' ? ' is-active' : ''}" href="${rootHref('blog.html')}"><i class="ri-article-line"></i><span>Blog</span></a>
           <a class="site-nav-link${currentPage === 'contact-solarcare.html' ? ' is-active' : ''}" href="${rootHref('contact-solarcare.html')}"><i class="ri-phone-line"></i><span>Contact</span></a>
+          <button class="site-nav-link site-nav-theme-action" type="button" id="mobileThemeToggleBtn"><i class="ri-sun-line" aria-hidden="true"></i><span>Theme</span></button>
+          <div class="site-nav-mobile-actions" aria-label="Quick contact actions">
+            <a href="tel:+918112780010"><i class="ri-phone-line" aria-hidden="true"></i><span>Call</span></a>
+            <a href="https://wa.me/918112780010?text=Hi%20IMSolarCare%2C%20I%20need%20solar%20service%20support." target="_blank" rel="noopener"><i class="ri-whatsapp-line" aria-hidden="true"></i><span>WhatsApp</span></a>
+          </div>
         </nav>
 
         <div class="site-header-actions">
           <button class="site-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle theme mode"><i class="ri-sun-line"></i></button>
-          <button type="button" class="site-btn-nav sp-open-booking"><i class="ri-calendar-check-line"></i> <span>Book Service</span></button>
+          <button type="button" class="site-btn-nav sp-open-booking"><i class="ri-calendar-check-line"></i> <span class="site-btn-label-full">Book Service</span><span class="site-btn-label-short">Book Now</span></button>
         </div>
       </div>
     `;
@@ -200,7 +205,7 @@
         <div class="site-footer-grid">
           <div class="site-footer-brand">
             <a href="${rootHref('index.html')}" class="site-footer-logo-link">
-              <img class="site-footer-logo" src="${rootHref('assets/imsolarcare-navbar-lockup.png')}" alt="IM Solar Care" />
+              <img class="site-footer-logo" src="${rootHref('assets/imsolarcare-navbar-logo-cropped.png')}" alt="IM Solar Care" />
             </a>
             <p>Professional solar panel cleaning, AMC, maintenance and bird mesh support for Lucknow rooftops.</p>
             <div class="site-footer-socials" aria-label="IMSolarCare social links">
@@ -363,10 +368,10 @@
           <i class="ri-whatsapp-line"></i> WhatsApp
         </a>
         <a class="sp-mobile-btn sp-mobile-call" href="tel:+918112780010" aria-label="Call Us">
-          <i class="ri-phone-line"></i> Call Now
+          <i class="ri-phone-line"></i> Call
         </a>
         <button type="button" class="sp-mobile-btn sp-mobile-book sp-open-booking" aria-label="Book Service">
-          <i class="ri-calendar-check-line"></i> Book Slot
+          <i class="ri-calendar-check-line"></i> Book
         </button>
       </div>
     `;
@@ -671,14 +676,25 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
 
     const toggleBtn = document.getElementById('themeToggleBtn');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        localStorage.setItem('solarcare-theme', nextTheme);
-      });
-    }
+    const mobileThemeToggle = document.getElementById('mobileThemeToggleBtn');
+
+    const updateThemeIcons = (theme) => {
+      const icon = `<i class="ri-${theme === 'dark' ? 'moon' : 'sun'}-line" aria-hidden="true"></i>`;
+      if (toggleBtn) toggleBtn.innerHTML = icon;
+      if (mobileThemeToggle) mobileThemeToggle.innerHTML = `${icon}<span>Theme</span>`;
+    };
+
+    const toggleTheme = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('solarcare-theme', nextTheme);
+      updateThemeIcons(nextTheme);
+    };
+
+    updateThemeIcons(savedTheme);
+    if (toggleBtn) toggleBtn.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
   }
 
   // Mobile Navigation Drawer Handler
@@ -686,9 +702,29 @@
     const toggleBtn = document.getElementById('siteNavToggle');
     const navMenu = document.getElementById('siteNavMenu');
     if (toggleBtn && navMenu) {
+      const setOpen = (open) => {
+        navMenu.classList.toggle('is-open', open);
+        toggleBtn.setAttribute('aria-expanded', String(open));
+      };
+
       toggleBtn.addEventListener('click', () => {
-        const isOpen = navMenu.classList.toggle('is-open');
-        toggleBtn.setAttribute('aria-expanded', isOpen);
+        setOpen(!navMenu.classList.contains('is-open'));
+      });
+
+      navMenu.addEventListener('click', (event) => {
+        const clickedLink = event.target.closest('a');
+        const clickedTheme = event.target.closest('#mobileThemeToggleBtn');
+        if (clickedLink || clickedTheme) setOpen(false);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setOpen(false);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!navMenu.classList.contains('is-open')) return;
+        if (event.target.closest('#siteNavMenu') || event.target.closest('#siteNavToggle')) return;
+        setOpen(false);
       });
     }
   }
